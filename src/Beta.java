@@ -1,7 +1,7 @@
 
-public class bite {
+public class Beta {
 
-	public bite() {
+	public Beta() {
 		// TODO Auto-generated constructor stub
 	}
 
