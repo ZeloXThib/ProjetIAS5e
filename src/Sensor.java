@@ -13,7 +13,6 @@ public class Sensor {
 	private String port;
 	SensorModes sensor = null;
 	static GraphicsLCD g = null;
-	static GraphicsLCD g = null;//
 	
 	public Sensor(String port_) {
 		port = port_;
