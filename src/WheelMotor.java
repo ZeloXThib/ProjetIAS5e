@@ -18,6 +18,7 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	//oui
+	
 	public void forward() {
 		super.forward();
 		Delay.msDelay(3000);
@@ -33,6 +34,14 @@ public class WheelMotor extends MovePilot{
 	public void arc(double rayon,double angle,boolean onsepas) {
 		super.arc(rayon, angle, onsepas);
 	}
+	
+	public static void main(String[] args) {
+		WheelMotor m = new WheelMotor();
+		m.forward();
+		m.arcForward(90);
+		m.forward();
+	}
+	
 		
 }
 
