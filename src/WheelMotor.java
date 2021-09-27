@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 import lejos.hardware.BrickFinder;
 import lejos.hardware.lcd.GraphicsLCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -21,6 +23,11 @@ public class WheelMotor extends MovePilot{
 	
 	public void forward(double i) {
 		super.forward();
+		boolean t = true;
+		if(t == true) {
+			Pinces p = new Pinces();
+			p.fermer();
+		}
 		Delay.msDelay((int)i);
 		super.stop();
 	}
@@ -49,10 +56,15 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	public static void main(String[] args) {
-		WheelMotor m = new WheelMotor();
-		m.forward(3000);
-		arcDeCercle(m,1000,true);	
-		m.forward(3000);
+		Scanner sc = new Scanner(System.in);
+		System.out.println("1, 2 ou 3");
+		int num = sc.nextInt();
+		sc.close();
+		System.out.println(num);
+		//WheelMotor m = new WheelMotor();
+		//m.forward(10000);
+		//arcDeCercle(m,1000,true);	
+		//m.forward(3000);
 	}
 	
 		
