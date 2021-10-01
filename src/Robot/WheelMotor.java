@@ -1,3 +1,4 @@
+package Robot;
 import java.util.Scanner;
 
 import lejos.hardware.BrickFinder;
