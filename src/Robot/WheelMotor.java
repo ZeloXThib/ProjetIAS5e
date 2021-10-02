@@ -21,7 +21,13 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	//oui
-	
+	/**
+	 * 
+	 * methode permettant d'avancer
+	 * 
+	 * @param i temps durant lequel le robot va avancer
+	 * 
+	 */
 	public void forward(double i) {
 		super.forward();
 		boolean t = true;
@@ -33,16 +39,20 @@ public class WheelMotor extends MovePilot{
 		super.stop();
 	}
 	
+	/**
+	 * methode permettant de reculer
+	 */
 	public void backward() {
 		super.backward();
 		Delay.msDelay(3000);
 		super.stop();
 	}
 	
-	public void arc(double rayon,double angle,boolean onsepas) {
-		super.arc(rayon, angle, onsepas);
-	}
+
 	
+	/**
+	 * methode permettant de realiser un arc de cercle
+	 */
 	public static void arcDeCercle(WheelMotor m,double longueur,boolean droite) {
 		if(droite == true) {
 			m.rotate(-45);
@@ -56,6 +66,7 @@ public class WheelMotor extends MovePilot{
 		
 	}
 	
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("1, 2 ou 3");

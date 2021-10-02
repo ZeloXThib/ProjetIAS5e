@@ -11,10 +11,16 @@ public class Pinces {
 		p = new EV3LargeRegulatedMotor(MotorPort.A);
 	}
 	
+	/*
+	 * methode permettant de fermer complètement les pinces
+	 */
 	public void fermer() {
 		this.p.rotate(-3*360);
 	}
 	
+	/*
+	 * methode permettant d'ouvrir completement les pinces
+	 */
 	public void ouvrir() {
 		this.p.rotate(3*360);
 	}
