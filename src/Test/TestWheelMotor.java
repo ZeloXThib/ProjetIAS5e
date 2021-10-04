@@ -1,8 +1,13 @@
 package Test;
 
+
 import java.util.Scanner;
 
+import Robot.Sensor;
 import Robot.WheelMotor;
+import lejos.hardware.Button;
+import lejos.robotics.Color;
+import lejos.utility.Delay;
 
 public class TestWheelMotor {
 
@@ -14,9 +19,14 @@ public class TestWheelMotor {
 			sc.close();
 			System.out.println(num);
 			WheelMotor m = new WheelMotor();
-			m.forward(10000);
-			m.arcDeCercle(1000,true);	
-			m.forward(3000);
+		
+			int i = 0;
+			while(i<5000){//4000 40sec
+				i++;
+				System.out.print(Button.getButtons());
+			}
+		   	Delay.msDelay(10);
+		    System.out.println("Salut");
+		}
 	}
-
 }
