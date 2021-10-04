@@ -74,6 +74,7 @@ public class Sensor {
 
 	    // initialize an array of floats for fetching samples. 
 		// Ask the SampleProvider how long the array should be
+
 		float[] sample = new float[presion.sampleSize()];
 
 				

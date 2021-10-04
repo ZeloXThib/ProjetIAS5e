@@ -48,36 +48,30 @@ public class WheelMotor extends MovePilot{
 		super.stop();
 	}
 	
+	public void rotate(double angle) {
+		super.rotate(angle);
+	}
+	
 
 	
 	/**
 	 * methode permettant de realiser un arc de cercle
 	 */
-	public static void arcDeCercle(WheelMotor m,double longueur,boolean droite) {
+	public void arcDeCercle(double longueur,boolean droite) {
 		if(droite == true) {
-			m.rotate(-45);
-			m.forward(longueur);
-			m.rotate(45);
+			this.rotate(-45);
+			this.forward(longueur);
+			this.rotate(45);
 		}else {
-			m.rotate(45);
-			m.forward(longueur);
-			m.rotate(-45);
+			this.rotate(45);
+			this.forward(longueur);
+			this.rotate(-45);
 		}
 		
 	}
 	
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("1, 2 ou 3");
-		int num = sc.nextInt();
-		sc.close();
-		System.out.println(num);
-		//WheelMotor m = new WheelMotor();
-		//m.forward(10000);
-		//arcDeCercle(m,1000,true);	
-		//m.forward(3000);
-	}
+	
 	
 		
 }

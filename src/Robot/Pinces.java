@@ -28,7 +28,7 @@ public class Pinces {
 		WheelMotor m = new WheelMotor();
 		Pinces pinces = new Pinces();
 		pinces.fermer();
-		m.forward(3000);
+		//m.forward(3000);
 		pinces.ouvrir();
 
 	}
