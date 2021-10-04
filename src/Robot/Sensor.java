@@ -31,11 +31,12 @@ public class Sensor {
 		sensor_Ultrasound = new EV3UltrasonicSensor(port_Ultrasound);
 		
 		port_Pression = LocalEV3.get().getPort(port_Pression_s);
-		sensor_Pression = new EV3UltrasonicSensor(port_Pression);
+		sensor_Pression = new EV3TouchSensor(port_Pression);
 		
 		port_S_Color = LocalEV3.get().getPort(port_Color_s);
-		sensor_S_Color = new EV3UltrasonicSensor(port_S_Color);
+		sensor_S_Color = new EV3ColorSensor(port_S_Color);
 	}
+	
 	
 	public Sensor() {
 		this("S1","S3","S4");//Par default S1
@@ -44,11 +45,7 @@ public class Sensor {
 
 	
 	static public void affiche(String text) {
-		if(g == null) {
-			g = BrickFinder.getDefault().getGraphicsLCD();
-		}		
-		g.clear();
-		g.drawString(text, 0, 0, GraphicsLCD.VCENTER|GraphicsLCD.LEFT);
+		System.out.println(text);
 	}
 	
 	
@@ -73,14 +70,14 @@ public class Sensor {
 	public static float havePalet() {
 		
 		// get an instance of this sensor in measurement mode
-		SampleProvider distance_s = sensor_Pression.getMode(0);
+		SampleProvider presion = sensor_Pression.getMode(0);
 
 	    // initialize an array of floats for fetching samples. 
 		// Ask the SampleProvider how long the array should be
-		float[] sample = new float[distance_s.sampleSize()];
+		float[] sample = new float[presion.sampleSize()];
 
 				
-	    distance_s.fetchSample(sample, 0);
+		presion.fetchSample(sample, 0);
 		
 		
 		return sample[0];
@@ -106,7 +103,46 @@ public class Sensor {
 		
 	}
 	
-	
+	public static String Color_to_String(int r, int g, int b) {
+		if((r<6 && g<6 && b<6)) {
+			return "BLACK";
+		}else if((r>8 && g>8 && b>8) && (r<27 && g<27 && b<27)) {
+			return "GRAY";
+		}else if((r>32 && g>22 && b<12)) {
+			return "YELLOW";
+		}else if(r>25 && g>25 && b>25) {
+			return "WHITE";
+		}else if(r>g && r>b) {
+			return "RED";
+		}else if(g>r && g>b) {
+			return "GREEN";
+		}else if(b>r && b>g) {
+			return "BLUE";
+		}else {
+			return "NONE";
+		}
+		
+		//JAUNE
+		//37 26 8
+		// 35 25 8
+		
+		//NOIR
+		//2 3 3
+		// 3 4 4
+		
+		//GRIS
+		//12 12 1
+		//13 12 1
+		///////10 10 1
+		
+		//BLUE
+		//2 5 11
+		//2 4 11
+	}
+
+	/*public static String WichButtonPressed() {
+		Buttons.GetClicks ()
+	}*/
 	
 	public static void main(String[] args) {
 		
@@ -119,10 +155,10 @@ public class Sensor {
 		//Delay.msDelay(5000);
 		
 		
-		Sensor.getDistance();
+		//Sensor.getDistance();
 		//Motor
 		MovePilot chassi = new MovePilot(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
-		//chassi.forward();
+		chassi.forward();
 		
 		
 		/*
@@ -137,10 +173,11 @@ public class Sensor {
 		
 		affiche("Detecte... "+Sensor.getDistance());
 		chassi.stop();
-		Delay.msDelay(10000);
+		Delay.msDelay(10000);//10 sec
+		
+		*/
 		
 		/*
-		
 		Sensor.havePalet();
 		int i = 0;
 		while((Sensor.havePalet() < 0.5) && (i<3000)){
@@ -156,27 +193,32 @@ public class Sensor {
 		Delay.msDelay(10000);
 		*/
 		
-
 		
-		Sensor.getColorOnGround();
+		
+		Color rgb = Sensor.getColorOnGround();
 		Sensor.havePalet(); //Pour stop
 		int i = 0;
-		while((Sensor.havePalet() < 0.5) && (i<5000)){//4000 40sec
+		while((Sensor.havePalet() < 0.5) && (i<10000) && Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "WHITE"){//10000 100sec
 			//Do nothing
 			i++;
-			Color rgb = Sensor.getColorOnGround();
+			rgb = Sensor.getColorOnGround();
 			//Lcd.print(6, "r=%d g=%d b=%d", rgb.getRed(), rgb.getGreen(), rgb.getBlue());
+			//Color color = new Color(rgb.getRed(), rgb.getGreen(), rgb.getBlue());
 			affiche(i+" : C: "+ rgb.getRed()+ "," + rgb.getGreen() + "," +  rgb.getBlue());
+			affiche(i+" : C: "+ Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()));
 	    	Delay.msDelay(10);
 		}
 		//Color code
 		//Gris table:
 		//Orange 
 		
-		Color rgb = Sensor.getColorOnGround();
+		rgb = Sensor.getColorOnGround();
 		affiche("Detecte... "+ rgb.getRed()+ "," + rgb.getGreen() + "," +  rgb.getBlue());
-		//chassi.stop();
+		affiche("C: "+ Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()));
+		chassi.stop();
 		Delay.msDelay(10000);
+		
+		
 		
 	}
 
