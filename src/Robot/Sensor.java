@@ -67,6 +67,42 @@ public class Sensor {
 		
 	}
 	
+	//Tourner sur lui meme lire les valeurs du capteur ultrasonic
+	public static boolean FindPalet(MovePilot p) {
+		
+		float[] dist = new float[20];
+		boolean find = false;
+		p.rotate(360);
+		
+		if(p.isMoving()) {
+		/*	
+			while(!find) {
+				for(int j=0; j<dist.length-1;j++) {
+					dist[j] = dist[j+1];
+				}
+				dist[19] = (getDistance());
+				
+				
+				//fais la moyenne
+				float var_moy = 0;
+				for(int i=0; i<dist.length-1;i++) {
+					var_moy+= Math.abs(dist[i] - dist[i+1]);
+				}
+				var_moy = var_moy/dist.length;
+				
+				if(var_moy < Math.abs(dist[19] - dist[18])) {
+					//La variation de la derniére distance perçus est supérieurs aux 20 deniéres variations
+					find= true;
+				}
+			}
+			p.stop();
+			System.out.println("Trouvé ??");
+		*/
+		}
+		
+		return false;
+	}
+	
 	public static float havePalet() {
 		
 		// get an instance of this sensor in measurement mode
@@ -140,6 +176,11 @@ public class Sensor {
 		//2 5 11
 		//2 4 11
 	}
+	
+	public static boolean colorIsWisWHITE() {
+		Color rgb = Sensor.getColorOnGround();
+		return Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) == "WHITE";
+	}
 
 	/*public static String WichButtonPressed() {
 		Buttons.GetClicks ()
@@ -147,15 +188,10 @@ public class Sensor {
 	
 	public static void main(String[] args) {
 		
-		affiche("Hello");
-		//Delay.msDelay(5000);
-		
-		
+		affiche("Initialisation Sensor");
 		Sensor Sensor_OBJ = new Sensor("S1","S3","S4");
-		affiche("Hello2");
-		//Delay.msDelay(5000);
-		
-		
+		affiche("Initialisation done!");
+
 		//Sensor.getDistance();
 		//Motor
 		MovePilot chassi = new MovePilot(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
@@ -194,12 +230,13 @@ public class Sensor {
 		Delay.msDelay(10000);
 		*/
 		
+		Sensor.FindPalet(chassi);
 		
-		
+		/*
 		Color rgb = Sensor.getColorOnGround();
 		Sensor.havePalet(); //Pour stop
 		int i = 0;
-		while((Sensor.havePalet() < 0.5) && (i<10000) && Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "WHITE"){//10000 100sec
+		while((Sensor.havePalet() < 0.5) && (i<10000) && !colorIsWisWHITE()){//10000 100sec
 			//Do nothing
 			i++;
 			rgb = Sensor.getColorOnGround();
@@ -218,6 +255,7 @@ public class Sensor {
 		affiche("C: "+ Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()));
 		chassi.stop();
 		Delay.msDelay(10000);
+		*/
 		
 		
 		
