@@ -27,6 +27,6 @@ public class TestWheelMotor {
 			}
 		   	Delay.msDelay(10);
 		    System.out.println("Salut");
-		}
+		
 	}
 }

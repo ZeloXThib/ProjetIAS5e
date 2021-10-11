@@ -17,10 +17,11 @@ import lejos.robotics.navigation.MovePilot.*;
 
 public class WheelMotor extends MovePilot{
 	
-	
+	private double boussole;
 	
 	public WheelMotor() {	
 		super(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
+		this.boussole = 0;
 	}
 	
 	//oui
@@ -53,9 +54,15 @@ public class WheelMotor extends MovePilot{
 	
 	public void rotate(double angle) {
 		super.rotate(angle);
+		this.mettreAJourBoussole(angle);
 	}
 	
-
+	public void mettreAJourBoussole(double i) {
+		this.boussole += i;
+		if(this.boussole < -180 || this.boussole > 180) {
+			this.boussole = -this.boussole % 180;
+		}
+	}
 	
 	/**
 	 * methode permettant de realiser un arc de cercle
