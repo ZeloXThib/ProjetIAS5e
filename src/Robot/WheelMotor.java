@@ -55,6 +55,7 @@ public class WheelMotor extends MovePilot{
 	public void rotate(double angle) {
 		super.rotate(angle);
 		this.mettreAJourBoussole(angle);
+		this.afficheBoussole();
 	}
 	
 	public void mettreAJourBoussole(double i) {
@@ -62,6 +63,11 @@ public class WheelMotor extends MovePilot{
 		if(this.boussole < -180 || this.boussole > 180) {
 			this.boussole = -this.boussole % 180;
 		}
+	}
+	
+	public void afficheBoussole() {
+		System.out.println(this.boussole);
+	
 	}
 	
 	/**
