@@ -18,6 +18,7 @@ public class WheelMotor extends MovePilot{
 	
 	public WheelMotor() {	
 		super(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
+		
 	}
 	
 	//oui
