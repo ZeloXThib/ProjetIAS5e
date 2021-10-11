@@ -3,10 +3,13 @@ import java.util.Scanner;
 
 import lejos.hardware.BrickFinder;
 import lejos.hardware.lcd.GraphicsLCD;
+import lejos.hardware.motor.BaseRegulatedMotor;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.TachoMotorPort;
 import lejos.robotics.RegulatedMotor;
+import lejos.robotics.chassis.Wheel;
 import lejos.utility.Delay;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.navigation.MovePilot.*;
@@ -27,7 +30,7 @@ public class WheelMotor extends MovePilot{
 	 * 
 	 * @param i temps durant lequel le robot va avancer
 	 * 
-	 */
+	 */	
 	public void forward(double i) {
 		super.forward();
 		boolean t = true;
