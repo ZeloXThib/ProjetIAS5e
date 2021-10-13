@@ -1,4 +1,4 @@
-package Robot;
+package perception;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.GraphicsLCD;

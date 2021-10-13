@@ -1,11 +1,13 @@
 package Robot;
 
+import Moteur.Pinces;
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.robotics.Color;
 import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
+import perception.Sensor;
 
 public class Brain {
 		

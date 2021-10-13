@@ -3,12 +3,12 @@ package Test;
 
 import java.util.Scanner;
 
-import Robot.Pinces;
-import Robot.Sensor;
-import Robot.WheelMotor;
+import Moteur.Pinces;
+import Moteur.WheelMotor;
 import lejos.hardware.Button;
 import lejos.robotics.Color;
 import lejos.utility.Delay;
+import perception.Sensor;
 
 public class TestWheelMotor {
 

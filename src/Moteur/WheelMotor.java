@@ -1,4 +1,4 @@
-package Robot;
+package Moteur;
 import java.util.Scanner;
 
 import lejos.hardware.BrickFinder;
