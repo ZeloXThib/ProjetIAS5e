@@ -3,6 +3,7 @@ package Test;
 
 import java.util.Scanner;
 
+import Robot.Pinces;
 import Robot.Sensor;
 import Robot.WheelMotor;
 import lejos.hardware.Button;
@@ -14,12 +15,14 @@ public class TestWheelMotor {
 	public static void main(String[] args) {
 
 			WheelMotor m = new WheelMotor();
+			Pinces p = new Pinces();
+			p.fermer();
 			System.out.print("Hello ta mere");
-			m.rotate(400);
+
 			
 			
 		
-			/**
+			
 		
 
 		/*
@@ -39,13 +42,13 @@ public class TestWheelMotor {
 		    System.out.println("Salut");
 
 		    
-		    */
+		    
 
 		    Delay.msDelay(10000);
 		    
 
-
+	}
 		
 
-	}
+	
 }
