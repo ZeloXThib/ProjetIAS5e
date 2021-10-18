@@ -4,14 +4,22 @@ import lejos.utility.Delay;
 
 public class findPalet extends Brain {
 
-	public double[] tab = new double[360];
-	public double[] tabVar = new double[360];
+	public double[] tab;
+	public double[] tabVar;
+	
+	findPalet() {
+		tab = new double[360];
+		tabVar = new double[360];
+	}
 	
 	public void scan(int nombreSecondePourRota) {
 		int deg = 0;
 		//AQUISITION
 		
-		super.pilot.rotate(360, true);
+		System.out.println("goo");
+		super.motor.rotate(360,false);
+		Delay.msDelay(5000);
+		/*
 		for(int i = 0;i<360;i++) {
 			tab[i]=super.sensor.getDistance();
 			Delay.msDelay((nombreSecondePourRota/360)*1000);
@@ -29,11 +37,14 @@ public class findPalet extends Brain {
 				max_Indice=i;
 			}
 		}
+		
 		if(max_Indice>=180) {
 			deg = -360+max_Indice;
 		} else {
 			deg = max_Indice;
 		}
-		super.pilot.rotate(max_Indice);
+
+		super.motor.rotate(max_Indice,false);
+		*/
 	}	
 }

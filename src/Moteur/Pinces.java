@@ -25,7 +25,7 @@ public class Pinces {
 		this.p.rotate(3*360);
 	}
 	public static void main(String[] args) {
-		WheelMotor m = new WheelMotor();
+		WheelMotor m = new WheelMotor(-1);
 		Pinces pinces = new Pinces();
 		pinces.fermer();
 		//m.forward(3000);

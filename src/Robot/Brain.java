@@ -1,6 +1,7 @@
 package Robot;
 
 import Moteur.Pinces;
+import Moteur.WheelMotor;
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
@@ -12,6 +13,7 @@ import perception.Sensor;
 public class Brain {
 	protected static Sensor sensor = new Sensor();
 	protected static MovePilot pilot = new MovePilot(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
+	protected WheelMotor motor = new WheelMotor(1);
 	static Pinces pince = new Pinces();
 	
 	public static void strategie(int d, int d2) {
@@ -42,6 +44,7 @@ public class Brain {
 	}
 	public static void main(String[] args) {
 		
+		
 		// AVANCER TANT QUE COULEUR != BLANC
 			
 		System.out.print("ESt-ce que la pinces est fermé ?: Oui(G),Non(D)");
@@ -56,7 +59,6 @@ public class Brain {
 				g = 2;
 			}
 		}
-		
 		
 		System.out.print("Initialisation:\nChoix GAUCHE,MIDGAUCHE ou MIDDROITE : ");
 		g = 0;
@@ -75,7 +77,6 @@ public class Brain {
 			}
 		}
 		if(g==1) {
-		   strategie(45,-45);
 		}else if(g==2) {
 			strategie(45,-45);
 		}else if(g==3) {
