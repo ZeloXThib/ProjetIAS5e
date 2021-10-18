@@ -18,15 +18,27 @@ import lejos.robotics.navigation.MovePilot.*;
 public class WheelMotor extends MovePilot{
 	
 	private double boussole;
-	EV3LargeRegulatedMotor B;
-	EV3LargeRegulatedMotor C;
+	private double distance;
+	private double longueur;
+	private double largeur;
 	
-	public WheelMotor() {	
+	
+	
+	public WheelMotor(int i) {	
 		super(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
-		B = new EV3LargeRegulatedMotor(MotorPort.B);
-		C = new EV3LargeRegulatedMotor(MotorPort.C);
-		this.boussole = 0;
+		boussole = 0;
+		distance = 0;
+		this.longueur = 30; 
+		if ( i == 1) {
+			this.largeur = 50;
+		}else if (i == 2){
+			this.largeur = 100;
+		}else if( i == 3) {
+			this.largeur = 150;
+		}
 	}
+	
+	
 	
 	//oui
 	/**
@@ -36,26 +48,36 @@ public class WheelMotor extends MovePilot{
 	 * @param i temps durant lequel le robot va avancer
 	 * 
 	 */	
+	
+	public double getBousssole() {
+		return boussole;
+	}
+	
+	
 	public void forward(double distance) {
-		int degre = (int) ((distance*360)/17993);
-		B.rotate(degre,true);
-		C.rotate(degre,false);
+		super.travel(distance);
+		this.distance += distance;
+		longueur = distance*Math.cos(boussole);
+		largeur = distance*Math.sin(boussole);
 	}
 	
 	/**
 	 * methode permettant de reculer
 	 */
-	public void backward() {
-		super.backward();
-		Delay.msDelay(3000);
-		super.stop();
+	public void backward(double distance) {
+		super.travel(-distance);
+		this.distance -= distance;
 	}
 	
-	public void rotate(double angle) {
-		super.rotate(angle);
+	public void rotate(double angle,boolean immediateReturn) {
+		//C.rotate((int) angle);
+		super.rotate(angle, immediateReturn);
 		this.mettreAJourBoussole(angle);
-		this.afficheBoussole();
+		//this.afficheBoussole();
 	}
+	
+
+	
 	
 	public void mettreAJourBoussole(double i) {
 		this.boussole += i;
@@ -72,6 +94,8 @@ public class WheelMotor extends MovePilot{
 	/**
 	 * methode permettant de realiser un arc de cercle
 	 */
+	
+	/**
 	public void arcDeCercle(double longueur,boolean droite) {
 		if(droite == true) {
 			this.rotate(-45);
@@ -82,12 +106,12 @@ public class WheelMotor extends MovePilot{
 			this.forward(longueur);
 			this.rotate(-45);
 		}
-		
+		*/
 	}
 	
 
 	
 	
 		
-}
+
 
