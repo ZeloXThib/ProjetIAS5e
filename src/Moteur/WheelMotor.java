@@ -56,7 +56,7 @@ public class WheelMotor extends MovePilot{
 	
 	public void forward(double distance) {
 		super.travel(distance);
-		double b = Math.abs(this.boussole);
+		double b = Math.toRadians(Math.abs(this.boussole));
 		double lon = distance*Math.cos(b);
 		double larg = distance*Math.sin(b);
 		System.out.println(lon);
