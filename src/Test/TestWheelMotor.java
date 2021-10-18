@@ -15,9 +15,7 @@ public class TestWheelMotor {
 	public static void main(String[] args) {
 
 			WheelMotor m = new WheelMotor();
-			Pinces p = new Pinces();
-			p.fermer();
-			System.out.print("Hello ta mere");
+			m.forward(2000);
 
 			
 			
@@ -33,6 +31,7 @@ public class TestWheelMotor {
 			sc.close();
 			WheelMotor m = new WheelMotor();
 		*/
+			/**
 			int i = 0;
 			while(i<4000 && Button.ENTER.isDown()==false){//4000 40sec
 				Delay.msDelay(10);
@@ -45,7 +44,7 @@ public class TestWheelMotor {
 		    
 
 		    Delay.msDelay(10000);
-		    
+		    */
 
 	}
 		

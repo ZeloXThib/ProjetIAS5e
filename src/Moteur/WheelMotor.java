@@ -18,12 +18,14 @@ import lejos.robotics.navigation.MovePilot.*;
 public class WheelMotor extends MovePilot{
 	
 	private double boussole;
+	EV3LargeRegulatedMotor B;
+	EV3LargeRegulatedMotor C;
 	
 	public WheelMotor() {	
 		super(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
-
+		B = new EV3LargeRegulatedMotor(MotorPort.B);
+		C = new EV3LargeRegulatedMotor(MotorPort.C);
 		this.boussole = 0;
-
 	}
 	
 	//oui
@@ -34,15 +36,10 @@ public class WheelMotor extends MovePilot{
 	 * @param i temps durant lequel le robot va avancer
 	 * 
 	 */	
-	public void forward(double i) {
-		super.forward();
-		boolean t = true;
-		if(t == true) {
-			Pinces p = new Pinces();
-			p.fermer();
-		}
-		Delay.msDelay((int)i);
-		super.stop();
+	public void forward(double distance) {
+		int degre = (int) ((distance*360)/17993);
+		B.rotate(degre,true);
+		C.rotate(degre,false);
 	}
 	
 	/**
