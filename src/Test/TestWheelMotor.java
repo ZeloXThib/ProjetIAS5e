@@ -28,9 +28,49 @@ public class TestWheelMotor {
 		C.rotate(720,false);
 			
 */
-		
-		WheelMotor m1 = new WheelMotor();
-		m1.backward(200);
+		/**
+		WheelMotor m = new WheelMotor(3);
+		m.afficheLargeur();
+		m.afficheLongueur();
+		m.afficheBoussole();
+		Delay.msDelay(3000);
+		m.rotate(45);
+		m.forward(1000);
+		m.afficheLargeur();
+		m.afficheLongueur();
+		m.afficheBoussole();
+		Delay.msDelay(10000);
+		*/
+		int distance = 1000;
+		int b = 45;
+		int boussole = 45;
+		int longueur = 300;
+		int largeur = 1500;
+		double lon = distance*Math.cos(b);
+		double larg = distance*Math.sin(b);
+		System.out.println(" 1"+lon);
+		System.out.println(" 1"+larg);
+		if(boussole <= -90) {
+			longueur -= lon;
+			largeur += larg;
+			System.out.println(" 2"+lon);
+			System.out.println(" 2"+larg);
+		}else if (boussole >= 90) {
+			longueur -= lon;
+			largeur -= larg;
+			System.out.println(" 2"+lon);
+			System.out.println(" 2"+larg);
+		}else if (boussole <= 0) {
+			longueur += lon;
+			largeur += larg;
+			System.out.println(" 2"+lon);
+			System.out.println(" 2"+larg);
+		}else {
+			longueur += lon;
+			largeur -= larg;
+			System.out.println(" 2"+lon);
+			System.out.println(" 2"+larg);
+		}
 
 			
 			

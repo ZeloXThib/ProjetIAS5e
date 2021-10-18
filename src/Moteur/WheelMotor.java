@@ -28,13 +28,13 @@ public class WheelMotor extends MovePilot{
 		super(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
 		boussole = 0;
 		distance = 0;
-		this.longueur = 30; 
+		this.longueur = 300; 
 		if ( i == 1) {
-			this.largeur = 50;
+			this.largeur = 500;
 		}else if (i == 2){
-			this.largeur = 100;
+			this.largeur = 1000;
 		}else if( i == 3) {
-			this.largeur = 150;
+			this.largeur = 1500;
 		}
 	}
 	
@@ -56,9 +56,25 @@ public class WheelMotor extends MovePilot{
 	
 	public void forward(double distance) {
 		super.travel(distance);
-		this.distance += distance;
-		longueur = distance*Math.cos(boussole);
-		largeur = distance*Math.sin(boussole);
+		double b = Math.abs(this.boussole);
+		double lon = distance*Math.cos(b);
+		double larg = distance*Math.sin(b);
+		System.out.println(lon);
+		System.out.println(larg);
+		if(this.boussole <= -90) {
+			longueur -= lon;
+			largeur += larg;
+		}else if (this.boussole >= 90) {
+			longueur -= lon;
+			largeur -= larg;
+		}else if (this.boussole <= 0) {
+			longueur += lon;
+			largeur += larg;
+		}else {
+			longueur += lon;
+			largeur -= larg;
+		}
+		
 	}
 	
 	/**
@@ -78,7 +94,6 @@ public class WheelMotor extends MovePilot{
 	
 
 	
-	
 	public void mettreAJourBoussole(double i) {
 		this.boussole += i;
 		if(this.boussole < -180 || this.boussole > 180) {
@@ -89,6 +104,14 @@ public class WheelMotor extends MovePilot{
 	public void afficheBoussole() {
 		System.out.println(this.boussole);
 	
+	}
+	
+	public void afficheLongueur() {
+		System.out.println(this.longueur);
+	}
+	
+	public void afficheLargeur() {
+		System.out.println(this.largeur);
 	}
 	
 	/**
