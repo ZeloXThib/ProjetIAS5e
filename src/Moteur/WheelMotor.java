@@ -55,22 +55,19 @@ public class WheelMotor extends MovePilot{
 	
 	public void goTo(double largeurF, double longueurF) {
 		if (longueurF >= this.longueur && largeurF <= this.largeur) {
-			rotate(90);
-			//rotateEnFonctionBoussole(90);
+			//rotate(90);
+			rotateEnFonctionBoussole(90);
 			double a = Math.toDegrees(Math.atan((longueurF-this.longueur)/(this.largeur-largeurF)));
-			System.out.println("a = "+a);
 			rotate(-a);
 			Delay.msDelay(2000);
 			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(this.largeur-largeurF, 2)) ));
 		}else if (longueurF >= this.longueur && largeurF >= this.largeur) {
-			//rotateEnFonctionBoussole(-90);
-			rotate(-90);
+			rotateEnFonctionBoussole(-90);
 			double a = Math.toDegrees(Math.atan((longueurF-this.longueur)/(largeurF-this.largeur)));
 			rotate(a);
 			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(largeurF-this.largeur, 2)) ));
 		}else if (longueurF <= this.longueur && largeurF <= this.largeur) {
-			rotate(00);
-		//	rotateEnFonctionBoussole(180);
+			rotateEnFonctionBoussole(180);
 			double a = Math.toDegrees(Math.atan((this.longueur-longueurF)/(this.largeur-largeurF)));
 			rotate(-a);
 			forward(Math.sqrt((Math.pow(this.longueur - longueurF, 2)) + (Math.pow(this.largeur-largeurF, 2)) ));
@@ -89,8 +86,6 @@ public class WheelMotor extends MovePilot{
 		double b = Math.toRadians(Math.abs(this.boussole));
 		double lon = distance*Math.cos(b);
 		double larg = distance*Math.sin(b);
-		System.out.println("longueur" + lon);
-		System.out.println("largeur" +larg);
 		if(this.boussole <= -90) {
 			longueur -= lon;
 			largeur += larg;
@@ -133,51 +128,53 @@ public class WheelMotor extends MovePilot{
 					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
 							+ " on tourne donc à gauche");
 					this.rotate(Math.abs(this.boussole)+ angleArrivee);
-					System.out.println("C'est bon");
+					System.out.println("C'est bon " + (Math.abs(this.boussole)+ angleArrivee));
 				}
 				else {
 					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
 							+ " on tourne donc à droite");
+					Delay.msDelay(5000);
 					this.rotate(-((180+this.boussole)+(180-angleArrivee)));
-					System.out.println("C'est bon");
+					System.out.println("C'est bon " + -((180+this.boussole)+(180-angleArrivee)));
 				}
 			}
-			if(this.boussole > 0) {
+			if(this.boussole >= 0) {
 				System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole);
 				this.rotate(angleArrivee-this.boussole);
-				System.out.println("C'est bon");
+				System.out.println("C'est bon " + (angleArrivee-this.boussole));
 			}
 			
 		}
 		if(angleArrivee < 0) {
-			if(this.boussole < 0) {
+			if(this.boussole <= 0) {
 				if(angleArrivee >= boussole) { 
 					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
 							+ " on tourne donc à gauche");
-					this.rotate(Math.abs(this.boussole)+ angleArrivee);
-					System.out.println("C'est bon");
+					this.rotate(Math.abs(angleArrivee - this.boussole));
+					System.out.println("C'est bon " + Math.abs(this.boussole)+ angleArrivee);
 				}
 				else {
 					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
 							+ " on tourne donc à droite");
-					this.rotate((Math.abs(angleArrivee)+ this.boussole));
-					System.out.println("C'est bon");
+					this.rotate(angleArrivee - this.boussole);
+					System.out.println("C'est bon " + (angleArrivee - this.boussole));
 				}
 			}
-			if(this.boussole > 0)
+			if(this.boussole > 0) {
 				if(angleArrivee+180 >= boussole) {
 					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
 							+ " on tourne donc à gauche");
 					this.rotate(angleArrivee+180-boussole);
-					System.out.println("C'est bon");
+					System.out.println("C'est bon " + (angleArrivee+180-boussole));
 				}
 				else {
 					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
 							+ " on tourne donc à droite");
 					this.rotate(boussole - (angleArrivee+180));
-					System.out.println("C'est bon");
+					System.out.println("C'est bon " + (boussole - (angleArrivee+180)));
 				}
 			
+		}
 		}
 	}
 	
