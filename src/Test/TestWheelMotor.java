@@ -2,6 +2,8 @@ package Test;
 
 
 import java.util.Scanner;
+
+import Moteur.Pinces;
 import Moteur.WheelMotor;
 import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -20,12 +22,15 @@ public class TestWheelMotor {
 	public static void main(String[] args) {
 		
 		
+		WheelMotor m = new WheelMotor(1);
+		m.setLargeur(1500);
+		m.setLongueur(1500);
+		m.goTo(500,900);
+		Pinces p = new Pinces();
+		p.fermer();
 		
 		
-			
-
-		
-		WheelMotor m = new WheelMotor(3);
+		/**
 		m.afficheLargeur();
 		m.afficheLongueur();
 		m.afficheBoussole();
@@ -36,7 +41,7 @@ public class TestWheelMotor {
 		m.afficheLongueur();
 		m.afficheBoussole();
 		Delay.msDelay(10000);
-
+		*/
 		}
 
 	}
