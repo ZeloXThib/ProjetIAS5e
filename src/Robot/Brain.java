@@ -11,12 +11,13 @@ import lejos.utility.Delay;
 import perception.Sensor;
 
 public class Brain {
-	protected static Sensor sensor = new Sensor();
-	protected static MovePilot pilot = new MovePilot(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
-	protected WheelMotor motor = new WheelMotor(1);
+	private static Sensor sensor = new Sensor();
+	//private static MovePilot pilot = new MovePilot(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
+	private static WheelMotor motor = new WheelMotor(1);
 	static Pinces pince = new Pinces();
 	
 	public static void strategie(int d, int d2) {
+		/*
 		pilot.forward();
 	    int i = 0;
 	    while(Sensor.havePalet()==0 && i<4000 ){
@@ -41,6 +42,7 @@ public class Brain {
 	    Delay.msDelay(50);
 	    pilot.stop();
 	    pince.ouvrir();
+	    */
 	}
 	public static void main(String[] args) {
 		
@@ -59,6 +61,7 @@ public class Brain {
 				g = 2;
 			}
 		}
+		Delay.msDelay(500);
 		
 		System.out.print("Initialisation:\nChoix GAUCHE,MIDGAUCHE ou MIDDROITE : ");
 		g = 0;
@@ -76,7 +79,22 @@ public class Brain {
 				g = 3;
 			}
 		}
+		
 		if(g==1) {
+			System.out.println("Run");
+			
+			//motor.rotate(360*5);
+			
+			
+			//Delay.msDelay(2000);//2sec
+			
+			System.out.println("Try Scan");
+			findPalet fp = new findPalet(sensor, motor);
+			fp.scan(-1);
+			
+			Delay.msDelay(2000);
+			
+			
 		}else if(g==2) {
 			strategie(45,-45);
 		}else if(g==3) {
