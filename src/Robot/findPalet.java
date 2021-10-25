@@ -1,33 +1,45 @@
 package Robot;
 
+import Moteur.WheelMotor;
 import lejos.utility.Delay;
+import perception.Sensor;
 
-public class findPalet extends Brain {
+public class findPalet {
 
-	public double[] tab;
-	public double[] tabVar;
+	private double[] tab;
+	private double[] tabVar;
+	private Sensor sensor;
+	private WheelMotor motor;
 	
-	findPalet() {
+	findPalet(Sensor sensor, WheelMotor motor) {
 		tab = new double[360];
 		tabVar = new double[360];
+		this.sensor = sensor;
+		this.motor = motor;
 	}
 	
-	public void scan(int nombreSecondePourRota) {
+	public void scan(double nombreSecondePourRota) {
 		int deg = 0;
 		//AQUISITION
 		
+		int time_rotate = 3;//sec
+		int speed_angular = (int)(360/time_rotate);
+		
 		System.out.println("goo");
-		super.motor.rotate(360,false);
-		Delay.msDelay(5000);
-		/*
+		motor.setAngularSpeed(speed_angular);
+		motor.rotate(360,false);
+		//Delay.msDelay(5000);
+		
 		for(int i = 0;i<360;i++) {
-			tab[i]=super.sensor.getDistance();
-			Delay.msDelay((nombreSecondePourRota/360)*1000);
+			tab[i]=sensor.getDistance();
+			//System.out.println(tab[i]);
+			Delay.msDelay((int)(((double)time_rotate/360)*1000));
+			//problem de precision 
 		}
 		
 		//TRAITEMENT
 		for(int i=1;i<360;i++) {
-			tabVar[i-1]=Math.abs(tab[i-1]/tab[i]);
+			tabVar[i-1]=Math.abs(tab[i-1]-tab[i]/tab[i]);
 		}
 		
 		//MAX INDICE
@@ -44,7 +56,9 @@ public class findPalet extends Brain {
 			deg = max_Indice;
 		}
 
-		super.motor.rotate(max_Indice,false);
-		*/
+		motor.rotate(deg,false);
+		System.out.println(deg);
+		
+		
 	}	
 }
