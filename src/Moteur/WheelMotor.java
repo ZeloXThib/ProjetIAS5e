@@ -53,6 +53,31 @@ public class WheelMotor extends MovePilot{
 		return boussole;
 	}
 	
+	public void goTo(double largeurF, double longueurF) {
+		if (longueurF >= this.longueur && largeurF <= this.largeur) {
+			rotateEnFonctionBoussole(90);
+			double a = Math.atan((longueurF-this.longueur)/(this.largeur-largeurF));
+			rotate(a);
+			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) - (Math.pow(this.largeur-largeurF, 2)) ));
+		}else if (longueurF >= this.longueur && largeurF >= this.largeur) {
+			rotateEnFonctionBoussole(-90);
+			double a = Math.atan((longueurF-this.longueur)/(largeurF-this.largeur));
+			rotate(a);
+			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) - (Math.pow(largeurF-this.largeur, 2)) ));
+		}else if (longueurF <= this.longueur && largeurF <= this.largeur) {
+			rotateEnFonctionBoussole(180);
+			double a = Math.atan((this.longueur-longueurF)/(this.largeur-largeurF));
+			rotate(a);
+			forward(Math.sqrt((Math.pow(this.longueur - longueurF, 2)) - (Math.pow(this.largeur-largeurF, 2)) ));
+		}else {
+			rotateEnFonctionBoussole(0);
+			double a = Math.atan((this.longueur-longueurF)/(largeurF-this.largeur));
+			rotate(a);
+			forward(Math.sqrt((Math.pow(this.longueur - longueurF, 2)) - (Math.pow(largeurF-this.largeur, 2)) ));
+		}
+		
+	}
+	
 	
 	public void forward(double distance) {
 		super.travel(distance);
@@ -90,6 +115,38 @@ public class WheelMotor extends MovePilot{
 		super.rotate(angle, immediateReturn);
 		this.mettreAJourBoussole(angle);
 		//this.afficheBoussole();
+	}
+	
+	public void rotate(double angle) {
+		this.rotate(angle, false);
+	}
+	
+	public void rotateEnFonctionBoussole(double angleArrivee) { 
+		if(angleArrivee >= 0) {
+			if(this.boussole < 0) {
+				if(angleArrivee-180 >= boussole) 
+					this.rotate(Math.abs(this.boussole)+ angleArrivee);
+				else 
+					this.rotate(-((180+this.boussole)+(180-angleArrivee)));
+			}
+			if(this.boussole > 0)
+				this.rotate(angleArrivee-this.boussole);
+			
+		}
+		if(angleArrivee < 0) {
+			if(this.boussole < 0) {
+				if(angleArrivee >= boussole) 
+					this.rotate(Math.abs(this.boussole)+ angleArrivee);
+				else 
+					this.rotate((Math.abs(angleArrivee)+ this.boussole));
+			}
+			if(this.boussole > 0)
+				if(angleArrivee+180 >= boussole) 
+					this.rotate(angleArrivee+180-boussole);
+				else 
+					this.rotate(boussole - (angleArrivee+180));
+			
+		}
 	}
 	
 
