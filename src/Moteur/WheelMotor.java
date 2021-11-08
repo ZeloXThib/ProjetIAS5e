@@ -106,13 +106,13 @@ public class WheelMotor extends MovePilot{
 	 * methode permettant de reculer
 	 */
 	public void backward(double distance) {
-		super.travel(-distance);
+//		super.travel(-distance);
 		this.distance -= distance;
 	}
 	
 	public void rotate(double angle,boolean immediateReturn) {
 		//C.rotate((int) angle);
-		super.rotate(angle, immediateReturn);
+		super.rotate(angle*0.9388888889,immediateReturn);
 		this.mettreAJourBoussole(angle);
 		//this.afficheBoussole();
 	}

@@ -23,11 +23,14 @@ public class TestWheelMotor {
 		
 		
 		WheelMotor m = new WheelMotor(1);
-		m.setLargeur(500);
-		m.setLongueur(2700);
+
+
+		m.rotate(338);
+		//m.setLargeur(1000);
+		//m.setLongueur(300);
 		
-		m.goTo(1000,1500);
-		Delay.msDelay(5000);
+	//	m.goTo(500,2700);
+	//	Delay.msDelay(5000);
 		//Pinces p = new Pinces();
 		//p.fermer();
 		
