@@ -21,86 +21,38 @@ public class findPalet {
 		this.motor = motor;
 	}
 	
-	public void scan(double nombreSecondePourRota) {
-		double deg = 0;
-		//AQUISITION
+	public void scan() {
 		
-		int time_rotate = 3;//sec
-		int speed_angular = (int)(360/time_rotate);
+		motor.setAngularSpeed(80);
+		motor.rotate(345,true); //345 pour faire un 360 avec une vitesse de 80
 		
-		System.out.println("goo");
-		double val_vitesse_rotation = motor.getAngularSpeed();
-		System.out.println("Vitesse rota default: "+val_vitesse_rotation);
-		Delay.msDelay(1000);
-		motor.setAngularSpeed(speed_angular);
-		motor.rotate(360,true);
-		
-		
-		//Delay.msDelay(5000);
-		
+		double valeur_plus_petite = -1;
 		int count_test = 0;
-		double valeur_precedente = -1;
-		double variation = -1;
-		double distance_enregistre = -1;
-		int indice_angle = 0;
-		while(motor.isMoving()){
+		double indice_angle = 0;
+		
+		while(motor.isMoving()) {
 			double valeur_en_cours = sensor.getDistance();
-			System.out.println(valeur_en_cours);
-			if(valeur_precedente != -1) {
-				double variation_en_cours = Math.abs((valeur_precedente-valeur_en_cours)/valeur_en_cours);
-					if(variation_en_cours > variation) {
-						variation = variation_en_cours;
-						indice_angle = count_test;
-						distance_enregistre = valeur_en_cours;
-					}
-				}
-			valeur_precedente = valeur_en_cours;
+			if(valeur_en_cours < valeur_plus_petite || valeur_plus_petite == -1) {
+				valeur_plus_petite = valeur_en_cours;
+				indice_angle = motor.getMovement().getAngleTurned();
+			}
+			Delay.msDelay(10);
 			count_test++;
-			Delay.msDelay(200);
-			//tab.add((double)sensor.getDistance());
-			//System.out.println(tab[i]);
-			//(int)(((double)time_rotate/360)*1000));
-			//problem de precision 
 		}
-		double indice_deg = (indice_angle*360)/count_test;	
-		if(indice_deg>=180) {
-			deg = -360+indice_deg;
-		} else {
-			deg = indice_deg;
-		}
-		
-		motor.rotate(deg,false);
-		//si la distance après rotation est égale à la distance du palet enregistré lors du scan alors on va le chercher 
-		if((int)sensor.getDistance()==(int)distance_enregistre) { 
-			//avance vers le palet et le prend
-			//sinon appelle de la fonction -5 degrès +5 degrès de scan pour se remettre en face 
-			//méthode qui scan sur au total 10 degres et qui prend le point le plus proche
-		}
-		System.out.println("variation choisie: "+variation);
-		System.out.println("Degres choisi: "+deg);
-		System.out.println("Nb tests: "+count_test);
-		System.out.println("indice angle: "+indice_angle);
-		Delay.msDelay(5000);
-		motor.setAngularSpeed(val_vitesse_rotation);
-		
-		//TRAITEMENT
-		/*for(int i=1;i<count_test;i++) {
-			
-			tabVar.add(Math.abs(tab.get(i-1)-tab.get(i)/tab.get(i)));
-		}
-		
-		//MAX INDICE
-		int max_Indice = 0;
-		for(int i=0;i<count_test;i++) {
-			if(tabVar.get(max_Indice)<tabVar.get(i)) {
-				max_Indice=i;
+
+		motor.rotate(indice_angle);
+	}
+	
+	public void is_palet(double distance) {
+		if((int)distance == (int)sensor.getDistance()) {
+			System.out.println("Meme distance j'y vais");
+			motor.travel(distance, true);
+			if(sensor.getDistance()<30) {
+				
 			}
 		}
-		*/
-		//Conversion des indices en deg
-		//(x*360)/count_test
-		
-		
-		
-	}	
+		else {
+			//faire un scan de -10/10 pour capter un palet éventuel 
+		}
+	}
 }

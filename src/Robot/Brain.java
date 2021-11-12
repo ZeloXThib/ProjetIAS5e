@@ -46,10 +46,10 @@ public class Brain {
 	}
 	public static void main(String[] args) {
 		
-		
-		// AVANCER TANT QUE COULEUR != BLANC
-			
-		System.out.print("ESt-ce que la pinces est fermé ?: Oui(G),Non(D)");
+		pince.fermer();
+		/*
+		// AVANCER TANT QUE COULEUR != BLANC	
+		System.out.print("ESt-ce que la pinces est ferme ?: Oui(G),Non(D)");
 		int g = 0;
 		while(g==0){
 			Delay.msDelay(10);
@@ -90,14 +90,17 @@ public class Brain {
 			
 			System.out.println("Try Scan");
 			findPalet fp = new findPalet(sensor, motor);
-			fp.scan(-1);
+			fp.scan();
 			
 			Delay.msDelay(2000);
 			
 			
 		}else if(g==2) {
-			strategie(45,-45);
+			motor.rotate(360);
 		}else if(g==3) {
+			motor.setAngularSpeed(120);
+			motor.rotate(360,true);
+			System.out.println(sensor.getDistance());
 			while(Button.ENTER.isDown()==false) {
 				System.out.println(sensor.getDistance());
 				Delay.msDelay(500);
@@ -108,7 +111,7 @@ public class Brain {
 		
 	   	
 	    Delay.msDelay(10000);
-	    
+	    */
 	}
 
 }
