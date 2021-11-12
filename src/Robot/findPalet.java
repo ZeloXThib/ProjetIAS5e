@@ -45,6 +45,7 @@ public class findPalet {
 		int indice_angle = 0;
 		while(motor.isMoving()){
 			double valeur_en_cours = sensor.getDistance();
+			System.out.println(valeur_en_cours);
 			if(valeur_precedente != -1) {
 				double variation_en_cours = Math.abs((valeur_precedente-valeur_en_cours)/valeur_en_cours);
 					if(variation_en_cours > variation) {
@@ -55,7 +56,7 @@ public class findPalet {
 				}
 			valeur_precedente = valeur_en_cours;
 			count_test++;
-			Delay.msDelay(5);
+			Delay.msDelay(200);
 			//tab.add((double)sensor.getDistance());
 			//System.out.println(tab[i]);
 			//(int)(((double)time_rotate/360)*1000));
@@ -75,6 +76,7 @@ public class findPalet {
 			//sinon appelle de la fonction -5 degrès +5 degrès de scan pour se remettre en face 
 			//méthode qui scan sur au total 10 degres et qui prend le point le plus proche
 		}
+		System.out.println("variation choisie: "+variation);
 		System.out.println("Degres choisi: "+deg);
 		System.out.println("Nb tests: "+count_test);
 		System.out.println("indice angle: "+indice_angle);

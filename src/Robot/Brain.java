@@ -98,7 +98,11 @@ public class Brain {
 		}else if(g==2) {
 			strategie(45,-45);
 		}else if(g==3) {
-			strategie(-45,45);
+			while(Button.ENTER.isDown()==false) {
+				System.out.println(sensor.getDistance());
+				Delay.msDelay(500);
+			}
+			//strategie(-45,45);
 		    
 		}
 		
