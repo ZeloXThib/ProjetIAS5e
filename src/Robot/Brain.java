@@ -32,7 +32,8 @@ public class Brain {
 	    motor.forwardUntilWhite();
 	    pince.ouvrir();
 	}
-	public static void main(String[] args) {		
+	public static void main(String[] args) {	
+		
 		// AVANCER TANT QUE COULEUR != BLANC	
 		System.out.print("ESt-ce que la pinces est ouverte ?: Oui(G),Non(D)");
 		int g = 0;
@@ -87,7 +88,7 @@ public class Brain {
 		    
 		}
 	    Delay.msDelay(10000);
-	    
+	   
 	}
 
 }

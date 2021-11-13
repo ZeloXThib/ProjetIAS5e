@@ -68,40 +68,7 @@ public class Sensor {
 	}
 	
 	//Tourner sur lui meme lire les valeurs du capteur ultrasonic
-	public static boolean FindPalet(MovePilot p) {
-		
-		float[] dist = new float[20];
-		boolean find = false;
-		p.rotate(360);
-		
-		if(p.isMoving()) {
-		/*	
-			while(!find) {
-				for(int j=0; j<dist.length-1;j++) {
-					dist[j] = dist[j+1];
-				}
-				dist[19] = (getDistance());
-				
-				
-				//fais la moyenne
-				float var_moy = 0;
-				for(int i=0; i<dist.length-1;i++) {
-					var_moy+= Math.abs(dist[i] - dist[i+1]);
-				}
-				var_moy = var_moy/dist.length;
-				
-				if(var_moy < Math.abs(dist[19] - dist[18])) {
-					//La variation de la derniére distance perçus est supérieurs aux 20 deniéres variations
-					find= true;
-				}
-			}
-			p.stop();
-			System.out.println("Trouvé ??");
-		*/
-		}
-		
-		return false;
-	}
+	
 	
 	public static float havePalet() {
 		
@@ -111,12 +78,8 @@ public class Sensor {
 	    // initialize an array of floats for fetching samples. 
 		// Ask the SampleProvider how long the array should be
 
-		float[] sample = new float[presion.sampleSize()];
-
-				
+		float[] sample = new float[presion.sampleSize()];			
 		presion.fetchSample(sample, 0);
-		
-		
 		return sample[0];
 		
 		
@@ -186,79 +149,10 @@ public class Sensor {
 		Buttons.GetClicks ()
 	}*/
 	
-	public static void main(String[] args) {
+	
 		
-		affiche("Initialisation Sensor");
-		Sensor Sensor_OBJ = new Sensor("S1","S3","S4");
-		affiche("Initialisation done!");
+		
+		
 
-		//Sensor.getDistance();
-		//Motor
-		MovePilot chassi = new MovePilot(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
-		chassi.forward();
-		
-		
-		/*
-		int i = 0;
-		while((Sensor.getDistance() > 0.2) && (i<3000)){//0,2 m = 20 cm
-			//Do nothing
-			i++;
-			affiche(i+": "+Sensor.getDistance());
-	    	Delay.msDelay(10);
-		}
-		
-		
-		affiche("Detecte... "+Sensor.getDistance());
-		chassi.stop();
-		Delay.msDelay(10000);//10 sec
-		
-		*/
-		
-		/*
-		Sensor.havePalet();
-		int i = 0;
-		while((Sensor.havePalet() < 0.5) && (i<3000)){
-			//Do nothing
-			i++;
-			affiche(i+" : "+ Sensor.havePalet());
-	    	Delay.msDelay(10);
-		}
-		
-		
-		affiche("Detecte... "+Sensor.havePalet());
-		chassi.stop();
-		Delay.msDelay(10000);
-		*/
-		
-		Sensor.FindPalet(chassi);
-		
-		/*
-		Color rgb = Sensor.getColorOnGround();
-		Sensor.havePalet(); //Pour stop
-		int i = 0;
-		while((Sensor.havePalet() < 0.5) && (i<10000) && !colorIsWisWHITE()){//10000 100sec
-			//Do nothing
-			i++;
-			rgb = Sensor.getColorOnGround();
-			//Lcd.print(6, "r=%d g=%d b=%d", rgb.getRed(), rgb.getGreen(), rgb.getBlue());
-			//Color color = new Color(rgb.getRed(), rgb.getGreen(), rgb.getBlue());
-			affiche(i+" : C: "+ rgb.getRed()+ "," + rgb.getGreen() + "," +  rgb.getBlue());
-			affiche(i+" : C: "+ Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()));
-	    	Delay.msDelay(10);
-		}
-		//Color code
-		//Gris table:
-		//Orange 
-		
-		rgb = Sensor.getColorOnGround();
-		affiche("Detecte... "+ rgb.getRed()+ "," + rgb.getGreen() + "," +  rgb.getBlue());
-		affiche("C: "+ Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()));
-		chassi.stop();
-		Delay.msDelay(10000);
-		*/
-		
-		
-		
-	}
 
 }
