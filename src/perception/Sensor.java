@@ -56,12 +56,8 @@ public class Sensor {
 
 	    // initialize an array of floats for fetching samples. 
 		// Ask the SampleProvider how long the array should be
-		float[] sample = new float[distance_s.sampleSize()];
-
-				
+		float[] sample = new float[distance_s.sampleSize()];	
 	    distance_s.fetchSample(sample, 0);
-		
-		
 		return sample[0];
 		
 		
@@ -78,7 +74,9 @@ public class Sensor {
 	    // initialize an array of floats for fetching samples. 
 		// Ask the SampleProvider how long the array should be
 
+
 		float[] sample = new float[presion.sampleSize()];			
+
 		presion.fetchSample(sample, 0);
 		return sample[0];
 		

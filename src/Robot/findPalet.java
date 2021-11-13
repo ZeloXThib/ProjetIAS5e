@@ -42,13 +42,16 @@ public class findPalet {
 		}
 	}
 	
+
 	public double[] gotoScanPoint() {
 		return new Double[this.pointScan[0][1],this.pointScan[0][2]];
 	}
 
 
 
-	public void scan(double angleScan) {
+
+	public boolean scan(double angleScan) {
+		boolean trouve = false;
 
 		motor.setAngularSpeed(80);
 		motor.rotate(345,true); //345 pour faire un 360 avec une vitesse de 80
@@ -82,10 +85,15 @@ public class findPalet {
 			motor.rotate(indice_angle);
 
 			if(is_palet(valeur_plus_petite) == false) {
+
 				//renvoyer � l'endroit de scan sauf si d�j� 2 essais
+
+
+				return false;
 
 			}
 		}
+		return true;
 
 
 	}
