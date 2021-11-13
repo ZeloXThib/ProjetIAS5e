@@ -15,14 +15,14 @@ public class Pinces {
 	 * methode permettant de fermer complètement les pinces
 	 */
 	public void fermer() {
-		this.p.rotate(-3*360);
+		this.p.rotate(-4*360);
 	}
 	
 	/*
 	 * methode permettant d'ouvrir completement les pinces
 	 */
 	public void ouvrir() {
-		this.p.rotate(3*360);
+		this.p.rotate(4*360);
 	}
 	public static void main(String[] args) {
 		WheelMotor m = new WheelMotor(1);

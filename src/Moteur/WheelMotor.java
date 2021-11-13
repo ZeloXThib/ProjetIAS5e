@@ -8,9 +8,11 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.TachoMotorPort;
+import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.chassis.Wheel;
 import lejos.utility.Delay;
+import perception.Sensor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.navigation.MovePilot.*;
 
@@ -60,29 +62,41 @@ public class WheelMotor extends MovePilot{
 			double a = Math.toDegrees(Math.atan((longueurF-this.longueur)/(this.largeur-largeurF)));
 			rotate(-a);
 			Delay.msDelay(2000);
-			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(this.largeur-largeurF, 2)) ));
+			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
 		}else if (longueurF >= this.longueur && largeurF >= this.largeur) {
 			rotateEnFonctionBoussole(-90);
 			double a = Math.toDegrees(Math.atan((longueurF-this.longueur)/(largeurF-this.largeur)));
 			rotate(a);
-			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(largeurF-this.largeur, 2)) ));
+			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(largeurF-this.largeur, 2)) ),false);
 		}else if (longueurF <= this.longueur && largeurF <= this.largeur) {
 			rotateEnFonctionBoussole(180);
 			double a = Math.toDegrees(Math.atan((this.longueur-longueurF)/(this.largeur-largeurF)));
 			rotate(-a);
-			forward(Math.sqrt((Math.pow(this.longueur - longueurF, 2)) + (Math.pow(this.largeur-largeurF, 2)) ));
+			forward(Math.sqrt((Math.pow(this.longueur - longueurF, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
 		}else {
 			rotateEnFonctionBoussole(180);
 			double a = Math.toDegrees(Math.atan((this.longueur-longueurF)/(largeurF-this.largeur)));
 			rotate(a);
-			forward(Math.sqrt((Math.pow(this.longueur - longueurF, 2)) + (Math.pow(largeurF-this.largeur, 2)) ));
+			forward(Math.sqrt((Math.pow(this.longueur - longueurF, 2)) + (Math.pow(largeurF-this.largeur, 2)) ),false);
 		}
 		
 	}
 	
+	public void forwardUntilWhite() {
+		super.forward();  
+	    Color rgb = Sensor.getColorOnGround();
+	    while(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "WHITE") {
+	    	rgb = Sensor.getColorOnGround();
+	    }
+	    super.stop();
+	}
 	
-	public void forward(double distance) {
-		super.travel(distance);
+	public void forward() {
+		super.forward();
+	}
+	
+	public void forward(double distance,boolean immediateReturn) {
+		super.travel(distance,immediateReturn);
 		double b = Math.toRadians(Math.abs(this.boussole));
 		double lon = distance*Math.cos(b);
 		double larg = distance*Math.sin(b);
