@@ -23,8 +23,8 @@ public class findPalet {
 		this.motor = motor;
 	}
 	
-	public void scan(double angleScan) {
-		
+	public boolean scan(double angleScan) {
+		boolean trouve = false;
 		motor.setAngularSpeed(80);
 		motor.rotate(345,true); //345 pour faire un 360 avec une vitesse de 80
 		double distanceMax = 0.8;
@@ -57,9 +57,10 @@ public class findPalet {
 			motor.rotate(indice_angle);
 			
 			if(is_palet(valeur_plus_petite) == false) {
-				//renvoyer à l'endroit de scan sauf si déjà 2 essais
+				return false;
 			}
 		}
+		return true;
 
 
 	}
