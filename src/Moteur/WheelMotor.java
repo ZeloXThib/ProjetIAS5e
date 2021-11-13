@@ -136,6 +136,8 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	public void rotateEnFonctionBoussole(double angleArrivee) { 
+		
+		/**
 		if(angleArrivee >= 0) {
 			if(this.boussole < 0) {
 				if(angleArrivee-180 >= boussole) {
@@ -190,6 +192,7 @@ public class WheelMotor extends MovePilot{
 			
 		}
 		}
+		*/
 	}
 	
 

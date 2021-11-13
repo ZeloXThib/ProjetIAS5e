@@ -32,19 +32,18 @@ public class Brain {
 	    motor.forwardUntilWhite();
 	    pince.ouvrir();
 	}
+
 	
 	public static void main(String[] args) {	
-		while(Button.ENTER.isDown()==false) {
-			if(sensor.getDistance()>10) {
-				System.out.println("infini >10");
-			}
-		}
+		
 		
 		//-----------------------------------------//
 		//Etat des pinces
 		//-----------------------------------------//
 
-		System.out.print("Est-ce que la pinces est ouverte ?: Oui(G),Non(D)");
+		
+		System.out.print("ESt-ce que la pinces est ouverte ?: Oui(G),Non(D)");
+
 		int g = 0;
 		while(g==0){
 			Delay.msDelay(10);
