@@ -7,6 +7,8 @@ import lejos.utility.Delay;
 import perception.Sensor;
 
 public class findPalet {
+	
+	//test de adri
 
 	private ArrayList<Double> tab;//double[] tab;
 	private ArrayList<Double> tabVar;//double[] tabVar;
@@ -52,7 +54,7 @@ public class findPalet {
 			}
 		}
 		else {
-			//faire un scan de -10/10 pour capter un palet éventuel 
+			//faire un scan de -10/10 pour capter un palet ï¿½ventuel 
 		}
 	}
 }
