@@ -26,9 +26,9 @@ public class Brain {
 	    }
 	    motor.stop();
 	    pince.fermer();
-	    motor.rotate(d,false);//45 stratégie1
+	    motor.rotate(d,false);//45 stratï¿½gie1
 	    motor.forward(300,false);
-	    motor.rotate(d2);//-45 stratégie2
+	    motor.rotate(d2);//-45 stratï¿½gie2
 	    motor.forwardUntilWhite();
 	    pince.ouvrir();
 	}
@@ -58,11 +58,11 @@ public class Brain {
 		}
 
 		//-----------------------------------------//
-		//Statégie 1, 2 ou 3
+		//Statï¿½gie 1, 2 ou 3
 		//-----------------------------------------//
 				
 	
-		System.out.println("Statégie 1, 2 ou 3");
+		System.out.println("Stategie 1, 2 ou 3");
 		g = 0;
 		while(g==0){
 			Delay.msDelay(10);
@@ -79,10 +79,10 @@ public class Brain {
 		
 		
 		//-----------------------------------------//
-		//D'où part le robot ? Gauche ; Milieu : Droite
+		//D'oï¿½ part le robot ? Gauche ; Milieu : Droite
 		//-----------------------------------------//
 		
-		System.out.println("D'où part le robot ? Gauche ; Milieu : Droite");
+		System.out.println("D'ou part le robot ? Gauche ; Milieu : Droite");
 		int h = 0;
 		while(h==0){
 			Delay.msDelay(10);
@@ -99,11 +99,11 @@ public class Brain {
 		
 		
 		//-----------------------------------------//
-		//Départ à gauche ou à droite ? 1=Gauche ; 2=Droite
+		//Dï¿½part ï¿½ gauche ou ï¿½ droite ? 1=Gauche ; 2=Droite
 		//-----------------------------------------//
 		
 		if(g==1 || g==2){
-			System.out.println("Départ à gauche ou à droite ? 1=Gauche ; 2=Droite");
+			System.out.println("Depart a gauche ou a droite ? 1=Gauche ; 2=Droite");
 			int r = 0;
 			while(r==0){
 				Delay.msDelay(10);
@@ -117,11 +117,11 @@ public class Brain {
 		}
 		
 		//-----------------------------------------//
-		//Quel palet est présent sur le terrain (au bon endroit):
+		//Quel palet est prï¿½sent sur le terrain (au bon endroit):
 		//-----------------------------------------//
 		
 		if(g==3) {
-			System.out.println("Quel palet est présent sur le terrain (au bon endroit):");
+			System.out.println("Quel palet est present sur le terrain (au bon endroit):");
 			System.out.println("Palet p1 :");
 			int p1 = 0;
 			while(p1==0){
