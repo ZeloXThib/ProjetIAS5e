@@ -14,7 +14,13 @@ public class findPalet {
 	private ArrayList<Double> tabVar;//double[] tabVar;
 	private Sensor sensor;
 	private WheelMotor motor;
-	private double[][] pointScan = new double{{0;2100;1000},{0;1800;1000},{0;1500;1000},{0;1200;1000},{0;900;1000}};
+	private double[][] pointScan = {
+		{0,2100,1000},
+		{0,1800,1000},
+		{0,1500,1000},
+		{0,1200,1000},
+		{0,900,1000}
+		};
 
 	findPalet(Sensor sensor, WheelMotor motor) {
 		//tab = new double[360];
@@ -25,7 +31,7 @@ public class findPalet {
 	}
 
 	public void scanDone() {
-		double[][] tab = new Double[pointScan.length-1][3];
+		double[][] tab = new double[pointScan.length-1][3];
 		if(pointScan.length>1) {
 			if(pointScan[0][0] == 1) {
 				for(int i=0;i<pointScan.length;i++) {
@@ -44,7 +50,8 @@ public class findPalet {
 	
 
 	public double[] gotoScanPoint() {
-		return new Double[this.pointScan[0][1],this.pointScan[0][2]];
+		double[] a = {this.pointScan[0][1],this.pointScan[0][2]};
+		return a;
 	}
 
 
@@ -86,8 +93,8 @@ public class findPalet {
 
 			if(is_palet(valeur_plus_petite) == false) {
 
-				//renvoyer � l'endroit de scan sauf si d�j� 2 essais
-
+				//renvoyer a l'endroit de scan sauf si deja 2 essais
+				
 
 				return false;
 
