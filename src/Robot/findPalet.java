@@ -7,14 +7,15 @@ import lejos.utility.Delay;
 import perception.Sensor;
 
 public class findPalet {
-	
+
 	//test de adri
 
 	private ArrayList<Double> tab;//double[] tab;
 	private ArrayList<Double> tabVar;//double[] tabVar;
 	private Sensor sensor;
 	private WheelMotor motor;
-	
+	private double[][] pointScan = new double{{0;2100;1000},{0;1800;1000},{0;1500;1000},{0;1200;1000},{0;900;1000}};
+
 	findPalet(Sensor sensor, WheelMotor motor) {
 		//tab = new double[360];
 		tab = new ArrayList<Double>();
@@ -22,16 +23,43 @@ public class findPalet {
 		this.sensor = sensor;
 		this.motor = motor;
 	}
+
+	public void scanDone() {
+		double[][] tab = new Double[pointScan.length-1][3];
+		if(pointScan.length>1) {
+			if(pointScan[0][0] == 1) {
+				for(int i=0;i<pointScan.length;i++) {
+					for(int j=0;j<pointScan[0].length;j++) {
+						tab[i][j]=pointScan[i+1][j];
+					}
+				}
+				pointScan = tab;
+			}
+
+			else {
+				pointScan[0][0]++;
+			}
+		}
+	}
 	
+
+	public double[] gotoScanPoint() {
+		return new Double[this.pointScan[0][1],this.pointScan[0][2]];
+	}
+
+
+
+
 	public boolean scan(double angleScan) {
 		boolean trouve = false;
+
 		motor.setAngularSpeed(80);
 		motor.rotate(345,true); //345 pour faire un 360 avec une vitesse de 80
 		double distanceMax = 0.8;
 		double valeur_plus_petite = -1;
 		int count_test = 0;
 		double indice_angle = 0;
-		
+
 		while(motor.isMoving()) {
 			double valeur_en_cours = sensor.getDistance();
 			if(valeur_en_cours < valeur_plus_petite || valeur_plus_petite == -1 && valeur_en_cours < distanceMax) {
@@ -43,7 +71,7 @@ public class findPalet {
 		}
 
 		motor.rotate(indice_angle);
-		
+
 		if(is_palet(valeur_plus_petite) == false) {
 			motor.rotate(10,true);
 			motor.rotate(-10,true);
@@ -55,17 +83,22 @@ public class findPalet {
 				}
 			}
 			motor.rotate(indice_angle);
-			
+
 			if(is_palet(valeur_plus_petite) == false) {
+
+				//renvoyer � l'endroit de scan sauf si d�j� 2 essais
+
+
 				return false;
+
 			}
 		}
 		return true;
 
 
 	}
-	
-	
+
+
 	public boolean is_palet(double distance) {
 		double valeur_prec = sensor.getDistance();
 		double valeur_en_cours;
@@ -85,7 +118,7 @@ public class findPalet {
 				}
 				valeur_prec = sensor.getDistance();
 			}
-			
+
 		}
 		return false;
 	}
