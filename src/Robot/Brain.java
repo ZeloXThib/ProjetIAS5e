@@ -52,7 +52,7 @@ public class Brain {
 			}	
 			if(Button.RIGHT.isDown()) {
 				g = 2;
-				pince.ouvrir();
+				pince.fermer();
 				
 			}
 		}
@@ -61,7 +61,7 @@ public class Brain {
 		//Statégie 1, 2 ou 3
 		//-----------------------------------------//
 				
-	
+	/*
 		System.out.println("Statégie 1, 2 ou 3");
 		g = 0;
 		while(g==0){
@@ -251,9 +251,8 @@ public class Brain {
 			}
 			//strategie(-45,45);
 		    
-		}
+		}*/
 	    Delay.msDelay(10000);
-	   
 	}
 
 }
