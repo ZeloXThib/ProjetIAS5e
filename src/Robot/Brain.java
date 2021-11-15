@@ -40,10 +40,21 @@ public class Brain {
 		//-----------------------------------------//
 		//Etat des pinces
 		//-----------------------------------------//
-
-		
+	int dev = 0;
+	System.out.print("ModeDev ? (Gauche:Oui,D:Non):");
+	while(dev==0){
+		Delay.msDelay(10);
+		if(Button.LEFT.isDown()) {
+			dev = 1;
+		}	
+		if(Button.RIGHT.isDown()) {
+			dev = 2;
+			
+		}
+	}
+	
+	if(dev==2) {
 		System.out.print("Est-ce que la pinces est ouverte ?: Oui(G),Non(D)");
-
 		int g = 0;
 		while(g==0){
 			Delay.msDelay(10);
@@ -62,17 +73,27 @@ public class Brain {
 		//-----------------------------------------//
 				
 		System.out.println("Statégie 1, 2 ou 3");
-		g = 0;
-		while(g==0){
+		int numStrat = 0;
+		while(numStrat==0){
 			Delay.msDelay(10);
 			if(Button.LEFT.isDown()) {
-				g = 1;
+				numStrat = 1;
+				/*(Stratégie 1) Tous les palets sont présents sur la table
+				 * 
+				 * (Strat 1; Gauche; Gauche)
+
+				(Strat 1; Milieu; Gauche) 
+				
+				(Strat 1; Milieu; Droite)
+				
+				(Strat 1; Droite; Droite) 
+				*/
 			}
 			if(Button.ENTER.isDown()) {
-				g = 2;
+				numStrat = 2;
 			}
 			if(Button.RIGHT.isDown()) {
-				g = 3;
+				numStrat = 3;
 			}
 		}
 		
@@ -82,17 +103,17 @@ public class Brain {
 		//-----------------------------------------//
 		
 		System.out.println("D'où part le robot ? Gauche ; Milieu : Droite");
-		int h = 0;
-		while(h==0){
+		int placement = 0;
+		while(placement==0){
 			Delay.msDelay(10);
 			if(Button.LEFT.isDown()) {
-				h = 1;
+				placement = 1;
 			}
 			if(Button.ENTER.isDown()) {
-				h = 2;
+				placement = 2;
 			}
 			if(Button.RIGHT.isDown()) {
-				h = 3;
+				placement = 3;
 			}
 		}
 		
@@ -101,16 +122,16 @@ public class Brain {
 		//Départ à gauche ou à droite ? 1=Gauche ; 2=Droite
 		//-----------------------------------------//
 		
-		if(g==1 || g==2){
+		if(numStrat==1 || numStrat==2){
 			System.out.println("Départ à gauche ou à droite ? 1=Gauche ; 2=Droite");
-			int r = 0;
-			while(r==0){
+			int direction = 0;
+			while(direction==0){
 				Delay.msDelay(10);
 				if(Button.LEFT.isDown()) {
-					r = 1;
+					direction = 1;
 				}
 				if(Button.ENTER.isDown()) {
-					r = 2;
+					direction = 2;
 				}
 			}
 		}
@@ -121,109 +142,28 @@ public class Brain {
 		
 		if(g==3) {
 			System.out.println("Quel palet est présent sur le terrain (au bon endroit):");
-			System.out.println("Palet p1 :");
-			int p1 = 0;
-			while(p1==0){
-				Delay.msDelay(10);
-				if(Button.LEFT.isDown()) {
-					p1 = 1;
+			int[] pValeur = new int[6];
+			for(int i=0; i<pValeur.length;i++) {
+				int p1 = 0;
+				System.out.println("Palet p"+(i+1)+": G(oui),D(non)");
+				while(p1==0){
+					Delay.msDelay(10);
+					if(Button.LEFT.isDown()) {
+						p1 = 1;
+					}
+					if(Button.RIGHT.isDown()) {
+						p1 = 2;
+					}
 				}
-				if(Button.ENTER.isDown()) {
-					p1 = 2;
-				}
+				pValeur[i]=p1;
 			}
-			System.out.println("Palet p2 :");
-			int p2 = 0;
-			while(p2==0){
-				Delay.msDelay(10);
-				if(Button.LEFT.isDown()) {
-					p2 = 1;
-				}
-				if(Button.ENTER.isDown()) {
-					p2 = 2;
-				}
-			}
-			System.out.println("Palet p3 :");
-			int p3 = 0;
-			while(p3==0){
-				Delay.msDelay(10);
-				if(Button.LEFT.isDown()) {
-					p3 = 1;
-				}
-				if(Button.ENTER.isDown()) {
-					p3 = 2;
-				}
-			}
-			System.out.println("Palet p4 :");
-			int p4 = 0;
-			while(p4==0){
-				Delay.msDelay(10);
-				if(Button.LEFT.isDown()) {
-					p4 = 1;
-				}
-				if(Button.ENTER.isDown()) {
-					p4 = 2;
-				}
-			}
-			System.out.println("Palet p5 :");
-			int p5 = 0;
-			while(p5==0){
-				Delay.msDelay(10);
-				if(Button.LEFT.isDown()) {
-					p5 = 1;
-				}
-				if(Button.ENTER.isDown()) {
-					p5 = 2;
-				}
-			}
-			System.out.println("Palet p6 :");
-			int p6 = 0;
-			while(p6==0){
-				Delay.msDelay(10);
-				if(Button.LEFT.isDown()) {
-					p6 = 1;
-				}
-				if(Button.ENTER.isDown()) {
-					p6 = 2;
-				}
-			}
-			System.out.println("Palet p7 :");
-			int p7 = 0;
-			while(p7==0){
-				Delay.msDelay(10);
-				if(Button.LEFT.isDown()) {
-					p7 = 1;
-				
-				if(Button.ENTER.isDown()) {
-					p7 = 2;
-				}
-			}
-			System.out.println("Palet p8 :");
-			int p8 = 0;
-			while(p8==0){
-				Delay.msDelay(10);
-				if(Button.LEFT.isDown()) {
-					p8 = 1;
-				}
-				if(Button.ENTER.isDown()) {
-					p8 = 2;
-				}
-			}
-			System.out.println("Palet p9 :");
-			int p9 = 0;
-			while(p9==0){
-				Delay.msDelay(10);
-				if(Button.LEFT.isDown()) {
-					p9 = 1;
-				}
-				if(Button.ENTER.isDown()) {
-					p9 = 2;
-				}
-			}
-			
 		}
+	}else {
+		//Code dev
+		
 		
 	}
+	
 		
 		
 		
@@ -231,7 +171,7 @@ public class Brain {
 		
 		
 		
-		if(g==1) {
+		if(==1) {
 			//motor.rotate(360*5);
 			//Delay.msDelay(2000);//2sec
 			strategie1(45,-45);
