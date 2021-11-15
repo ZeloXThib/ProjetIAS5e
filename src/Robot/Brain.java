@@ -35,12 +35,17 @@ public class Brain {
 
 	
 	public static void main(String[] args) {	
+		int dev = 0;
+		int g = 0;
+		int numStrat = 0;
+		int direction = 0;
+		int placement = 0;
+		int[] pValeur = new int[6];
 		
 		
 		//-----------------------------------------//
 		//Etat des pinces
 		//-----------------------------------------//
-	int dev = 0;
 	System.out.print("ModeDev ? (Gauche:Oui,D:Non):");
 	while(dev==0){
 		Delay.msDelay(10);
@@ -55,7 +60,7 @@ public class Brain {
 	
 	if(dev==2) {
 		System.out.print("Est-ce que la pinces est ouverte ?: Oui(G),Non(D)");
-		int g = 0;
+		
 		while(g==0){
 			Delay.msDelay(10);
 			if(Button.LEFT.isDown()) {
@@ -73,7 +78,7 @@ public class Brain {
 		//-----------------------------------------//
 				
 		System.out.println("Statégie 1, 2 ou 3");
-		int numStrat = 0;
+		
 		while(numStrat==0){
 			Delay.msDelay(10);
 			if(Button.LEFT.isDown()) {
@@ -103,7 +108,6 @@ public class Brain {
 		//-----------------------------------------//
 		
 		System.out.println("D'où part le robot ? Gauche ; Milieu : Droite");
-		int placement = 0;
 		while(placement==0){
 			Delay.msDelay(10);
 			if(Button.LEFT.isDown()) {
@@ -121,10 +125,9 @@ public class Brain {
 		//-----------------------------------------//
 		//Départ à gauche ou à droite ? 1=Gauche ; 2=Droite
 		//-----------------------------------------//
-		
-		if(numStrat==1 || numStrat==2){
+		if((numStrat==1 && placement==2) || numStrat==2){
 			System.out.println("Départ à gauche ou à droite ? 1=Gauche ; 2=Droite");
-			int direction = 0;
+			
 			while(direction==0){
 				Delay.msDelay(10);
 				if(Button.LEFT.isDown()) {
@@ -142,7 +145,6 @@ public class Brain {
 		
 		if(g==3) {
 			System.out.println("Quel palet est présent sur le terrain (au bon endroit):");
-			int[] pValeur = new int[6];
 			for(int i=0; i<pValeur.length;i++) {
 				int p1 = 0;
 				System.out.println("Palet p"+(i+1)+": G(oui),D(non)");
@@ -163,15 +165,8 @@ public class Brain {
 		
 		
 	}
-	
-		
-		
-		
-		
-		
-		
-		
-		if(==1) {
+
+		if(numStrat==1) {
 			//motor.rotate(360*5);
 			//Delay.msDelay(2000);//2sec
 			strategie1(45,-45);
