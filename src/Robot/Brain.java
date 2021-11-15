@@ -26,9 +26,9 @@ public class Brain {
 	    }
 	    motor.stop();
 	    pince.fermer();
-	    motor.rotate(d,false);//45 stratégie1
+	    motor.rotate(d,false);//45 stratÃ©gie1
 	    motor.forward(300,false);
-	    motor.rotate(d2);//-45 stratégie2
+	    motor.rotate(d2);//-45 stratÃ©gie2
 	    motor.forwardUntilWhite();
 	    pince.ouvrir();
 	}
@@ -74,16 +74,16 @@ public class Brain {
 		}
 
 		//-----------------------------------------//
-		//Statégie 1, 2 ou 3
+		//StatÃ©gie 1, 2 ou 3
 		//-----------------------------------------//
 				
-		System.out.println("Statégie 1, 2 ou 3");
+		System.out.println("StatÃ©gie 1, 2 ou 3");
 		
 		while(numStrat==0){
 			Delay.msDelay(10);
 			if(Button.LEFT.isDown()) {
 				numStrat = 1;
-				/*(Stratégie 1) Tous les palets sont présents sur la table
+				/*(StratÃ©gie 1) Tous les palets sont prÃ©sents sur la table
 				 * 
 				 * (Strat 1; Gauche; Gauche)
 
@@ -104,10 +104,10 @@ public class Brain {
 		
 		
 		//-----------------------------------------//
-		//D'où part le robot ? Gauche ; Milieu : Droite
+		//D'oÃ¹ part le robot ? Gauche ; Milieu : Droite
 		//-----------------------------------------//
 		
-		System.out.println("D'où part le robot ? Gauche ; Milieu : Droite");
+		System.out.println("D'oÃ¹ part le robot ? Gauche ; Milieu : Droite");
 		while(placement==0){
 			Delay.msDelay(10);
 			if(Button.LEFT.isDown()) {
@@ -123,10 +123,10 @@ public class Brain {
 		
 		
 		//-----------------------------------------//
-		//Départ à gauche ou à droite ? 1=Gauche ; 2=Droite
+		//DÃ©part Ã  gauche ou Ã  droite ? 1=Gauche ; 2=Droite
 		//-----------------------------------------//
 		if((numStrat==1 && placement==2) || numStrat==2){
-			System.out.println("Départ à gauche ou à droite ? 1=Gauche ; 2=Droite");
+			System.out.println("DÃ©part Ã  gauche ou Ã  droite ? 1=Gauche ; 2=Droite");
 			
 			while(direction==0){
 				Delay.msDelay(10);
@@ -140,11 +140,11 @@ public class Brain {
 		}
 		
 		//-----------------------------------------//
-		//Quel palet est présent sur le terrain (au bon endroit):
+		//Quel palet est prÃ©sent sur le terrain (au bon endroit):
 		//-----------------------------------------//
 		
 		if(g==3) {
-			System.out.println("Quel palet est présent sur le terrain (au bon endroit):");
+			System.out.println("Quel palet est prÃ©sent sur le terrain (au bon endroit):");
 			for(int i=0; i<pValeur.length;i++) {
 				int p1 = 0;
 				System.out.println("Palet p"+(i+1)+": G(oui),D(non)");
@@ -166,7 +166,10 @@ public class Brain {
 		
 	}
 
+
 		if(numStrat==1) {
+
+
 			//motor.rotate(360*5);
 			//Delay.msDelay(2000);//2sec
 			strategie1(45,-45);
@@ -190,3 +193,4 @@ public class Brain {
 	}
 
 }
+

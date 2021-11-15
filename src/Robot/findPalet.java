@@ -22,7 +22,7 @@ public class findPalet {
 		{0,900,1000}
 		};
 
-	findPalet(Sensor sensor, WheelMotor motor) {
+	public findPalet(Sensor sensor, WheelMotor motor) {
 		//tab = new double[360];
 		tab = new ArrayList<Double>();
 		tabVar = new ArrayList<Double>();
@@ -92,14 +92,12 @@ public class findPalet {
 			motor.rotate(indice_angle);
 
 			if(is_palet(valeur_plus_petite) == false) {
-
-				//renvoyer a l'endroit de scan sauf si deja 2 essais
-				
-
+				scanDone();
 				return false;
 
 			}
 		}
+		scanDone();
 		return true;
 
 
@@ -129,4 +127,36 @@ public class findPalet {
 		}
 		return false;
 	}
+	
+	public boolean paletTrouve() {
+		boolean trouve = false;
+		while (trouve == false && sensor.havePalet()==0) {
+			if(scan(180)==false) {
+				double[] a = gotoScanPoint();
+				motor.goTo(a[0],a[1]);
+			}else {
+				trouve = true;
+			}
+		}
+		return trouve;
+	}
+	
+	
+	/**
+	public static void main(String[] args) {
+		
+		boolean trouve = false;
+		while(trouve == false) {
+			if(scan(180)==false) {
+				double[] a = gotoScanPoint();
+				motor.goTo(a[0],a[1]);
+			}else {
+				trouve = true;
+			}
+			
+		}
+		
+		
+	}
+	*/
 }
