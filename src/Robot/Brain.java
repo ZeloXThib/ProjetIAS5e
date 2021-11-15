@@ -42,7 +42,7 @@ public class Brain {
 		//-----------------------------------------//
 
 		
-		System.out.print("ESt-ce que la pinces est ouverte ?: Oui(G),Non(D)");
+		System.out.print("Est-ce que la pinces est ouverte ?: Oui(G),Non(D)");
 
 		int g = 0;
 		while(g==0){
@@ -52,7 +52,7 @@ public class Brain {
 			}	
 			if(Button.RIGHT.isDown()) {
 				g = 2;
-				pince.fermer();
+				pince.ouvrir();
 				
 			}
 		}
@@ -61,7 +61,6 @@ public class Brain {
 		//Statégie 1, 2 ou 3
 		//-----------------------------------------//
 				
-	/*
 		System.out.println("Statégie 1, 2 ou 3");
 		g = 0;
 		while(g==0){
@@ -251,7 +250,7 @@ public class Brain {
 			}
 			//strategie(-45,45);
 		    
-		}*/
+		}
 	    Delay.msDelay(10000);
 	}
 
