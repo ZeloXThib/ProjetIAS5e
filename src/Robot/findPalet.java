@@ -127,6 +127,21 @@ public class findPalet {
 		}
 		return false;
 	}
+	
+	public boolean paletTrouve() {
+		boolean trouve = false;
+		while (trouve == false && sensor.havePalet()==0) {
+			if(scan(180)==false) {
+				double[] a = gotoScanPoint();
+				motor.goTo(a[0],a[1]);
+			}else {
+				trouve = true;
+			}
+		}
+		return trouve;
+	}
+	
+	
 	/**
 	public static void main(String[] args) {
 		
