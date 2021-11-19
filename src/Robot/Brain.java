@@ -20,17 +20,64 @@ public class Brain {
 	public static void strategie1(int d, int d2) {
 		motor.forward();
 	    int i = 0;
-	    while(Sensor.havePalet()==0 && i<4000 ){
+	    while(Sensor.havePalet()==0 && i<5000 ){
+	    	Delay.msDelay(10);
+	    	i++;
+	    }
+	    double val_default_rotate_acc = motor.getAngularAcceleration();
+	    System.out.println("Val default acc: "+ val_default_rotate_acc);
+	    motor.setAngularAcceleration(100);
+	    motor.stop();
+	    pince.fermer();
+	    motor.rotate(d,false);//45 stratégie1
+	    motor.forward(320,false);
+	    motor.rotate(d2,false);//-45 stratégie2
+	    motor.forwardUntil("WHITE");
+	    pince.ouvrir();
+	    motor.backward(610);
+	    if(d<0) {//ex -45,45
+	    	motor.rotate(90);
+	    }else {//ex 45,-45
+	    	motor.rotate(-90);
+	    }
+	    motor.forward();
+	    while(Sensor.havePalet()==0 && i<5000 ){
 	    	Delay.msDelay(10);
 	    	i++;
 	    }
 	    motor.stop();
 	    pince.fermer();
-	    motor.rotate(d,false);//45 stratégie1
-	    motor.forward(300,false);
-	    motor.rotate(d2);//-45 stratégie2
-	    motor.forwardUntilWhite();
+	    if(d<0) {//ex -45,45
+	    	motor.rotate(-90);
+	    }else {//ex 45,-45
+	    	motor.rotate(90);
+	    }
+	    motor.forwardUntil("WHITE");
 	    pince.ouvrir();
+	    
+	    
+	    motor.setAngularAcceleration(val_default_rotate_acc);
+	}
+	
+	public static void strategie2(int d, int d2) {
+		motor.forward();
+	    int i = 0;
+	    while(Sensor.havePalet()==0 && i<5000 ){
+	    	Delay.msDelay(10);
+	    	i++;
+	    }
+	    double val_default_rotate_acc = motor.getAngularAcceleration();
+	    System.out.println("Val default acc: "+ val_default_rotate_acc);
+	    motor.setAngularAcceleration(100);
+	    motor.stop();
+	    pince.fermer();
+	    motor.rotate(d,false);//45 stratégie1
+	    motor.forward(320,false);
+	    motor.rotate(d2,false);//-45 stratégie2
+	    motor.forwardUntil("WHITE");
+	    pince.ouvrir();
+	    motor.backward(210);
+	    motor.rotate(90,false);
 	}
 
 	
@@ -57,21 +104,32 @@ public class Brain {
 			
 		}
 	}
+	Delay.msDelay(100);
 	
 	if(dev==2) {
-		System.out.print("Est-ce que la pinces est ouverte ?: Oui(G),Non(D)");
-		
+		System.out.print("Pince: Ouvrire(G),RienFaire(C),Fermer(D)");
+		double val_def = motor.getAngularSpeed();
 		while(g==0){
 			Delay.msDelay(10);
 			if(Button.LEFT.isDown()) {
 				g = 1;
-			}	
-			if(Button.RIGHT.isDown()) {
-				g = 2;
+				
+				motor.setAngularSpeed(200);
 				pince.ouvrir();
+				motor.setAngularSpeed(val_def);
+			}	
+			if(Button.ENTER.isDown()) {
+				g = 2;
+			}
+			if(Button.RIGHT.isDown()) {
+				g = 3;
+				motor.setAngularSpeed(200);
+				pince.fermer();
+				motor.setAngularSpeed(val_def);
 				
 			}
 		}
+		Delay.msDelay(100);
 
 		//-----------------------------------------//
 		//Statégie 1, 2 ou 3
@@ -101,6 +159,7 @@ public class Brain {
 				numStrat = 3;
 			}
 		}
+		Delay.msDelay(100);
 		
 		
 		//-----------------------------------------//
@@ -120,6 +179,7 @@ public class Brain {
 				placement = 3;
 			}
 		}
+		Delay.msDelay(100);
 		
 		
 		//-----------------------------------------//
@@ -138,6 +198,7 @@ public class Brain {
 				}
 			}
 		}
+		Delay.msDelay(100);
 		
 		//-----------------------------------------//
 		//Quel palet est présent sur le terrain (au bon endroit):
@@ -167,18 +228,29 @@ public class Brain {
 	}
 
 
-		if(numStrat==1) {
-
-
-			//motor.rotate(360*5);
-			//Delay.msDelay(2000);//2sec
-			strategie1(45,-45);
-			Delay.msDelay(2000);
+		if(numStrat==1) {//Tous les palets sont présents sur la table
+			if(placement == 1) {//Strat 1 et placement a gauche
+				strategie1(45,-45);//Direction gauche
+			}
+			else if (placement == 2) {//Strat 1 et placement au millieu
+				if(direction == 1) {
+					strategie1(45,-45);//Direction gauche
+				}
+				else if(direction == 2) {//Strat 1 et placement au millieu
+					strategie1(-45,45);//Direction droite
+				}
+			}
+			else {//Strat 1 et placement a droite
+				strategie1(-45,45);//Direction droite
+			}
 			
-			
-		}else if(g==2) {
+		}else if(numStrat==2) {
 			motor.rotate(360);
-		}else if(g==3) {
+			
+			
+		}else if(numStrat==3) {
+			
+			
 			motor.setAngularSpeed(120);
 			motor.rotate(360,true);
 			System.out.println(sensor.getDistance());
@@ -189,7 +261,6 @@ public class Brain {
 			//strategie(-45,45);
 		    
 		}
-	    Delay.msDelay(10000);
 	}
 
 }

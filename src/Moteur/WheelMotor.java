@@ -82,14 +82,26 @@ public class WheelMotor extends MovePilot{
 		
 	}
 	
-	public void forwardUntilWhite() {
+	public void forwardUntil(String couleur) {
 		super.forward();  
 	    Color rgb = Sensor.getColorOnGround();
-	    while(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != "WHITE") {
+	    while(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != couleur) {
 	    	rgb = Sensor.getColorOnGround();
 	    }
 	    super.stop();
 	}
+	
+	public void backwardUntil(String couleur) {
+		super.backward();  
+	    Color rgb = Sensor.getColorOnGround();
+	    while(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != couleur) {
+	    	rgb = Sensor.getColorOnGround();
+	    }
+	    super.stop();
+	}
+	
+	
+	
 	
 	public void forward() {
 		super.forward();
@@ -120,7 +132,7 @@ public class WheelMotor extends MovePilot{
 	 * methode permettant de reculer
 	 */
 	public void backward(double distance) {
-//		super.travel(-distance);
+		super.travel(-distance);
 		this.distance -= distance;
 	}
 	
