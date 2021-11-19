@@ -244,9 +244,21 @@ public class Brain {
 				}
 			}
 		}).start();
-		motor.setLongueur(300);
-		motor.setLargeur(1500);
-		motor.goTo(1000, 2100);
+//		motor.rotateEnFonctionBoussole(180);
+//		System.out.println(motor.getBousssole());
+//		motor.rotate(30,false);
+//		System.out.println(motor.getBousssole());
+//		Delay.msDelay(3000);
+		
+		motor.setLongueur(1500);
+		motor.setLargeur(1000);
+		//motor.forward(1300,false);
+		motor.goTo(1500,300);
+		motor.goTo(500,301);
+		motor.goTo(501,2700);
+		motor.goTo(1500,1000);
+		
+//		motor.goTo(1500, 2700);
 		//motor.forward(1868, false);
 		//fp.paletTrouve(motor);
 		
