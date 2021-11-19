@@ -61,7 +61,8 @@ public class findPalet {
 		boolean trouve = false;
 
 		motor.setAngularSpeed(80);
-		motor.rotate(345,true); //345 pour faire un 360 avec une vitesse de 80
+		motor.rotate(angleScan/2,true); 
+		motor.rotate(-angleScan,true);//345 pour faire un 360 avec une vitesse de 80
 		double distanceMax = 0.8;
 		double valeur_plus_petite = -1;
 		int count_test = 0;
@@ -81,7 +82,7 @@ public class findPalet {
 
 		if(is_palet(valeur_plus_petite) == false) {
 			motor.rotate(10,true);
-			motor.rotate(-10,true);
+			motor.rotate(-20,true);
 			while(motor.isMoving()) {
 				double valeur_en_cours = sensor.getDistance();
 				if(valeur_en_cours < valeur_plus_petite || valeur_plus_petite == -1 && valeur_en_cours < distanceMax) {
@@ -97,7 +98,7 @@ public class findPalet {
 
 			}
 		}
-		scanDone();
+		//scanDone();
 		return true;
 
 
@@ -128,12 +129,14 @@ public class findPalet {
 		return false;
 	}
 	
-	public boolean paletTrouve() {
+	public boolean paletTrouve(WheelMotor m) {
+		m.rotateEnFonctionBoussole(180);
 		boolean trouve = false;
 		while (trouve == false && sensor.havePalet()==0) {
 			if(scan(180)==false) {
 				double[] a = gotoScanPoint();
 				motor.goTo(a[0],a[1]);
+				m.rotateEnFonctionBoussole(180);
 			}else {
 				trouve = true;
 			}

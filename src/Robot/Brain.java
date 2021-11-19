@@ -1,5 +1,5 @@
 package Robot;
-
+import perception.TestThread;
 import Moteur.Pinces;
 import Moteur.WheelMotor;
 import lejos.hardware.Button;
@@ -223,7 +223,32 @@ public class Brain {
 		}
 	}else {
 		//Code dev
-		
+		/**
+		motor.forward();
+		new Thread(new Runnable() {
+			public void run() {
+				while(Button.ENTER.isDown() ==false) {
+					Color rgb = sensor.getColorOnGround();
+					System.out.println(sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()));
+					Delay.msDelay(20);
+				}
+			}
+		}).start();
+		*/
+		new Thread(new Runnable() {
+			public void run() {
+				if(Button.ENTER.isDown()) {
+					motor.stop();
+					System.exit(0);
+					return;
+				}
+			}
+		}).start();
+		motor.setLongueur(300);
+		motor.setLargeur(1500);
+		motor.goTo(1000, 2100);
+		//motor.forward(1868, false);
+		//fp.paletTrouve(motor);
 		
 	}
 

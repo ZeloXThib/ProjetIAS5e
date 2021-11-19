@@ -58,26 +58,31 @@ public class WheelMotor extends MovePilot{
 	public void goTo(double largeurF, double longueurF) {
 		if (longueurF >= this.longueur && largeurF <= this.largeur) {
 			//rotate(90);
+			System.out.println("pass 1");
 			rotateEnFonctionBoussole(90);
 			double a = Math.toDegrees(Math.atan((longueurF-this.longueur)/(this.largeur-largeurF)));
 			rotate(-a);
-			Delay.msDelay(2000);
-			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
+			forward(Math.sqrt((Math.pow(this.longueur-longueurF, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
 		}else if (longueurF >= this.longueur && largeurF >= this.largeur) {
+			System.out.println("pass 2");
 			rotateEnFonctionBoussole(-90);
 			double a = Math.toDegrees(Math.atan((longueurF-this.longueur)/(largeurF-this.largeur)));
-			rotate(a);
-			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(largeurF-this.largeur, 2)) ),false);
+			System.out.println(a);
+			Delay.msDelay(3000);
+			rotate(-a);
+			forward(Math.sqrt((Math.pow(this.longueur-longueurF, 2)) + (Math.pow(largeurF-this.largeur, 2)) ),false);
 		}else if (longueurF <= this.longueur && largeurF <= this.largeur) {
+			System.out.println("pass 3");
 			rotateEnFonctionBoussole(180);
 			double a = Math.toDegrees(Math.atan((this.longueur-longueurF)/(this.largeur-largeurF)));
-			rotate(-a);
-			forward(Math.sqrt((Math.pow(this.longueur - longueurF, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
+			rotate(a);
+			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
 		}else {
+			System.out.println("pass 4");
 			rotateEnFonctionBoussole(180);
 			double a = Math.toDegrees(Math.atan((this.longueur-longueurF)/(largeurF-this.largeur)));
 			rotate(a);
-			forward(Math.sqrt((Math.pow(this.longueur - longueurF, 2)) + (Math.pow(largeurF-this.largeur, 2)) ),false);
+			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(largeurF-this.largeur, 2)) ),false);
 		}
 		
 	}
@@ -148,6 +153,7 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	public void rotateEnFonctionBoussole(double angleArrivee) { 
+		rotate(angleArrivee-this.boussole,false);
 		
 		/**
 		if(angleArrivee >= 0) {
