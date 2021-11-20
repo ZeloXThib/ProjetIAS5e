@@ -266,6 +266,7 @@ public class Brain {
 				}
 			}
 		}).start();
+
 		motor.setLongueur(300);
 		motor.setLargeur(1500);
 		motor.goTo(1000, 2100);
@@ -283,6 +284,28 @@ public class Brain {
 			//																				/
 			//																				/
 			/////////////////////////////////////////////////////////////////////////////////
+
+
+		
+		fp.scan(180);
+		Delay.msDelay(3000);
+		//pour nous mode dev 	
+
+//		while(Button.ENTER.isDown()==false) {
+//			if(Button.RIGHT.isDown())
+//				motor.rotate(270,false);
+//			if(Button.LEFT.isDown())
+//				motor.rotate(90,false);
+//			if(Button.DOWN.isDown())
+//				motor.rotate(180,false);
+//			if(Button.UP.isDown())
+//				motor.rotate(360,false);
+			//motor.rotate(120);
+			//motor.rotate(60);
+		}
+	
+
+
 
 		if(numStrat==1) {//Tous les palets sont présents sur la table
 			if(placement == 1) {//Strat 1 et placement a gauche

@@ -189,8 +189,10 @@ public class WheelMotor extends MovePilot{
 	
 	public void rotate(double angle,boolean immediateReturn) {
 		//C.rotate((int) angle);
-		super.rotate(angle*0.9388888889,immediateReturn);
+		this.setAngularSpeed(80);
+		super.rotate(angle*0.908,immediateReturn);
 		this.mettreAJourBoussole(angle);
+		this.setAngularSpeed(100000);
 		//this.afficheBoussole();
 	}
 	
