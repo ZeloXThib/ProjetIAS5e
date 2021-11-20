@@ -102,9 +102,10 @@ public class findPalet {
 
 			if(is_palet(valeur_plus_petite) == false) {
 				scanDone();
-
+				return false;
 			}
 		}
+		return true;
 
 
 	}
