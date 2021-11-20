@@ -19,29 +19,30 @@ public class Brain {
 	
 	public static void strategie1(int d, int d2) {
 		motor.forward();
+		pince.ouvrir();
 	    int i = 0;
 	    while(Sensor.havePalet()==0 && i<5000 ){
 	    	Delay.msDelay(10);
 	    	i++;
 	    }
-	    double val_default_rotate_acc = motor.getAngularAcceleration();
-	    System.out.println("Val default acc: "+ val_default_rotate_acc);
-	    motor.setAngularAcceleration(100);
 	    motor.stop();
 	    pince.fermer();
 	    motor.rotate(d,false);//45 stratégie1
-	    motor.forward(320,false);
+	    motor.forward(380,false);
 	    motor.rotate(d2,false);//-45 stratégie2
 	    motor.forwardUntil("WHITE");
 	    pince.ouvrir();
-	    motor.backward(610);
+	    //motor.backward(100);
+	    pince.fermer();
+	    motor.backward(570);
 	    if(d<0) {//ex -45,45
 	    	motor.rotate(90);
 	    }else {//ex 45,-45
 	    	motor.rotate(-90);
 	    }
+	    pince.ouvrir();
 	    motor.forward();
-	    while(Sensor.havePalet()==0 && i<5000 ){
+	    while(Sensor.havePalet()==0 && i<150 ){
 	    	Delay.msDelay(10);
 	    	i++;
 	    }
@@ -54,30 +55,42 @@ public class Brain {
 	    }
 	    motor.forwardUntil("WHITE");
 	    pince.ouvrir();
+	    //motor.backward(100);
+	    pince.fermer();
+	    motor.backward(300);
+	    if(d<0) {//ex -45,45
+	    	motor.rotate(90);
+	    }else {//ex 45,-45
+	    	motor.rotate(-90);
+	    }
+	    motor.forwardUntil("BLACK");
 	    
+	    if(d<0) {//ex -45,45
+	    	motor.rotate(90);
+	    }else {//ex 45,-45
+	    	motor.rotate(-90);
+	    }
 	    
-	    motor.setAngularAcceleration(val_default_rotate_acc);
 	}
 	
 	public static void strategie2(int d, int d2) {
 		motor.forward();
+		pince.ouvrir();
 	    int i = 0;
 	    while(Sensor.havePalet()==0 && i<5000 ){
 	    	Delay.msDelay(10);
 	    	i++;
 	    }
-	    double val_default_rotate_acc = motor.getAngularAcceleration();
-	    System.out.println("Val default acc: "+ val_default_rotate_acc);
-	    motor.setAngularAcceleration(100);
 	    motor.stop();
 	    pince.fermer();
 	    motor.rotate(d,false);//45 stratégie1
-	    motor.forward(320,false);
+	    motor.forward(360,false);
 	    motor.rotate(d2,false);//-45 stratégie2
 	    motor.forwardUntil("WHITE");
 	    pince.ouvrir();
-	    motor.backward(210);
-	    motor.rotate(90,false);
+	    pince.fermer();
+	    motor.goTo(1000, 2100);
+	    
 	}
 
 	
@@ -88,6 +101,11 @@ public class Brain {
 		int direction = 0;
 		int placement = 0;
 		int[] pValeur = new int[6];
+		
+		//motor.setLinearSpeed(1000);
+		//motor.setAngularSpeed(1000);
+	    //motor.setLinearAcceleration(80);
+	    motor.setAngularAcceleration(120);
 		
 		
 		//-----------------------------------------//
@@ -204,7 +222,7 @@ public class Brain {
 		//Quel palet est présent sur le terrain (au bon endroit):
 		//-----------------------------------------//
 		
-		if(g==3) {
+		if(numStrat==3) {
 			System.out.println("Quel palet est présent sur le terrain (au bon endroit):");
 			for(int i=0; i<pValeur.length;i++) {
 				int p1 = 0;
@@ -219,11 +237,15 @@ public class Brain {
 					}
 				}
 				pValeur[i]=p1;
+				p1=0;
 			}
 		}
 	}else {
+		fp.scan();
+		
+		
 		//Code dev
-		/**
+		/*
 		motor.forward();
 		new Thread(new Runnable() {
 			public void run() {
@@ -234,7 +256,7 @@ public class Brain {
 				}
 			}
 		}).start();
-		*/
+		
 		new Thread(new Runnable() {
 			public void run() {
 				if(Button.ENTER.isDown()) {
@@ -249,42 +271,113 @@ public class Brain {
 		motor.goTo(1000, 2100);
 		//motor.forward(1868, false);
 		//fp.paletTrouve(motor);
-		
+		*/
 	}
-
+	
+	
+	
+			/////////////////////////////////////////////////////////////////////////////////
+			//																				/
+			//																				/
+			//								  NumStrat1 									/
+			//																				/
+			//																				/
+			/////////////////////////////////////////////////////////////////////////////////
 
 		if(numStrat==1) {//Tous les palets sont présents sur la table
 			if(placement == 1) {//Strat 1 et placement a gauche
+				Delay.msDelay(100);
 				strategie1(45,-45);//Direction gauche
 			}
 			else if (placement == 2) {//Strat 1 et placement au millieu
 				if(direction == 1) {
+					Delay.msDelay(100);
 					strategie1(45,-45);//Direction gauche
 				}
 				else if(direction == 2) {//Strat 1 et placement au millieu
+					Delay.msDelay(100);
 					strategie1(-45,45);//Direction droite
 				}
 			}
 			else {//Strat 1 et placement a droite
+				Delay.msDelay(100);
 				strategie1(-45,45);//Direction droite
 			}
 			
 		}else if(numStrat==2) {
-			motor.rotate(360);
+		
+			/////////////////////////////////////////////////////////////////////////////////
+			//																				/
+			//																				/
+			//								  NumStrat2 									/
+			//																				/
+			//																				/
+			/////////////////////////////////////////////////////////////////////////////////
+			
+			if(placement == 1) {//Strat 2 et placement a gauche
+				Delay.msDelay(100);
+				strategie2(45,-45);//Direction gauche
+			}
+			else if (placement == 2) {//Strat 2 et placement au millieu
+				if(direction == 1) {
+					Delay.msDelay(100);
+					strategie2(45,-45);//Direction gauche
+				}
+				else if(direction == 2) {//Strat 2 et placement au millieu
+					Delay.msDelay(100);
+					strategie2(-45,45);//Direction droite
+				}
+			}
+			else {//Strat 2 et placement a droite
+				Delay.msDelay(100);
+				strategie2(-45,45);//Direction droite
+			}
 			
 			
+			
+			/////////////////////////////////////////////////////////////////////////////////
+			//																				/
+			//																				/
+			//								  NumStrat3 									/
+			//																				/
+			//																				/
+			/////////////////////////////////////////////////////////////////////////////////
+			
+			
+		
 		}else if(numStrat==3) {
+			int[] tabGoTo = {600,900,1200,1500,1800};
+			int choix=0;
+			int indice=0;
+			for(int i = 0;i<tabGoTo.length&&indice==0;i++) {
+				int test = 0;
+				System.out.println("Distance : " + tabGoTo[i]);
+				while(test==0) {
+					if(Button.RIGHT.isDown()) {
+						test=1;
+					}
+					else if(Button.LEFT.isDown()) {
+						test=2;
+						choix = tabGoTo[i];
+						indice = i;
+					}
+				}	
+			}
+			int[] modif = new int[6-indice];
+			for(int f=indice;indice<=modif.length;f++) {
+				modif[f]=tabGoTo[f];
+			}
+			motor.goTo(1000, modif[indice]);
 			
-			
+			/*
 			motor.setAngularSpeed(120);
 			motor.rotate(360,true);
 			System.out.println(sensor.getDistance());
 			while(Button.ENTER.isDown()==false) {
 				System.out.println(sensor.getDistance());
 				Delay.msDelay(500);
-			}
-			//strategie(-45,45);
-		    
+			}*/
+			
 		}
 	}
 

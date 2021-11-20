@@ -15,6 +15,7 @@ public class Pinces {
 	 * methode permettant de fermer complètement les pinces
 	 */
 	public void fermer() {
+		p.setSpeed(10000);
 		this.p.rotate(-4*360);
 	}
 	
@@ -22,6 +23,7 @@ public class Pinces {
 	 * methode permettant d'ouvrir completement les pinces
 	 */
 	public void ouvrir() {
+		p.setSpeed(10000);
 		this.p.rotate(4*360);
 	}
 	public static void main(String[] args) {
