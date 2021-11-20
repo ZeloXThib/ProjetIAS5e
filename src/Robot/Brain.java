@@ -249,7 +249,7 @@ public class Brain {
 //		motor.rotate(30,false);
 //		System.out.println(motor.getBousssole());
 //		Delay.msDelay(3000);
-		
+		/*
 		motor.setLongueur(1500);
 		motor.setLargeur(1000);
 		//motor.forward(1300,false);
@@ -257,10 +257,24 @@ public class Brain {
 		motor.goTo(500,301);
 		motor.goTo(501,2700);
 		motor.goTo(1500,1000);
-		
+		*/
 //		motor.goTo(1500, 2700);
 		//motor.forward(1868, false);
 		//fp.paletTrouve(motor);
+		while(Button.ENTER.isDown()==false) {
+			Sound.playSample(new File("musiqueTest.wav"), Sound.VOL_MAX);
+			if(Button.RIGHT.isDown())
+				Sound.
+				motor.rotate(360);
+			if(Button.LEFT.isDown())
+				motor.rotate(300);
+			if(Button.DOWN.isDown())
+				motor.rotate(240);
+			if(Button.UP.isDown())
+				motor.rotate(180);
+			//motor.rotate(120);
+			//motor.rotate(60);
+		}
 		
 	}
 
