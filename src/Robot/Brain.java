@@ -9,6 +9,7 @@ import lejos.robotics.Color;
 import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 import perception.Sensor;
+import lejos.hardware.Sound;
 
 public class Brain {
 	private static WheelMotor motor = new WheelMotor(1);
@@ -262,7 +263,8 @@ public class Brain {
 		//motor.forward(1868, false);
 		//fp.paletTrouve(motor);
 		while(Button.ENTER.isDown()==false) {
-			Sound.playSample(new File("musiqueTest.wav"), Sound.VOL_MAX);
+			//Sound.playSample(new File("musiqueTest.wav"), Sound.VOL_MAX);
+			Sound.playTone(Sound.C2, 2000, 50);
 			if(Button.RIGHT.isDown())
 				Sound.
 				motor.rotate(360);
