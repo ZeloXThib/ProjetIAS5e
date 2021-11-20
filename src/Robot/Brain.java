@@ -247,46 +247,23 @@ public class Brain {
 		}).start();
 
 		
-		//fp.scan(180);
-		//Delay.msDelay(3000);
-		//pour nous mode dev 
-		
+		fp.scan(180);
+		Delay.msDelay(3000);
+		//pour nous mode dev 	
 
-//		motor.rotateEnFonctionBoussole(180);
-//		System.out.println(motor.getBousssole());
-//		motor.rotate(30,false);
-//		System.out.println(motor.getBousssole());
-//		Delay.msDelay(3000);
-		/*
-		motor.setLongueur(1500);
-		motor.setLargeur(1000);
-		//motor.forward(1300,false);
-		motor.goTo(1500,300);
-		motor.goTo(500,301);
-		motor.goTo(501,2700);
-		motor.goTo(1500,1000);
-		*/
-//		motor.goTo(1500, 2700);
-		//motor.forward(1868, false);
-		//fp.paletTrouve(motor);
-		while(Button.ENTER.isDown()==false) {
-			//Sound.playSample(new File("musiqueTest.wav"), Sound.VOL_MAX);
-			Sound.playTone(Sound.C2, 8000, 50);
-			if(Button.RIGHT.isDown())
-				Sound.
-				motor.rotate(360);
-			if(Button.LEFT.isDown())
-				motor.rotate(300);
-			if(Button.DOWN.isDown())
-				motor.rotate(240);
-			if(Button.UP.isDown())
-				motor.rotate(180);
+//		while(Button.ENTER.isDown()==false) {
+//			if(Button.RIGHT.isDown())
+//				motor.rotate(270,false);
+//			if(Button.LEFT.isDown())
+//				motor.rotate(90,false);
+//			if(Button.DOWN.isDown())
+//				motor.rotate(180,false);
+//			if(Button.UP.isDown())
+//				motor.rotate(360,false);
 			//motor.rotate(120);
 			//motor.rotate(60);
 		}
-
-		
-	}
+	
 
 
 		if(numStrat==1) {//Tous les palets sont présents sur la table

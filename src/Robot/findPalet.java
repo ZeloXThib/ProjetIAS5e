@@ -57,28 +57,34 @@ public class findPalet {
 
 
 
-	public boolean scan(double angleScan) {
-		boolean trouve = false;
+	public boolean scan() {
+        motor.setAngularSpeed(40);
+        int bob = 0;
+        double valeur_plus_petite = 100;
+        int count_test = 0;
+        double indice_angle = 0;
+        double distanceMax = 0.8;
+        motor.rotate(90,false);
+        motor.rotate(-180,true);
+        while(motor.isMoving()) {
+            double valeur_en_cours = sensor.getDistance();
+            System.out.print(valeur_en_cours);
+            if(valeur_en_cours < valeur_plus_petite) {
+                //valeur_plus_petite == 100 && valeur_en_cours < distanceMax) {
+                valeur_plus_petite = valeur_en_cours;
+                indice_angle = motor.getMovement().getAngleTurned();
+            }
+            System.out.print(valeur_plus_petite);
+            Delay.msDelay(5);
+            count_test++;
+        }
 
-		motor.setAngularSpeed(80);
-		motor.rotate(angleScan/2,false); 
-		motor.rotate(-angleScan,true);//345 pour faire un 360 avec une vitesse de 80
-		double distanceMax = 0.8;
-		double valeur_plus_petite = -1;
-		int count_test = 0;
-		double indice_angle = 0;
+        System.out.println("Nb test : "+count_test);
+        Delay.msDelay(2000);
+        motor.rotate(-180+indice_angle);
+        System.out.println("Angle : "+indice_angle);
+        Delay.msDelay(2000);
 
-		while(motor.isMoving()) {
-			double valeur_en_cours = sensor.getDistance();
-			if(valeur_en_cours < valeur_plus_petite || valeur_plus_petite == -1 && valeur_en_cours < distanceMax) {
-				valeur_plus_petite = valeur_en_cours;
-				indice_angle = motor.getMovement().getAngleTurned();
-			}
-			Delay.msDelay(10);
-			count_test++;
-		}
-
-		motor.rotate(indice_angle);
 
 		if(is_palet(valeur_plus_petite) == false) {
 			System.out.println("valeur plus petite a change");
@@ -135,7 +141,7 @@ public class findPalet {
 		m.rotateEnFonctionBoussole(180);
 		boolean trouve = false;
 		while (trouve == false && sensor.havePalet()==0) {
-			if(scan(180)==false) {
+			if(scan()==false) {
 				double[] a = gotoScanPoint();
 				motor.goTo(a[0],a[1]);
 				m.rotateEnFonctionBoussole(180);
