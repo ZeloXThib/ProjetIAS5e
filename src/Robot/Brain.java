@@ -264,7 +264,7 @@ public class Brain {
 		//fp.paletTrouve(motor);
 		while(Button.ENTER.isDown()==false) {
 			//Sound.playSample(new File("musiqueTest.wav"), Sound.VOL_MAX);
-			Sound.playTone(Sound.C2, 2000, 50);
+			Sound.playTone(Sound.C2, 8000, 50);
 			if(Button.RIGHT.isDown())
 				Sound.
 				motor.rotate(360);
