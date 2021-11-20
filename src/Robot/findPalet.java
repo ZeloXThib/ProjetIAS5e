@@ -60,23 +60,10 @@ public class findPalet {
 	public void scan() {
 		motor.setAngularSpeed(40);
 		int bob = 0;
-		double valeur_plus_petite = 100;
+		double valeur_plus_petite = 0.8;
 		int count_test = 0;
 		double indice_angle = 0;
 
-		/*while(motor.isMoving()) {
-			double valeur_en_cours = sensor.getDistance();
-			System.out.print(valeur_en_cours);
-			if(valeur_en_cours < valeur_plus_petite) {
-				//valeur_plus_petite == 100 && valeur_en_cours < distanceMax) {
-				valeur_plus_petite = valeur_en_cours;
-				indice_angle = motor.getMovement().getAngleTurned();
-				bob = 1;
-			}
-			System.out.print(valeur_plus_petite);
-			Delay.msDelay(5);
-			count_test++;
-		}*/
 		motor.rotate(90,false);
 		motor.rotate(-180,true);
 		while(motor.isMoving()) {
@@ -86,7 +73,6 @@ public class findPalet {
 				//valeur_plus_petite == 100 && valeur_en_cours < distanceMax) {
 				valeur_plus_petite = valeur_en_cours;
 				indice_angle = motor.getMovement().getAngleTurned();
-				bob = 2;
 			}
 			System.out.print(valeur_plus_petite);
 			Delay.msDelay(5);
@@ -117,8 +103,8 @@ public class findPalet {
 
 			}
 		}
-
 */
+
 	}
 
 
@@ -180,3 +166,9 @@ public class findPalet {
 	}
 	*/
 }
+
+
+
+
+
+
