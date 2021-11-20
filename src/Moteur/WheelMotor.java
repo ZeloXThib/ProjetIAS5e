@@ -56,25 +56,33 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	public void goTo(double largeurF, double longueurF) {
-		if (longueurF > this.longueur && largeurF <= this.largeur) {
+		if (longueurF >= this.longueur && largeurF <= this.largeur) {
 			//rotate(90);
 			System.out.println("pass 1");
-			rotateEnFonctionBoussole(90);
-			double a = Math.toDegrees(Math.atan((longueurF-this.longueur)/(this.largeur-largeurF)));
-			rotate(-a,false);
+			rotateEnFonctionBoussole(0);
+			double a;
+			if(this.largeur-largeurF == 0) {
+				a = 0;
+			}else if (longueurF-this.longueur == 0) {
+				a = 90;
+			}else {
+				a = Math.toDegrees(Math.atan((this.largeur-largeurF)/(longueurF-this.longueur)));
+			}
+			rotate(a,false);
 			forward(Math.sqrt((Math.pow(this.longueur-longueurF, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
 			this.largeur = largeurF;
 			this.longueur = longueurF;
-			
 		}else if (longueurF >= this.longueur && largeurF >= this.largeur) {
 			System.out.println("pass 2");
 			rotateEnFonctionBoussole(-90);
 			double a;
-			if(longueurF - this.longueur == 0) {
+			if(longueurF-this.longueur == 0) {
 				a = 0;
-			}else {
-				a = Math.toDegrees(Math.atan((longueurF-this.longueur)/(largeurF-this.largeur)));
-			}	
+			}else if( largeurF - this.largeur == 0){
+				a = 90;
+			}else {	
+				a = Math.toDegrees(Math.atan((largeurF-this.largeur)/(longueurF-this.longueur)));
+			}
 			System.out.println(a);
 			Delay.msDelay(3000);
 			rotate(a,false);
@@ -90,7 +98,13 @@ public class WheelMotor extends MovePilot{
 			System.out.println("Longueur " + this.longueur);
 			System.out.println("LonguueurF " + longueurF);
 			Delay.msDelay(3000);
-			double a = Math.toDegrees(Math.atan((this.largeur-largeurF)/(this.longueur-longueurF)));
+			double a;
+			if(longueurF - this.longueur == 0) {
+				a = 0;
+			}else if(this.largeur-largeurF == 0){
+				a = 90;
+			}
+			a = Math.toDegrees(Math.atan((this.largeur-largeurF)/(this.longueur-longueurF)));
 			System.out.println("Angle " + a);
 			Delay.msDelay(3000);
 			rotate(a,false);
@@ -102,7 +116,14 @@ public class WheelMotor extends MovePilot{
 		}else {
 			System.out.println("pass 4");
 			rotateEnFonctionBoussole(180);
-			double a = Math.toDegrees(Math.atan((largeurF-this.largeur)/(this.longueur-longueurF)));
+			double a;
+			if(largeurF - this.largeur == 0) {
+				a = 0;
+			}else if(this.longueur-longueurF == 0) {
+				a = 90;
+			}else {
+				a = Math.toDegrees(Math.atan((largeurF-this.largeur)/(this.longueur-longueurF)));
+			}			
 			rotate(a,false);
 			System.out.println(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(largeurF-this.largeur, 2))));
 			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(largeurF-this.largeur, 2)) ),false);

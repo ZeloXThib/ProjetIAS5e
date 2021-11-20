@@ -61,7 +61,7 @@ public class findPalet {
 		boolean trouve = false;
 
 		motor.setAngularSpeed(80);
-		motor.rotate(angleScan/2,true); 
+		motor.rotate(angleScan/2,false); 
 		motor.rotate(-angleScan,true);//345 pour faire un 360 avec une vitesse de 80
 		double distanceMax = 0.8;
 		double valeur_plus_petite = -1;
@@ -81,6 +81,7 @@ public class findPalet {
 		motor.rotate(indice_angle);
 
 		if(is_palet(valeur_plus_petite) == false) {
+			System.out.println("valeur plus petite a change");
 			motor.rotate(10,true);
 			motor.rotate(-20,true);
 			while(motor.isMoving()) {
@@ -93,6 +94,7 @@ public class findPalet {
 			motor.rotate(indice_angle);
 
 			if(is_palet(valeur_plus_petite) == false) {
+				System.out.println("valeur plus petite a encore change");
 				scanDone();
 				return false;
 
