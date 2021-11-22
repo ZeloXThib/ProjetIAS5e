@@ -14,7 +14,7 @@ public class Brain {
 	private static WheelMotor motor = new WheelMotor(1);
 	private static Sensor sensor = new Sensor();
 	private static Pinces pince = new Pinces();
-	private static findPalet fp = new findPalet(sensor, motor);
+	private static findPalet fp = new findPalet(sensor, motor, pince);
 	
 	
 	public static void strategie1(int d, int d2) {
@@ -243,6 +243,7 @@ public class Brain {
 	}else {
 		
 		fp.scan();
+
 		Delay.msDelay(3000);
 		//pour nous mode dev 	
 
