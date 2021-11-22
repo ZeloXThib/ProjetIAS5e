@@ -115,7 +115,7 @@ public class findPalet {
 		double valeur_prec = sensor.getDistance();
 		double valeur_en_cours;
 		double distance_parcourue_au_cas_ou ;
-		if((int)distance <= (int)sensor.getDistance() +1 || (int)distance >= (int)sensor.getDistance() +1) {
+		if((int)distance <= (int)sensor.getDistance() +0.01 || (int)distance >= (int)sensor.getDistance() +0.01) {
 			System.out.println("Meme distance j'y vais");
 			motor.travel(distance, true);
 			while(motor.isMoving() || Sensor.havePalet()==0) {
