@@ -242,9 +242,14 @@ public class Brain {
 		}
 	}else {
 		
-
-		fp.scan();
-
+		if (fp.scan()) {
+			System.out.println(motor.getBousssole());
+			//Delay.msDelay(5000);
+			motor.rotateEnFonctionBoussole(0);
+			motor.forwardUntil("WHITE");
+			fp.boussole_a_0();
+		}
+		
 		Delay.msDelay(3000);
 
 //		while(Button.ENTER.isDown()==false) {

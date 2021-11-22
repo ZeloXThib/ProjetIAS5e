@@ -202,7 +202,7 @@ public class WheelMotor extends MovePilot{
 	
 	public void rotateEnFonctionBoussole(double angleArrivee) { 
 		rotate(angleArrivee-this.boussole,false);
-		this.mettreAJourBoussole(angleArrivee-this.boussole);
+		
 		
 		/**
 		if(angleArrivee >= 0) {
@@ -267,27 +267,31 @@ public class WheelMotor extends MovePilot{
 	public void mettreAJourBoussole(double i) {
 		
 		if(this.boussole >= 0) {
-			if(i < 0) {
-				System.out.println("maj 1");
+			if(i <= 0) {
+				//System.out.println("maj 1");
 				this.boussole += i;
 			}else if(i > 0 && this.boussole+i >= 180) {
-				System.out.println("maj 2");
+				//System.out.println("maj 2");
 				double a = 180 - this.boussole;
 				double b = i - a;
 				this.boussole = (180 - b)*-1;
+			}else {
+				this.boussole += i; 
 			}
 		}else {
 			if(i > 0) {
-				System.out.println("maj 3");
+				//System.out.println("maj 3");
 				this.boussole +=i;
 			}else if(i < 0 && this.boussole - i <= -180) {
-				System.out.println("maj 4");
+				//System.out.println("maj 4");
 				double a = 180 - -1*this.boussole;
 				double b = i - a;
 				this.boussole = 180 - b;
+			}else {
+				this.boussole +=i;
 			}
 		}
-//			
+		System.out.println(this.boussole);
 //		if(this.boussole < -180 || this.boussole > 180) {
 //			this.boussole = -this.boussole % 180;
 //		}
@@ -313,6 +317,12 @@ public class WheelMotor extends MovePilot{
 	public void setLargeur(double d) {
 		this.largeur = d;
 	}
+
+	public void setBoussole(double boussole) {
+		this.boussole = boussole;
+	}
+	
+	
 	
 	/**
 	 * methode permettant de realiser un arc de cercle
