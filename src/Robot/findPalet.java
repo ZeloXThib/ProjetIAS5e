@@ -56,9 +56,26 @@ public class findPalet {
 		return a;
 	}
 
-
+	public void boussole_a_0() {
+		motor.rotate(20,false);
+		motor.rotate(-40,true);
+		double min = 100;
+		double angle_trouver = 0;
+		while(motor.isMoving()) {
+			double valeur_en_cours = sensor.getDistance();
+			if(valeur_en_cours<min) {
+				min=valeur_en_cours;
+				angle_trouver = motor.getMovement().getAngleTurned();
+			}
+			Delay.msDelay(10);
+		}
+		//motor.rotate(indice_angle);
+		//System.out.print("Voila l'angle : " + angle_trouver);
+		//Delay.msDelay(3000);
+		motor.rotate(40+angle_trouver, false);
+		motor.setBoussole(0);
+	}
 		
-
 
 	public boolean scan() {
         motor.setAngularSpeed(40);
@@ -66,25 +83,28 @@ public class findPalet {
         int count_test = 0;
         double indice_angle = 0;
         double distanceMax = 0.8;
+        System.out.println("90v");
         motor.rotate(90,false);
+        System.out.println("-90v");
         motor.rotate(-180,true);
         while(motor.isMoving()) {
             double valeur_en_cours = sensor.getDistance();
-            System.out.print(valeur_en_cours);
+            //System.out.print(valeur_en_cours);
             if(valeur_en_cours < valeur_plus_petite) {
                 //valeur_plus_petite == 100 && valeur_en_cours < distanceMax) {
                 valeur_plus_petite = valeur_en_cours;
                 indice_angle = motor.getMovement().getAngleTurned();
             }
-            System.out.print(valeur_plus_petite);
+            //System.out.print(valeur_plus_petite);
             Delay.msDelay(10);
             count_test++;
         }
 
-        System.out.println("Nb test : "+count_test);
+        //System.out.println("Nb test : "+count_test);
         Delay.msDelay(2000);
-        motor.rotate(-180+indice_angle, false);
-        System.out.println("Angle : "+indice_angle);
+        System.out.println(-270+indice_angle+"v");
+        motor.rotate(180+indice_angle, false);
+        //System.out.println("Angle : "+indice_angle);
         Delay.msDelay(2000);
 
 
@@ -106,13 +126,13 @@ public class findPalet {
 			}
 			
 			if(min>900) {//si la plus petite valeurs sup
-				motor.rotate(20);//rotate à gauche pour se re mettre droit
+				motor.rotate(20);//rotate ? gauche pour se re mettre droit
 				motor.forward(500,false);//re avance de 50cm
 				return scan();
 			}
 			
 			//motor.rotate(indice_angle);
-			System.out.print("Voila l'angle : " + angle_trouver);
+			//System.out.print("Voila l'angle : " + angle_trouver);
 			Delay.msDelay(3000);
 			motor.rotate(40+angle_trouver, false);		
 		}
@@ -126,6 +146,7 @@ public class findPalet {
 		 motor.stop();
 		 pince.fermer(); 
 		scanDone();
+		
 		
 		return true;
 	}
@@ -159,10 +180,13 @@ public class findPalet {
 
 
 		}*/
+
 		}
 		else 
 			return true;
-		
+			
+		}
+			
 	}
 	/*
 	public boolean paletTrouve(WheelMotor m) {
