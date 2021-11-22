@@ -70,6 +70,8 @@ public class Brain {
 	    }else {//ex 45,-45
 	    	motor.rotate(-90);
 	    }
+	    motor.backwardUntil("WHITE");
+	    fp.scan();
 	    
 	}
 	

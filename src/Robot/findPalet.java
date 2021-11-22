@@ -88,11 +88,13 @@ public class findPalet {
         Delay.msDelay(2000);
 
 
-
+        
+        double min = 100;
+        
 		if(is_palet(valeur_plus_petite) == false) {
 			motor.rotate(20,false);
 			motor.rotate(-40,true);
-			double min = 100;
+			
 			double angle_trouver = 0;
 			while(motor.isMoving()) {
 				double valeur_en_cours = sensor.getDistance();
@@ -102,6 +104,13 @@ public class findPalet {
 				}
 				Delay.msDelay(10);
 			}
+			
+			if(min>900) {//si la plus petite valeurs sup
+				motor.rotate(20);//rotate à gauche pour se re mettre droit
+				motor.forward(500,false);//re avance de 50cm
+				return scan();
+			}
+			
 			//motor.rotate(indice_angle);
 			System.out.print("Voila l'angle : " + angle_trouver);
 			Delay.msDelay(3000);
@@ -110,7 +119,7 @@ public class findPalet {
 		motor.forward();
 		pince.ouvrir();
 		int i=0;
-		 while(Sensor.havePalet()==0 && i<300 ){
+		 while(Sensor.havePalet()==0 && i<300 && (motor.getMovement().getDistanceTraveled() < ((valeur_plus_petite+min)/2)+100 )){
 		    	Delay.msDelay(10);
 		    	i++;
 		    }
@@ -126,6 +135,7 @@ public class findPalet {
 
 		double distance_en_cours = sensor.getDistance();
 		if(distance_en_cours>distance) {
+		
 			return false;
 
 		/*double valeur_prec = sensor.getDistance();
@@ -149,7 +159,8 @@ public class findPalet {
 
 
 		}*/
-		else
+		}
+		else 
 			return true;
 		
 	}
