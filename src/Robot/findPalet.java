@@ -123,12 +123,35 @@ public class findPalet {
 
 
 	public boolean is_palet(double distance) {
+
 		double distance_en_cours = sensor.getDistance();
 		if(distance_en_cours>distance) {
 			return false;
-		}
+
+		/*double valeur_prec = sensor.getDistance();
+		double valeur_en_cours;
+		double distance_parcourue_au_cas_ou ;
+		if((int)distance <= (int)sensor.getDistance() +0.01 || (int)distance >= (int)sensor.getDistance() +0.01) {
+			System.out.println("Meme distance j'y vais");
+			motor.travel(distance, true);
+			while(motor.isMoving() || Sensor.havePalet()==0) {
+				if(sensor.getDistance() > valeur_prec && valeur_prec > 0.3) {
+					return true;
+				}
+				else if(sensor.getDistance()< 0.3) {
+					distance_parcourue_au_cas_ou = motor.getMovement().getDistanceTraveled();
+					motor.stop();
+					motor.backward(distance_parcourue_au_cas_ou);
+					return false;
+				}
+				valeur_prec = sensor.getDistance();
+			}
+
+
+		}*/
 		else
 			return true;
+		
 	}
 	/*
 	public boolean paletTrouve(WheelMotor m) {

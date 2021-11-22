@@ -242,9 +242,26 @@ public class Brain {
 		}
 	}else {
 		
+
 		fp.scan();
 
 		Delay.msDelay(3000);
+
+//		while(Button.ENTER.isDown()==false) {
+//			motor.setLongueur(300);
+//			motor.setLargeur(1500);
+//			motor.goTo(1000,1500 );
+//			motor.goTo(1500,300 );
+//			motor.goTo(1000,1500 );
+//			motor.goTo(500,300 );
+//			motor.goTo(1000,1500 );
+//			motor.goTo(500,2700 );
+//			motor.goTo(1000,1500 );
+//			motor.goTo(1500,2700 );
+//		}
+//		fp.scan();
+//		Delay.msDelay(3000);
+
 		//pour nous mode dev 	
 
 //		while(Button.ENTER.isDown()==false) {
