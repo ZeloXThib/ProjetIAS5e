@@ -16,7 +16,9 @@ public class findPalet {
 	private WheelMotor motor;
 	private Pinces pince;
 	private double dist_max;
+	private double distance_parcourue;
 	private double[][] pointScan = {
+			{0,2700,1000},
 			{0,2100,1000},
 			{0,1800,1000},
 			{0,1500,1000},
@@ -24,7 +26,7 @@ public class findPalet {
 			{0,900,1000}
 	};
 
-	public findPalet(Sensor sensor, WheelMotor motor, Pinces pince, double distance_max) {
+	public findPalet(Sensor sensor, WheelMotor motor, Pinces pince, double distance_max, double distance_parcourue) {
 		//tab = new double[360];
 		tab = new ArrayList<Double>();
 		tabVar = new ArrayList<Double>();
@@ -32,6 +34,7 @@ public class findPalet {
 		this.motor = motor;
 		this.pince = pince;
 		this.dist_max = distance_max;
+		this.distance_parcourue =distance_parcourue;
 	}
 
 	public void scanDone() {
@@ -114,6 +117,7 @@ public class findPalet {
 			}
 		}
 		System.out.println("boucle 3");
+		motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 		motor.stop();
 		pince.fermer();
 		motor.rotateEnFonctionBoussole(0);
@@ -123,7 +127,8 @@ public class findPalet {
 		pince.fermer();
 		return true;
 	}
-
+	
+	
 
 
 	//      

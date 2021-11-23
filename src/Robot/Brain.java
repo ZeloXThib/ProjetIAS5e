@@ -15,7 +15,7 @@ public class Brain {
 	private static WheelMotor motor = new WheelMotor(1, sensor);
 	private static Pinces pince = new Pinces();
 	private static final double DIST_MAX = 0.8;
-	private static findPalet fp = new findPalet(sensor, motor, pince, DIST_MAX);
+	private static findPalet fp = new findPalet(sensor, motor, pince, DIST_MAX, 0);
 	
 	
 	public static void strategie1(int d, int d2) {
@@ -26,6 +26,7 @@ public class Brain {
 	    	Delay.msDelay(10);
 	    	i++;
 	    }
+	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 	    motor.stop();
 	    pince.fermer();
 	    motor.rotate(d,false);//45 stratégie1
@@ -47,6 +48,7 @@ public class Brain {
 	    	Delay.msDelay(10);
 	    	i++;
 	    }
+	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 	    motor.stop();
 	    pince.fermer();
 	    if(d<0) {//ex -45,45
@@ -277,6 +279,9 @@ public class Brain {
 		motor.forward();
 		Delay.msDelay(2000);
 		motor.stop();
+		System.out.println(motor.getLongueur());
+		System.out.println(motor.getLargeur());
+		motor.goTo(500, 300);
 		Delay.msDelay(5000);
 		// IMPORTANT 
 		
