@@ -15,21 +15,23 @@ public class findPalet {
 	private Sensor sensor;
 	private WheelMotor motor;
 	private Pinces pince;
+	private double dist_max;
 	private double[][] pointScan = {
-		{0,2100,1000},
-		{0,1800,1000},
-		{0,1500,1000},
-		{0,1200,1000},
-		{0,900,1000}
-		};
+			{0,2100,1000},
+			{0,1800,1000},
+			{0,1500,1000},
+			{0,1200,1000},
+			{0,900,1000}
+	};
 
-	public findPalet(Sensor sensor, WheelMotor motor, Pinces pince) {
+	public findPalet(Sensor sensor, WheelMotor motor, Pinces pince, double distance_max) {
 		//tab = new double[360];
 		tab = new ArrayList<Double>();
 		tabVar = new ArrayList<Double>();
 		this.sensor = sensor;
 		this.motor = motor;
 		this.pince = pince;
+		this.dist_max = distance_max;
 	}
 
 	public void scanDone() {
@@ -49,117 +51,107 @@ public class findPalet {
 			}
 		}
 	}
-	
+
 
 	public double[] gotoScanPoint() {
 		double[] a = {this.pointScan[0][1],this.pointScan[0][2]};
 		return a;
 	}
 
-	public void boussole_a_0() {
-		motor.rotate(20,false);
-		motor.rotate(-40,true);
-		double min = 100;
-		double angle_trouver = 0;
+
+	public double scan(int angle_scan) {
+		motor.setAngularSpeed(40);
+		double valeur_plus_petite = 100;
+		int count_test = 0;
+		double indice_angle = 0;
+		double distanceMax = 0.8;
+		motor.rotate(angle_scan/2,false);
+		motor.rotate(-angle_scan,true);
 		while(motor.isMoving()) {
 			double valeur_en_cours = sensor.getDistance();
-			if(valeur_en_cours<min) {
-				min=valeur_en_cours;
-				angle_trouver = motor.getMovement().getAngleTurned();
+			//System.out.print(valeur_en_cours);
+			if(valeur_en_cours < valeur_plus_petite) {
+				//valeur_plus_petite == 100 && valeur_en_cours < distanceMax) {
+				valeur_plus_petite = valeur_en_cours;
+				indice_angle = motor.getMovement().getAngleTurned();
 			}
+			//System.out.print(valeur_plus_petite);
 			Delay.msDelay(10);
+			count_test++;
 		}
-		//motor.rotate(indice_angle);
-		//System.out.print("Voila l'angle : " + angle_trouver);
-		//Delay.msDelay(3000);
-		motor.rotate(40+angle_trouver, false);
-		motor.setBoussole(0);
+
+
+		motor.rotate(angle_scan+indice_angle, false);
+		return valeur_plus_petite;
+
+
 	}
-		
 
-	public boolean scan() {
-        motor.setAngularSpeed(40);
-        double valeur_plus_petite = 100;
-        int count_test = 0;
-        double indice_angle = 0;
-        double distanceMax = 0.8;
-        System.out.println("90v");
-        motor.rotate(90,false);
-        System.out.println("-90v");
-        motor.rotate(-180,true);
-        while(motor.isMoving()) {
-            double valeur_en_cours = sensor.getDistance();
-            //System.out.print(valeur_en_cours);
-            if(valeur_en_cours < valeur_plus_petite) {
-                //valeur_plus_petite == 100 && valeur_en_cours < distanceMax) {
-                valeur_plus_petite = valeur_en_cours;
-                indice_angle = motor.getMovement().getAngleTurned();
-            }
-            //System.out.print(valeur_plus_petite);
-            Delay.msDelay(10);
-            count_test++;
-        }
-
-        //System.out.println("Nb test : "+count_test);
-        Delay.msDelay(2000);
-        System.out.println(-270+indice_angle+"v");
-        motor.rotate(180+indice_angle, false);
-        //System.out.println("Angle : "+indice_angle);
-        Delay.msDelay(2000);
-
-
-        
-        double min = 100;
-        
-		if(is_palet(valeur_plus_petite) == false) {
-			motor.rotate(20,false);
-			motor.rotate(-40,true);
-			
-			double angle_trouver = 0;
-			while(motor.isMoving()) {
-				double valeur_en_cours = sensor.getDistance();
-				if(valeur_en_cours<min) {
-					min=valeur_en_cours;
-					angle_trouver = motor.getMovement().getAngleTurned();
-				}
-				Delay.msDelay(10);
-			}
-			
-			if(min>900) {//si la plus petite valeurs sup
-				motor.rotate(20);//rotate ? gauche pour se re mettre droit
-				motor.forward(500,false);//re avance de 50cm
-				return scan();
-			}
-			
-			//motor.rotate(indice_angle);
-			//System.out.print("Voila l'angle : " + angle_trouver);
-			Delay.msDelay(3000);
-			motor.rotate(40+angle_trouver, false);		
+	public boolean marquer_palet(int angle_scan, int angle_verif) {
+		double a = scan(angle_scan);
+		if (is_palet(a)==false){
+			a = scan(angle_verif);	
 		}
 		motor.forward();
 		pince.ouvrir();
 		int i=0;
-		 while(Sensor.havePalet()==0 && i<300 && (motor.getMovement().getDistanceTraveled() < ((valeur_plus_petite+min)/2)+100 )){
-		    	Delay.msDelay(10);
-		    	i++;
-		    }
-		 motor.stop();
-		 pince.fermer(); 
-		scanDone();
-		
-		
+		while(Sensor.havePalet() == 0) {	
+			
+			if( motor.getMovement().getDistanceTraveled() < ((a+this.dist_max)/2)+100 ) {
+				motor.stop();
+				pince.fermer();
+				System.out.println("boucle 1");
+				return false;
+			}
+			if(sensor.getDistance()<0.2) {
+				motor.stop();
+				double distance_parcourue = motor.getMovement().getDistanceTraveled();
+				motor.backward(distance_parcourue);
+				pince.fermer();
+				scanDone();
+				System.out.println("boucle 2");
+				return false;
+			}
+		}
+		System.out.println("boucle 3");
+		motor.stop();
+		pince.fermer();
+		motor.rotateEnFonctionBoussole(0);
+		motor.forwardUntil("WHITE");
+		pince.ouvrir();
+		motor.boussole_a_0();
+		pince.fermer();
 		return true;
 	}
+
+
+
+	//      
+	//		motor.forward();
+	//		pince.ouvrir();
+	//		int i=0;
+	//		 while(Sensor.havePalet()==0 && i<300 && (motor.getMovement().getDistanceTraveled() < ((valeur_plus_petite+min)/2)+100 )){
+	//		    	Delay.msDelay(10);
+	//		    	i++;
+	//		    }
+	//		 motor.stop();
+	//		 pince.fermer(); 
+	//		scanDone();
+	//		
+	//		
+	//		return true;
+	//	}
+
 
 
 	public boolean is_palet(double distance) {
 
 		double distance_en_cours = sensor.getDistance();
 		if(distance_en_cours>distance) {
-		
+
 			return false;
 
-		/*double valeur_prec = sensor.getDistance();
+			/*double valeur_prec = sensor.getDistance();
 		double valeur_en_cours;
 		double distance_parcourue_au_cas_ou ;
 		if((int)distance <= (int)sensor.getDistance() +0.01 || (int)distance >= (int)sensor.getDistance() +0.01) {
@@ -181,12 +173,12 @@ public class findPalet {
 
 		}*/
 
-		}
-		else 
+		} else {
+
 			return true;
-			
 		}
-			
+
+
 	}
 	/*
 	public boolean paletTrouve(WheelMotor m) {
@@ -204,10 +196,10 @@ public class findPalet {
 		return trouve;
 	}
 	/*
-	
+
 	/**
 	public static void main(String[] args) {
-		
+
 		boolean trouve = false;
 		while(trouve == false) {
 			if(scan(180)==false) {
@@ -216,12 +208,12 @@ public class findPalet {
 			}else {
 				trouve = true;
 			}
-			
+
 		}
-		
-		
+
+
 	}
-	*/
+	 */
 }
 
 

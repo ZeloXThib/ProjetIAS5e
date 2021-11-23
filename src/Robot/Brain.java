@@ -11,10 +11,11 @@ import lejos.utility.Delay;
 import perception.Sensor;
 
 public class Brain {
-	private static WheelMotor motor = new WheelMotor(1);
 	private static Sensor sensor = new Sensor();
+	private static WheelMotor motor = new WheelMotor(1, sensor);
 	private static Pinces pince = new Pinces();
-	private static findPalet fp = new findPalet(sensor, motor, pince);
+	private static final double DIST_MAX = 0.8;
+	private static findPalet fp = new findPalet(sensor, motor, pince, DIST_MAX);
 	
 	
 	public static void strategie1(int d, int d2) {
@@ -71,7 +72,7 @@ public class Brain {
 	    	motor.rotate(-90);
 	    }
 	    motor.backwardUntil("WHITE");
-	    fp.scan();
+	    fp.scan(180);
 	    
 	}
 	
@@ -243,16 +244,47 @@ public class Brain {
 			}
 		}
 	}else {
-		
-		if (fp.scan()) {
-			System.out.println(motor.getBousssole());
-			//Delay.msDelay(5000);
-			motor.rotateEnFonctionBoussole(0);
+		/*
+		double a = fp.scan(180);
+		if (fp.is_palet(a)==false){
+			a = fp.scan(40);	
+		}
+		motor.forward();
+		pince.ouvrir();
+		while(motor.isMoving()) {
+			if(sensor.getDistance()<20) {
+				motor.stop();
+				double distance_parcourue = motor.getMovement().getDistanceTraveled();
+				motor.backward(distance_parcourue);
+				pince.fermer();
+				fp.scanDone();
+			}
+			int i=0;
+			while(Sensor.havePalet()==0 && i<300 && (motor.getMovement().getDistanceTraveled() < ((a+DIST_MAX)/2)+100 )){
+			    	Delay.msDelay(10);
+			    	i++;
+			    }
+			 motor.stop();
+			 pince.fermer();
+			 motor.rotateEnFonctionBoussole(0);
 			motor.forwardUntil("WHITE");
-			fp.boussole_a_0();
+			motor.boussole_a_0();
+			pince.ouvrir();
+		}
+		*/
+			//pince.fermer();
+		
+		motor.forward();
+		Delay.msDelay(2000);
+		motor.stop();
+		Delay.msDelay(5000);
+		// IMPORTANT 
+		
+//			System.out.println(fp.marquer_palet(180,40));
+//			Delay.msDelay(2000);
 		}
 		
-		Delay.msDelay(3000);
+		//Delay.msDelay(3000);
 
 //		while(Button.ENTER.isDown()==false) {
 //			motor.setLongueur(300);
@@ -315,7 +347,7 @@ public class Brain {
 		//motor.forward(1868, false);
 		//fp.paletTrouve(motor);
 		*/
-	}
+	
 	
 	
 	

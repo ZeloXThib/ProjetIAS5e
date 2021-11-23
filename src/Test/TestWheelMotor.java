@@ -22,10 +22,10 @@ public class TestWheelMotor {
 	public static void main(String[] args) {
 		
 		
-		WheelMotor m = new WheelMotor(1);
+		//WheelMotor m = new WheelMotor(1);
 
 
-		m.rotate(338);
+		//m.rotate(338);
 		//m.setLargeur(1000);
 		//m.setLongueur(300);
 		

@@ -23,11 +23,13 @@ public class WheelMotor extends MovePilot{
 	private double distance;
 	private double longueur;
 	private double largeur;
+	private Sensor sensor;
 	
 	
 	
-	public WheelMotor(int i) {	
+	public WheelMotor(int i, Sensor sensor) {	
 		super(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
+		this.sensor = sensor;
 		boussole = 0;
 		distance = 0;
 		this.longueur = 300; 
@@ -152,14 +154,22 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	
-	
+	public void stop() {
+		super.stop();
+//		double distance = this.getMovement().getDistanceTraveled();
+//		System.out.println(distance);
+	}
 	
 	public void forward() {
 		super.forward();
+		double distance = this.getMovement().getDistanceTraveled();
+		System.out.println(distance);
+		
 	}
 	
 	public void forward(double distance,boolean immediateReturn) {
 		super.travel(distance,immediateReturn);
+		
 //		double b = Math.toRadians(Math.abs(this.boussole));
 //		double lon = distance*Math.cos(b);
 //		double larg = distance*Math.sin(b);
@@ -295,6 +305,30 @@ public class WheelMotor extends MovePilot{
 //		if(this.boussole < -180 || this.boussole > 180) {
 //			this.boussole = -this.boussole % 180;
 //		}
+	}
+	
+	public void boussole_a_0() {
+		this.rotate(20,false);
+		this.rotate(-40,true);
+		double min = 100;
+		double angle_trouver = 0;
+		while(this.isMoving()) {
+			double valeur_en_cours = sensor.getDistance();
+			if(valeur_en_cours<min) {
+				min=valeur_en_cours;
+				angle_trouver = this.getMovement().getAngleTurned();
+			}
+			Delay.msDelay(3);
+		}
+		//motor.rotate(indice_angle);
+		//System.out.print("Voila l'angle : " + angle_trouver);
+		//Delay.msDelay(3000);
+		this.rotate(40+angle_trouver, false);
+		this.setBoussole(0);
+	}
+	
+	public void mettre_a_jour_largeur() {
+		
 	}
 	
 	public void afficheBoussole() {
