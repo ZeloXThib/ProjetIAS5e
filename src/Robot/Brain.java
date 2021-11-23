@@ -1,5 +1,5 @@
 package Robot;
-import perception.TestThread;
+
 import Moteur.Pinces;
 import Moteur.WheelMotor;
 import lejos.hardware.Button;
@@ -437,23 +437,30 @@ public class Brain {
 			int indice=0;
 			for(int i = 0;i<tabGoTo.length&&indice==0;i++) {
 				int test = 0;
-				System.out.println("Distance : " + tabGoTo[i]);
+				System.out.println(test);
+				System.out.println("Distance : " + tabGoTo[i]+" Non(G) && OUI(D)");
 				while(test==0) {
-					if(Button.RIGHT.isDown()) {
+					if(Button.LEFT.isDown()) {
 						test=1;
 					}
-					else if(Button.LEFT.isDown()) {
+					else if(Button.RIGHT.isDown()) {
 						test=2;
 						choix = tabGoTo[i];
 						indice = i;
 					}
-				}	
+				}
+				Delay.msDelay(1000);
 			}
+			/*
 			int[] modif = new int[6-indice];
 			for(int f=indice;indice<=modif.length;f++) {
 				modif[f]=tabGoTo[f];
 			}
-			motor.goTo(1000, modif[indice]);
+			*/
+			motor.goTo(1000, tabGoTo[indice]);
+			fp.scan(100);
+			motor.goTo(1000, tabGoTo[tabGoTo.length-1]);
+			fp.scan(180);
 			
 			/*
 			motor.setAngularSpeed(120);
@@ -465,6 +472,15 @@ public class Brain {
 			}*/
 			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 }
