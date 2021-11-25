@@ -40,6 +40,37 @@ public class WheelMotor extends MovePilot{
 			this.largeur = 1500;
 		}
 	}
+	public void mettre_a_jour_longueur_largeur_backward(double distance) {
+		System.out.println("la distance est "+distance);
+		if(boussole > 0 && boussole < 90) {
+			double angle = 180+boussole;
+			largeur += Math.cos(angle)*distance;
+			longueur -= Math.sin(angle)*distance;
+		}else if (boussole < 0 && boussole > -90) { 
+			double angle = 180-boussole;
+			largeur -= Math.cos(angle)*distance;
+			longueur -= Math.sin(angle)*distance;
+		}else if (boussole == 0) {
+			largeur += 0;
+			longueur -= distance; 
+		}else if (boussole == 90) {
+			largeur += distance;
+			longueur += 0; 
+		}else if (boussole == -90) {
+			largeur -= distance;
+			longueur += 0;
+		}else if (boussole < -180 && boussole > -90) {	
+			largeur += Math.sin(boussole)*distance;
+			longueur += Math.cos(boussole)*distance;
+		}else if (boussole > 90 && boussole < 180) {
+			largeur -= Math.sin(Math.abs(boussole))*distance;
+			longueur += Math.cos(Math.abs(boussole))*distance;
+		}else if (boussole == 180 || boussole == -180) {
+			largeur += 0;
+			longueur += distance; 
+		}
+		
+	}
 	
 	public void mettre_a_jour_longueur_largeur(double distance) {
 		System.out.println("la distance est "+distance);
@@ -216,9 +247,11 @@ public class WheelMotor extends MovePilot{
 	 */
 	public void backward(double distance) {
 		super.travel(-distance);
-		
+		mettre_a_jour_longueur_largeur_backward(distance);
 	}
 	
+	
+
 	public void rotate(double angle,boolean immediateReturn) {
 		//C.rotate((int) angle);
 		this.setAngularSpeed(80);
