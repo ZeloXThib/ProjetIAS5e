@@ -16,7 +16,9 @@ public class findPalet {
 	private WheelMotor motor;
 	private Pinces pince;
 	private double dist_max;
+	private double distance_parcourue;
 	private double[][] pointScan = {
+			{0,2700,1000},
 			{0,2100,1000},
 			{0,1800,1000},
 			{0,1500,1000},
@@ -24,7 +26,7 @@ public class findPalet {
 			{0,900,1000}
 	};
 
-	public findPalet(Sensor sensor, WheelMotor motor, Pinces pince, double distance_max) {
+	public findPalet(Sensor sensor, WheelMotor motor, Pinces pince, double distance_max, double distance_parcourue) {
 		//tab = new double[360];
 		tab = new ArrayList<Double>();
 		tabVar = new ArrayList<Double>();
@@ -32,6 +34,7 @@ public class findPalet {
 		this.motor = motor;
 		this.pince = pince;
 		this.dist_max = distance_max;
+		this.distance_parcourue =distance_parcourue;
 	}
 
 	public void scanDone() {
@@ -83,7 +86,7 @@ public class findPalet {
 
 		motor.rotate(angle_scan+indice_angle, false);
 		return valeur_plus_petite;
-
+		
 
 	}
 
@@ -100,6 +103,7 @@ public class findPalet {
 			if( motor.getMovement().getDistanceTraveled() < ((a+this.dist_max)/2)+100 ) {
 				motor.stop();
 				pince.fermer();
+				scanDone();
 				System.out.println("boucle 1");
 				return false;
 			}
@@ -114,16 +118,50 @@ public class findPalet {
 			}
 		}
 		System.out.println("boucle 3");
+		motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 		motor.stop();
 		pince.fermer();
 		motor.rotateEnFonctionBoussole(0);
 		motor.forwardUntil("WHITE");
+		motor.setLongueur(2700-35);
 		pince.ouvrir();
 		motor.boussole_a_0();
 		pince.fermer();
 		return true;
 	}
-
+	
+	public void mettre_a_jour_largeur() {
+		if(motor.getLargeur()<501) {
+			motor.rotateEnFonctionBoussole(90);
+			double distance_percu = this.scan(40);
+			if(Math.abs((distance_percu*100)-motor.getLargeur())<200) {
+				motor.setLargeur(distance_percu);
+				System.out.println(motor.getLargeur());
+			}
+			else {
+				System.out.println("Trop de différence");
+				return;
+			}
+		}
+		else if(motor.getLargeur()>1500) {
+			motor.rotateEnFonctionBoussole(-90);
+			double distance_percu = this.scan(40);
+			if(Math.abs((distance_percu*100)-motor.getLargeur())<200) {
+				motor.setLargeur(distance_percu);
+				System.out.println(motor.getLargeur());
+			}
+			else {
+				System.out.println("Trop de différence");
+				return;
+			}
+		}
+		else {
+			System.out.println("Pas la bonne largeur");
+			return;
+		}
+	}
+	
+	
 
 
 	//      
