@@ -276,12 +276,14 @@ public class Brain {
 		*/
 			//pince.fermer();
 		
-		motor.forward();
-		Delay.msDelay(2000);
-		motor.stop();
-		System.out.println(motor.getLongueur());
-		System.out.println(motor.getLargeur());
-		motor.goTo(500, 300);
+//		motor.forwardUntil("WHITE");
+//	 	motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+//    	System.out.println("la premiere dist est "+motor.getMovement().getDistanceTraveled());
+//    	motor.stop();
+//		Delay.msDelay(5000);
+//		motor.goTo(500,300);
+//		Delay.msDelay(5000);
+		fp.mettre_a_jour_largeur();
 		Delay.msDelay(5000);
 		// IMPORTANT 
 		

@@ -20,7 +20,7 @@ import lejos.robotics.navigation.MovePilot.*;
 public class WheelMotor extends MovePilot{
 	
 	private double boussole;
-	private double distance;
+//	private double distance;
 	private double longueur;
 	private double largeur;
 	private Sensor sensor;
@@ -31,7 +31,6 @@ public class WheelMotor extends MovePilot{
 		super(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
 		this.sensor = sensor;
 		boussole = 0;
-		distance = 0;
 		this.longueur = 300; 
 		if ( i == 1) {
 			this.largeur = 500;
@@ -42,8 +41,8 @@ public class WheelMotor extends MovePilot{
 		}
 	}
 	
-	
 	public void mettre_a_jour_longueur_largeur(double distance) {
+		System.out.println("la distance est "+distance);
 		if(boussole > 0 && boussole < 90) {
 			largeur += Math.sin(boussole)*distance;
 			longueur += Math.cos(boussole)*distance; 
@@ -52,7 +51,10 @@ public class WheelMotor extends MovePilot{
 			longueur += Math.cos(Math.abs(boussole))*distance; 
 		}else if (boussole == 0) {
 			largeur += 0;
+			System.out.println("premiere" + longueur);
 			longueur += distance; 
+			System.out.println("deuxieme" + longueur);
+			//System.out.println("longeur: "+longueur);
 		}else if (boussole == 90) {
 			largeur -= distance;
 			longueur += 0; 
@@ -130,7 +132,7 @@ public class WheelMotor extends MovePilot{
 			System.out.println("LargeurF " + largeurF);
 			System.out.println("Longueur " + this.longueur);
 			System.out.println("LonguueurF " + longueurF);
-			Delay.msDelay(3000);
+			Delay.msDelay(8000);
 			double a;
 			if(longueurF - this.longueur == 0) {
 				a = 0;
@@ -140,12 +142,12 @@ public class WheelMotor extends MovePilot{
 				a = Math.toDegrees(Math.atan((this.largeur-largeurF)/(this.longueur-longueurF)));
 			}
 			
-			System.out.println("Angle " + a);
-			Delay.msDelay(3000);
+			//System.out.println("Angle " + a);
+			//Delay.msDelay(3000);
 			rotate(a,false);
 			System.out.println("Forward " + Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(this.largeur-largeurF, 2)) ));
+			Delay.msDelay(5000);
 			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
-			Delay.msDelay(3000);
 //			this.largeur = largeurF;
 //			this.longueur = longueurF;
 		}else {
@@ -173,9 +175,11 @@ public class WheelMotor extends MovePilot{
 	    Color rgb = Sensor.getColorOnGround();
 	    while(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != couleur) {
 	    	rgb = Sensor.getColorOnGround();
+	   // 	System.out.println(this.boussole);
+	    	
+	   
 	    }
-	    
-	    super.stop();
+
 	}
 	
 	public void backwardUntil(String couleur) {
@@ -212,7 +216,7 @@ public class WheelMotor extends MovePilot{
 	 */
 	public void backward(double distance) {
 		super.travel(-distance);
-		this.distance -= distance;
+		
 	}
 	
 	public void rotate(double angle,boolean immediateReturn) {

@@ -86,7 +86,7 @@ public class findPalet {
 
 		motor.rotate(angle_scan+indice_angle, false);
 		return valeur_plus_petite;
-
+		
 
 	}
 
@@ -103,6 +103,7 @@ public class findPalet {
 			if( motor.getMovement().getDistanceTraveled() < ((a+this.dist_max)/2)+100 ) {
 				motor.stop();
 				pince.fermer();
+				scanDone();
 				System.out.println("boucle 1");
 				return false;
 			}
@@ -122,10 +123,42 @@ public class findPalet {
 		pince.fermer();
 		motor.rotateEnFonctionBoussole(0);
 		motor.forwardUntil("WHITE");
+		motor.setLongueur(2700-35);
 		pince.ouvrir();
 		motor.boussole_a_0();
 		pince.fermer();
 		return true;
+	}
+	
+	public void mettre_a_jour_largeur() {
+		if(motor.getLargeur()<501) {
+			motor.rotateEnFonctionBoussole(90);
+			double distance_percu = this.scan(40);
+			if(Math.abs((distance_percu*100)-motor.getLargeur())<200) {
+				motor.setLargeur(distance_percu);
+				System.out.println(motor.getLargeur());
+			}
+			else {
+				System.out.println("Trop de différence");
+				return;
+			}
+		}
+		else if(motor.getLargeur()>1500) {
+			motor.rotateEnFonctionBoussole(-90);
+			double distance_percu = this.scan(40);
+			if(Math.abs((distance_percu*100)-motor.getLargeur())<200) {
+				motor.setLargeur(distance_percu);
+				System.out.println(motor.getLargeur());
+			}
+			else {
+				System.out.println("Trop de différence");
+				return;
+			}
+		}
+		else {
+			System.out.println("Pas la bonne largeur");
+			return;
+		}
 	}
 	
 	
