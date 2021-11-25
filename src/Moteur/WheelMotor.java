@@ -219,7 +219,7 @@ public class WheelMotor extends MovePilot{
 	    while(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != couleur) {
 	    	rgb = Sensor.getColorOnGround();
 	    }
-	    super.stop();
+	    
 	}
 	
 	

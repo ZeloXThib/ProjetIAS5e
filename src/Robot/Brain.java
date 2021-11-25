@@ -33,6 +33,8 @@ public class Brain {
 	    motor.forward(380,false);
 	    motor.rotate(d2,false);//-45 stratégie2
 	    motor.forwardUntil("WHITE");
+	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+	    motor.stop();
 	    pince.ouvrir();
 	    //motor.backward(100);
 	    pince.fermer();
@@ -57,6 +59,8 @@ public class Brain {
 	    	motor.rotate(90);
 	    }
 	    motor.forwardUntil("WHITE");
+	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+	    motor.stop();
 	    pince.ouvrir();
 	    //motor.backward(100);
 	    pince.fermer();
@@ -67,6 +71,8 @@ public class Brain {
 	    	motor.rotate(-90);
 	    }
 	    motor.forwardUntil("BLACK");
+	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+	    motor.stop();
 
 	    if(d<0) {//ex -45,45
 	    	motor.rotate(90);
@@ -74,6 +80,8 @@ public class Brain {
 	    	motor.rotate(-90);
 	    }
 	    motor.backwardUntil("WHITE");
+	    motor.mettre_a_jour_longueur_largeur_backward(motor.getMovement().getDistanceTraveled());
+	    motor.stop();
 	    fp.scan(180);
 
 	}
@@ -86,12 +94,15 @@ public class Brain {
 	    	Delay.msDelay(10);
 	    	i++;
 	    }
+	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 	    motor.stop();
 	    pince.fermer();
 	    motor.rotate(d,false);//45 stratégie1
 	    motor.forward(360,false);
 	    motor.rotate(d2,false);//-45 stratégie2
 	    motor.forwardUntil("WHITE");
+	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+	    motor.stop();
 	    pince.ouvrir();
 	    pince.fermer();
 	    motor.goTo(1000, 2100);
