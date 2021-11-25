@@ -1,5 +1,5 @@
 package Robot;
-import perception.TestThread;
+//import perception.TestThread;
 import Moteur.Pinces;
 import Moteur.WheelMotor;
 import lejos.hardware.Button;
