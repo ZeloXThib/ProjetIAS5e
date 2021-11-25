@@ -101,6 +101,7 @@ public class findPalet {
 		while(Sensor.havePalet() == 0) {	
 			
 			if( motor.getMovement().getDistanceTraveled() < ((a+this.dist_max)/2)+100 ) {
+				motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 				motor.stop();
 				pince.fermer();
 				scanDone();
@@ -108,6 +109,7 @@ public class findPalet {
 				return false;
 			}
 			if(sensor.getDistance()<0.2) {
+				motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 				motor.stop();
 				double distance_parcourue = motor.getMovement().getDistanceTraveled();
 				motor.backward(distance_parcourue);
@@ -123,6 +125,8 @@ public class findPalet {
 		pince.fermer();
 		motor.rotateEnFonctionBoussole(0);
 		motor.forwardUntil("WHITE");
+		motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+		motor.stop();
 		motor.setLongueur(2700-35);
 		pince.ouvrir();
 		motor.boussole_a_0();
