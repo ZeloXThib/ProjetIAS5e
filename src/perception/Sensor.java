@@ -1,4 +1,5 @@
 package perception;
+import java.util.ArrayList;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.GraphicsLCD;
@@ -24,6 +25,8 @@ public class Sensor {
 	private static SensorModes sensor_Pression = null;
 	private static SensorModes sensor_S_Color = null;
 	static GraphicsLCD g = null;
+	private ArrayList<Integer> yellow = new ArrayList<Integer>();
+	private ArrayList<Integer> red = new ArrayList<Integer>();
 	
 	public Sensor(String port_Ultrasound_s, String port_Pression_s, String port_Color_s) {
 		// get a port instance
@@ -141,6 +144,48 @@ public class Sensor {
 	public static boolean colorIsWisWHITE() {
 		Color rgb = Sensor.getColorOnGround();
 		return Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) == "WHITE";
+	}
+	
+	public boolean yellow() {
+		Color rgb = Sensor.getColorOnGround();
+		if(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) == "YELLOW") {
+			yellow.add(1);
+			if(is_yellow())
+				return true;
+			return false;
+		}
+		else {
+			yellow.clear();
+			return false;
+		}
+	}
+	
+	public boolean red() {
+		Color rgb = Sensor.getColorOnGround();
+		if(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) == "RED") {
+			red.add(1);
+			if(is_red()) {
+				return true;
+			}
+			return false;
+		}
+		else {
+			red.clear();
+			return false;
+		}
+	
+	}
+	
+	public boolean is_yellow() {
+		if(yellow.size()>=5)
+			return true;
+		return false;
+	}
+	
+	public boolean is_red() {
+		if(red.size()>=5)
+			return true;
+		return false;
 	}
 
 	/*public static String WichButtonPressed() {

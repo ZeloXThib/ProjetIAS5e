@@ -17,8 +17,8 @@ public class Brain {
 	private static final double DIST_MAX = 0.65;
 	private static findPalet fp = new findPalet(sensor, motor, pince, DIST_MAX, 0);
 
-
 	public static void strategie1(int d, int d2, int placement) {
+		motor.setLinearSpeed(motor.getMaxLinearSpeed()-50);
 		motor.forward();
 		pince.ouvrir();
 	    int i = 0;
@@ -30,6 +30,7 @@ public class Brain {
 	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 	    motor.stop();
 	    pince.fermer();
+	    
 	    motor.rotate(d,false);//45 stratégie1
 	    motor.forward(385,false);
 	    motor.rotate(d2,false);//-45 stratégie2
@@ -260,38 +261,14 @@ public class Brain {
 		Delay.msDelay(100);
 
 	}else {
-		/*
-		double a = fp.scan(180);
-		if (fp.is_palet(a)==false){
-			a = fp.scan(40);
-		}
-		motor.forward();
-		pince.ouvrir();
-		while(motor.isMoving()) {
-			if(sensor.getDistance()<20) {
-				motor.stop();
-				double distance_parcourue = motor.getMovement().getDistanceTraveled();
-				motor.backward(distance_parcourue);
-				pince.fermer();
-				fp.scanDone();
-			}
-			int i=0;
-			while(Sensor.havePalet()==0 && i<300 && (motor.getMovement().getDistanceTraveled() < ((a+DIST_MAX)/2)+100 )){
-			    	Delay.msDelay(10);
-			    	i++;
-			    }
-			 motor.stop();
-			 pince.fermer();
-			 motor.rotateEnFonctionBoussole(0);
-			motor.forwardUntil("WHITE");
-			motor.boussole_a_0();
-			pince.ouvrir();
-		}
-		*/
-		
+		pince.fermer();
 		while(Button.ENTER.isDown()==false) {
+			if(Button.DOWN.isDown()==true) {
+				motor.boussole_a_0();
+			}
+		}
 			
-		
+		/*
 		System.out.println("largeur de base : " + motor.getLargeur());
 		System.out.println("longueur de base : " + motor.getLongueur());
 			
@@ -345,50 +322,12 @@ public class Brain {
 			fp.marquer_palet(180, 40);
 			Delay.msDelay(2000);
 			//palet trouve
-		
+		*/
 		}
-		// IMPORTANT
-
-//			System.out.println(fp.marquer_palet(180,40));
-//			Delay.msDelay(2000);
-		}
-
-		//Delay.msDelay(3000);
-
-//		while(Button.ENTER.isDown()==false) {
-//			motor.setLongueur(300);
-//			motor.setLargeur(1500);
-//			motor.goTo(1000,1500 );
-//			motor.goTo(1500,300 );
-//			motor.goTo(1000,1500 );
-//			motor.goTo(500,300 );
-//			motor.goTo(1000,1500 );
-//			motor.goTo(500,2700 );
-//			motor.goTo(1000,1500 );
-//			motor.goTo(1500,2700 );
-//		}
-//		fp.scan();
-//		Delay.msDelay(3000);
-
-		//pour nous mode dev
-
-//		while(Button.ENTER.isDown()==false) {
-//			if(Button.RIGHT.isDown())
-//				motor.rotate(270,false);
-//			if(Button.LEFT.isDown())
-//				motor.rotate(90,false);
-//			if(Button.DOWN.isDown())
-//				motor.rotate(180,false);
-//			if(Button.UP.isDown())
-//				motor.rotate(360,false);
-			//motor.rotate(120);
-			//motor.rotate(60);
-
-
 
 
 		//Code dev
-		/*
+		
 		motor.forward();
 		new Thread(new Runnable() {
 			public void run() {
@@ -409,14 +348,7 @@ public class Brain {
 				}
 			}
 		}).start();
-
-		motor.setLongueur(300);
-		motor.setLargeur(1500);
-		motor.goTo(1000, 2100);
-		//motor.forward(1868, false);
-		//fp.paletTrouve(motor);
-		*/
-
+		
 
 
 
@@ -536,15 +468,6 @@ public class Brain {
 			}*/
 
 		}
-
-
-
-
-
-
-
-
-
 	}
-
 }
+

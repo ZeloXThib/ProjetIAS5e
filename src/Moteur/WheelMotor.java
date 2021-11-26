@@ -356,6 +356,7 @@ public class WheelMotor extends MovePilot{
 	public void boussole_a_0() {
 		this.rotate(30,false);
 		this.rotate(-60,true);
+		int cmp =0;
 		double min = 100;
 		double angle_trouver = 0;
 		while(this.isMoving()) {
@@ -363,14 +364,18 @@ public class WheelMotor extends MovePilot{
 			if(valeur_en_cours<min) {
 				min=valeur_en_cours;
 				angle_trouver = this.getMovement().getAngleTurned();
+				System.out.println(valeur_en_cours);
 			}
 			Delay.msDelay(3);
+			cmp++;
 		}
 		//motor.rotate(indice_angle);
 		//System.out.print("Voila l'angle : " + angle_trouver);
-		//Delay.msDelay(3000);
-		this.rotate(40+angle_trouver, false);
+		Delay.msDelay(3000);
+		this.rotate(60+angle_trouver, false);
 		this.setBoussole(0);
+		System.out.println("cmp= "+cmp);
+		Delay.msDelay(3000);
 	}
 	
 	public void mettre_a_jour_largeur() {
