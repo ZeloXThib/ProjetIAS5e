@@ -40,45 +40,44 @@ public class WheelMotor extends MovePilot{
 			this.largeur = 1500;
 		}
 	}
-	public void mettre_a_jour_longueur_largeur_backward(double distance) {
-		System.out.println("la distance est "+distance);
-		if(boussole > 0 && boussole < 90) {
-			double angle = 180+boussole;
-			largeur += Math.cos(angle)*distance;
-			longueur -= Math.sin(angle)*distance;
-		}else if (boussole < 0 && boussole > -90) { 
-			double angle = 180-boussole;
-			largeur -= Math.cos(angle)*distance;
-			longueur -= Math.sin(angle)*distance;
-		}else if (boussole == 0) {
-			largeur += 0;
-			longueur -= distance; 
-		}else if (boussole == 90) {
-			largeur += distance;
-			longueur += 0; 
-		}else if (boussole == -90) {
-			largeur -= distance;
-			longueur += 0;
-		}else if (boussole < -180 && boussole > -90) {	
-			largeur += Math.sin(boussole)*distance;
-			longueur += Math.cos(boussole)*distance;
-		}else if (boussole > 90 && boussole < 180) {
-			largeur -= Math.sin(Math.abs(boussole))*distance;
-			longueur += Math.cos(Math.abs(boussole))*distance;
-		}else if (boussole == 180 || boussole == -180) {
-			largeur += 0;
-			longueur += distance; 
-		}
-		
-	}
+//	public void mettre_a_jour_longueur_largeur_backward(double distance) {
+//		//System.out.println("la distance est "+distance);
+//		if(boussole > 0 && boussole < 90) {
+//			double angle = 180+boussole;
+//			largeur += Math.cos(angle)*distance;
+//			longueur -= Math.sin(angle)*distance;
+//		}else if (boussole < 0 && boussole > -90) { 
+//			double angle = 180-boussole;
+//			largeur -= Math.cos(angle)*distance;
+//			longueur -= Math.sin(angle)*distance;
+//		}else if (boussole == 0) {
+//			largeur += 0;
+//			longueur -= distance; 
+//		}else if (boussole == 90) {
+//			largeur += distance;
+//			longueur += 0; 
+//		}else if (boussole == -90) {
+//			largeur -= distance;
+//			longueur += 0;
+//		}else if (boussole < -180 && boussole > -90) {	
+//			largeur += Math.sin(boussole)*distance;
+//			longueur += Math.cos(boussole)*distance;
+//		}else if (boussole > 90 && boussole < 180) {
+//			largeur -= Math.sin(Math.abs(boussole))*distance;
+//			longueur += Math.cos(Math.abs(boussole))*distance;
+//		}else if (boussole == 180 || boussole == -180) {
+//			largeur += 0;
+//			longueur += distance; 
+//		}
+//		
+//	}
 	
 	public void mettre_a_jour_longueur_largeur(double distance) {
-		System.out.println("la distance est "+distance);
 		if(boussole > 0 && boussole < 90) {
-			largeur += Math.sin(boussole)*distance;
+			largeur -= Math.sin(boussole)*distance;
 			longueur += Math.cos(boussole)*distance; 
 		}else if (boussole < 0 && boussole > -90) {
-			largeur -= Math.sin(Math.abs(boussole))*distance;
+			largeur += Math.sin(Math.abs(boussole))*distance;
 			longueur += Math.cos(Math.abs(boussole))*distance; 
 		}else if (boussole == 0) {
 			largeur += 0;
@@ -153,9 +152,7 @@ public class WheelMotor extends MovePilot{
 			this.longueur = longueurF;
 		}else if (longueurF <= this.longueur && largeurF <= this.largeur) {
 			System.out.println("pass 3");
-			Delay.msDelay(3000);
 			rotateEnFonctionBoussole(90);
-			Delay.msDelay(8000);
 			double a;
 			if(longueurF - this.longueur == 0) {
 				a = 0;
@@ -168,7 +165,6 @@ public class WheelMotor extends MovePilot{
 			//System.out.println("Angle " + a);
 			//Delay.msDelay(3000);
 			rotate(a,false);
-			Delay.msDelay(5000);
 			forward(Math.sqrt((Math.pow(Math.abs(longueurF-this.longueur), 2)) + (Math.pow(Math.abs(this.largeur-largeurF), 2)) ),false);
 			this.largeur = largeurF;
 			this.longueur = longueurF;
@@ -198,8 +194,6 @@ public class WheelMotor extends MovePilot{
 	    while(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != couleur) {
 	    	rgb = Sensor.getColorOnGround();
 	   // 	System.out.println(this.boussole);
-	    	
-	   
 	    }
 
 	}
@@ -238,7 +232,7 @@ public class WheelMotor extends MovePilot{
 	 */
 	public void backward(double distance) {
 		super.travel(-distance);
-		mettre_a_jour_longueur_largeur_backward(distance);
+	//	mettre_a_jour_longueur_largeur_backward(distance);
 	}
 	
 	
@@ -260,62 +254,7 @@ public class WheelMotor extends MovePilot{
 		rotate(angleArrivee-this.boussole,false);
 		
 		
-		/**
-		if(angleArrivee >= 0) {
-			if(this.boussole < 0) {
-				if(angleArrivee-180 >= boussole) {
-					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
-							+ " on tourne donc à gauche");
-					this.rotate(Math.abs(this.boussole)+ angleArrivee);
-					System.out.println("C'est bon " + (Math.abs(this.boussole)+ angleArrivee));
-				}
-				else {
-					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
-							+ " on tourne donc à droite");
-					Delay.msDelay(5000);
-					this.rotate(-((180+this.boussole)+(180-angleArrivee)));
-					System.out.println("C'est bon " + -((180+this.boussole)+(180-angleArrivee)));
-				}
-			}
-			if(this.boussole >= 0) {
-				System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole);
-				this.rotate(angleArrivee-this.boussole);
-				System.out.println("C'est bon " + (angleArrivee-this.boussole));
-			}
-			
-		}
-		if(angleArrivee < 0) {
-			if(this.boussole <= 0) {
-				if(angleArrivee >= boussole) { 
-					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
-							+ " on tourne donc à gauche");
-					this.rotate(Math.abs(angleArrivee - this.boussole));
-					System.out.println("C'est bon " + Math.abs(this.boussole)+ angleArrivee);
-				}
-				else {
-					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
-							+ " on tourne donc à droite");
-					this.rotate(angleArrivee - this.boussole);
-					System.out.println("C'est bon " + (angleArrivee - this.boussole));
-				}
-			}
-			if(this.boussole > 0) {
-				if(angleArrivee+180 >= boussole) {
-					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
-							+ " on tourne donc à gauche");
-					this.rotate(angleArrivee+180-boussole);
-					System.out.println("C'est bon " + (angleArrivee+180-boussole));
-				}
-				else {
-					System.out.println("l'angle d'arrivé est " + angleArrivee + " , nous sommes en " + this.boussole
-							+ " on tourne donc à droite");
-					this.rotate(boussole - (angleArrivee+180));
-					System.out.println("C'est bon " + (boussole - (angleArrivee+180)));
-				}
-			
-		}
-		}
-		*/
+		
 	}
 	
 
@@ -347,7 +286,7 @@ public class WheelMotor extends MovePilot{
 				this.boussole +=i;
 			}
 		}
-		System.out.println(this.boussole);
+		
 //		if(this.boussole < -180 || this.boussole > 180) {
 //			this.boussole = -this.boussole % 180;
 //		}
@@ -371,16 +310,16 @@ public class WheelMotor extends MovePilot{
 		}
 		//motor.rotate(indice_angle);
 		//System.out.print("Voila l'angle : " + angle_trouver);
-		Delay.msDelay(3000);
+
+
+
 		this.rotate(60+angle_trouver, false);
 		this.setBoussole(0);
 		System.out.println("cmp= "+cmp);
 		Delay.msDelay(3000);
 	}
 	
-	public void mettre_a_jour_largeur() {
-		
-	}
+	
 	
 	public void afficheBoussole() {
 		System.out.println(this.boussole);
@@ -388,11 +327,11 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	public void afficheLongueur() {
-		System.out.println(this.longueur);
+		System.out.println("blablabla" + this.longueur);
 	}
 	
 	public void afficheLargeur() {
-		System.out.println(this.largeur);
+		System.out.println("blibliblbi "+ this.largeur);
 	}
 	
 	public void setLongueur(double d) {

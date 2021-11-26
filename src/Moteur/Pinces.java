@@ -14,24 +14,24 @@ public class Pinces {
 	/*
 	 * methode permettant de fermer complètement les pinces
 	 */
-	public void fermer() {
+	public void fermer(boolean t) {
 		p.setSpeed(10000);
-		this.p.rotate(-4*360);
+		this.p.rotate(-4*360,t);
 	}
 	
 	/*
 	 * methode permettant d'ouvrir completement les pinces
 	 */
-	public void ouvrir() {
+	public void ouvrir(boolean t) {
 		p.setSpeed(10000);
-		this.p.rotate(4*360);
+		this.p.rotate(4*360,t);
 	}
 	public static void main(String[] args) {
 		
 		Pinces pinces = new Pinces();
-		pinces.fermer();
+		pinces.fermer(false);
 		//m.forward(3000);
-		pinces.ouvrir();
+		pinces.ouvrir(false);
 
 	}
 
