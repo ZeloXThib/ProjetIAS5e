@@ -18,23 +18,26 @@ public class Brain {
 	private static findPalet fp = new findPalet(sensor, motor, pince, DIST_MAX, 0);
 
 
-	public static void strategie1(int d, int d2) {
+	public static void strategie1(int d, int d2, int placement) {
 		motor.forward();
 		pince.ouvrir();
 	    int i = 0;
-	    while(Sensor.havePalet()==0 && i<5000 ){
+	    while(Sensor.havePalet()==0 && i<600 ){
 	    	Delay.msDelay(10);
 	    	i++;
 	    }
+	    double val_speed = motor.getLinearSpeed();
 	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 	    motor.stop();
 	    pince.fermer();
 	    motor.rotate(d,false);//45 stratégie1
-	    motor.forward(380,false);
+	    motor.forward(385,false);
 	    motor.rotate(d2,false);//-45 stratégie2
+	    motor.setLinearSpeed(motor.getMaxLinearSpeed()-50);
 	    motor.forwardUntil("WHITE");
 	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 	    motor.stop();
+	    motor.setLinearSpeed(val_speed);
 	    pince.ouvrir();
 	    //motor.backward(100);
 	    pince.fermer();
@@ -44,15 +47,19 @@ public class Brain {
 	    }else {//ex 45,-45
 	    	motor.rotate(-90);
 	    }
+	    motor.backward(90);
 	    pince.ouvrir();
 	    motor.forward();
-	    while(Sensor.havePalet()==0 && i<150 ){
+	    i = 0;
+	    while(Sensor.havePalet()==0 && i<80 ){
 	    	Delay.msDelay(10);
 	    	i++;
 	    }
+	    
 	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 	    motor.stop();
 	    pince.fermer();
+	    
 	    if(d<0) {//ex -45,45
 	    	motor.rotate(-90);
 	    }else {//ex 45,-45
@@ -65,24 +72,35 @@ public class Brain {
 	    //motor.backward(100);
 	    pince.fermer();
 	    motor.backward(300);
+	    	
 	    if(d<0) {//ex -45,45
-	    	motor.rotate(90);
+	    		motor.rotate(90);
 	    }else {//ex 45,-45
-	    	motor.rotate(-90);
+	    		motor.rotate(-90);
 	    }
+	    
+	    
+	    if(placement == 2) {
+	    		motor.backward(200);
+	    }
+	    	
+	    	
 	    motor.forwardUntil("BLACK");
 	    motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 	    motor.stop();
 
-	    if(d<0) {//ex -45,45
-	    	motor.rotate(90);
-	    }else {//ex 45,-45
-	    	motor.rotate(-90);
-	    }
+	   	if(d<0) {//ex -45,45
+	    		motor.rotate(90);
+	   	}else {//ex 45,-45
+	    		motor.rotate(-90);
+	   	}
+	    	
 	    motor.backwardUntil("WHITE");
 	    motor.mettre_a_jour_longueur_largeur_backward(motor.getMovement().getDistanceTraveled());
 	    motor.stop();
-	    fp.scan(180);
+	    motor.forward(100,false);
+	    fp.marquer_palet(140, 50);
+
 
 	}
 
@@ -118,7 +136,7 @@ public class Brain {
 		int placement = 0;
 		int[] pValeur = new int[6];
 
-		//motor.setLinearSpeed(1000);
+		//motor.setLinearSpeed(motor.getMaxLinearSpeed()-50);
 		//motor.setAngularSpeed(1000);
 	    //motor.setLinearAcceleration(80);
 	    motor.setAngularAcceleration(120);
@@ -199,21 +217,28 @@ public class Brain {
 		//-----------------------------------------//
 		//D'où part le robot ? Gauche ; Milieu : Droite
 		//-----------------------------------------//
-
-		System.out.println("D'où part le robot ? Gauche ; Milieu : Droite");
-		while(placement==0){
-			Delay.msDelay(10);
-			if(Button.LEFT.isDown()) {
-				placement = 1;
+		if(numStrat != 3) {
+			System.out.println("D'où part le robot ? Gauche ; Milieu : Droite");
+			while(placement==0){
+				Delay.msDelay(10);
+				if(Button.LEFT.isDown()) {
+					placement = 1;
+					motor.setLargeur(500);
+				}
+				if(Button.ENTER.isDown()) {
+					placement = 2;
+					motor.setLargeur(1000);
+				}
+				if(Button.RIGHT.isDown()) {
+					placement = 3;
+					motor.setLargeur(1500);
+				}
 			}
-			if(Button.ENTER.isDown()) {
-				placement = 2;
-			}
-			if(Button.RIGHT.isDown()) {
-				placement = 3;
-			}
+			Delay.msDelay(100);
+		}else {
+			//depart tojours au millieu
+			motor.setLargeur(1000);
 		}
-		Delay.msDelay(100);
 
 
 		//-----------------------------------------//
@@ -234,28 +259,6 @@ public class Brain {
 		}
 		Delay.msDelay(100);
 
-		//-----------------------------------------//
-		//Quel palet est présent sur le terrain (au bon endroit):
-		//-----------------------------------------//
-
-		if(numStrat==3) {
-			System.out.println("Quel palet est présent sur le terrain (au bon endroit):");
-			for(int i=0; i<pValeur.length;i++) {
-				int p1 = 0;
-				System.out.println("Palet p"+(i+1)+": G(oui),D(non)");
-				while(p1==0){
-					Delay.msDelay(10);
-					if(Button.LEFT.isDown()) {
-						p1 = 1;
-					}
-					if(Button.RIGHT.isDown()) {
-						p1 = 2;
-					}
-				}
-				pValeur[i]=p1;
-				p1=0;
-			}
-		}
 	}else {
 		/*
 		double a = fp.scan(180);
@@ -462,21 +465,21 @@ public class Brain {
 		if(numStrat==1) {//Tous les palets sont présents sur la table
 			if(placement == 1) {//Strat 1 et placement a gauche
 				Delay.msDelay(100);
-				strategie1(45,-45);//Direction gauche
+				strategie1(45,-45,1);//Direction gauche
 			}
 			else if (placement == 2) {//Strat 1 et placement au millieu
 				if(direction == 1) {
 					Delay.msDelay(100);
-					strategie1(45,-45);//Direction gauche
+					strategie1(45,-45,2);//Direction gauche
 				}
 				else if(direction == 2) {//Strat 1 et placement au millieu
 					Delay.msDelay(100);
-					strategie1(-45,45);//Direction droite
+					strategie1(-45,45,2);//Direction droite
 				}
 			}
 			else {//Strat 1 et placement a droite
 				Delay.msDelay(100);
-				strategie1(-45,45);//Direction droite
+				strategie1(-45,45,3);//Direction droite
 			}
 
 		}else if(numStrat==2) {
