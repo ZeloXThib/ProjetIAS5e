@@ -40,24 +40,18 @@ public class findPalet {
 	public void scanDone() {
 		double[][] tab = new double[pointScan.length-1][3];
 		if(pointScan.length>1) {
-			if(pointScan[0][0] == 1) {
-				for(int i=0;i<pointScan.length;i++) {
-					for(int j=0;j<pointScan[0].length;j++) {
-						tab[i][j]=pointScan[i+1][j];
-					}
+			for(int i=0;i<pointScan.length-1;i++) {
+				for(int j=0;j<pointScan[0].length;j++) {
+					tab[i][j]=pointScan[i+1][j];
 				}
-				pointScan = tab;
 			}
-
-			else {
-				pointScan[0][0]++;
-			}
+			pointScan = tab;
 		}
 	}
 
 
 	public double[] gotoScanPoint() {
-		double[] a = {this.pointScan[0][1],this.pointScan[0][2]};
+		double[] a = {this.pointScan[0][2],this.pointScan[0][1]};
 		return a;
 	}
 
@@ -86,26 +80,31 @@ public class findPalet {
 
 		motor.rotate(angle_scan+indice_angle, false);
 		return valeur_plus_petite;
-		
+
 
 	}
 
 	public boolean marquer_palet(int angle_scan, int angle_verif) {
 		double a = scan(angle_scan);
-		if (is_palet(a)==false){
-			a = scan(angle_verif);	
+		if (a >= dist_max){
+			scanDone();
+			motor.rotateEnFonctionBoussole(180);
+			return false;	
+		}else if (sensor.getDistance() > a){
+			a = scan(angle_verif);
 		}
 		motor.forward();
 		pince.ouvrir();
 		int i=0;
 		while(Sensor.havePalet() == 0) {	
-			
+
 			if( motor.getMovement().getDistanceTraveled() < ((a+this.dist_max)/2)+100 ) {
 				motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 				motor.stop();
 				pince.fermer();
 				scanDone();
 				System.out.println("boucle 1");
+				motor.rotateEnFonctionBoussole(180);
 				return false;
 			}
 			if(sensor.getDistance()<0.2) {
@@ -116,6 +115,7 @@ public class findPalet {
 				pince.fermer();
 				scanDone();
 				System.out.println("boucle 2");
+				motor.rotateEnFonctionBoussole(180);
 				return false;
 			}
 		}
@@ -133,7 +133,7 @@ public class findPalet {
 		pince.fermer();
 		return true;
 	}
-	
+
 	public void mettre_a_jour_largeur() {
 		if(motor.getLargeur()<501) {
 			motor.rotateEnFonctionBoussole(90);
@@ -164,98 +164,15 @@ public class findPalet {
 			return;
 		}
 	}
-	
-	
-
-
-	//      
-	//		motor.forward();
-	//		pince.ouvrir();
-	//		int i=0;
-	//		 while(Sensor.havePalet()==0 && i<300 && (motor.getMovement().getDistanceTraveled() < ((valeur_plus_petite+min)/2)+100 )){
-	//		    	Delay.msDelay(10);
-	//		    	i++;
-	//		    }
-	//		 motor.stop();
-	//		 pince.fermer(); 
-	//		scanDone();
-	//		
-	//		
-	//		return true;
-	//	}
 
 
 
-	public boolean is_palet(double distance) {
-
-		double distance_en_cours = sensor.getDistance();
-		if(distance_en_cours>distance) {
-
-			return false;
-
-			/*double valeur_prec = sensor.getDistance();
-		double valeur_en_cours;
-		double distance_parcourue_au_cas_ou ;
-		if((int)distance <= (int)sensor.getDistance() +0.01 || (int)distance >= (int)sensor.getDistance() +0.01) {
-			System.out.println("Meme distance j'y vais");
-			motor.travel(distance, true);
-			while(motor.isMoving() || Sensor.havePalet()==0) {
-				if(sensor.getDistance() > valeur_prec && valeur_prec > 0.3) {
-					return true;
-				}
-				else if(sensor.getDistance()< 0.3) {
-					distance_parcourue_au_cas_ou = motor.getMovement().getDistanceTraveled();
-					motor.stop();
-					motor.backward(distance_parcourue_au_cas_ou);
-					return false;
-				}
-				valeur_prec = sensor.getDistance();
-			}
 
 
-		}*/
-
-		} else {
-
-			return true;
-		}
 
 
-	}
-	/*
-	public boolean paletTrouve(WheelMotor m) {
-		m.rotateEnFonctionBoussole(180);
-		boolean trouve = false;
-		while (trouve == false && sensor.havePalet()==0) {
-			if(scan()==false) {
-				double[] a = gotoScanPoint();
-				motor.goTo(a[0],a[1]);
-				m.rotateEnFonctionBoussole(180);
-			}else {
-				trouve = true;
-			}
-		}
-		return trouve;
-	}
-	/*
-
-	/**
-	public static void main(String[] args) {
-
-		boolean trouve = false;
-		while(trouve == false) {
-			if(scan(180)==false) {
-				double[] a = gotoScanPoint();
-				motor.goTo(a[0],a[1]);
-			}else {
-				trouve = true;
-			}
-
-		}
 
 
-	}
-	 */
 }
 
 
