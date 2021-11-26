@@ -82,10 +82,7 @@ public class WheelMotor extends MovePilot{
 			longueur += Math.cos(Math.abs(boussole))*distance; 
 		}else if (boussole == 0) {
 			largeur += 0;
-			System.out.println("premiere" + longueur);
 			longueur += distance; 
-			System.out.println("deuxieme" + longueur);
-			//System.out.println("longeur: "+longueur);
 		}else if (boussole == 90) {
 			largeur -= distance;
 			longueur += 0; 
@@ -114,7 +111,7 @@ public class WheelMotor extends MovePilot{
 	 * methode permettant d'avancer
 	 * 
 	 * @param i temps durant lequel le robot va avancer
-	 * 
+	 * System.out.println("largeur de base : " + motor.getLargeur());
 	 */	
 	
 	public double getBousssole() {
@@ -122,6 +119,7 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	public void goTo(double largeurF, double longueurF) {
+		this.setAngularSpeed(200);
 		if (longueurF >= this.longueur && largeurF <= this.largeur) {
 			//rotate(90);
 			System.out.println("pass 1");
@@ -135,9 +133,9 @@ public class WheelMotor extends MovePilot{
 				a = Math.toDegrees(Math.atan((this.largeur-largeurF)/(longueurF-this.longueur)));
 			}
 			rotate(a,false);
-			forward(Math.sqrt((Math.pow(this.longueur-longueurF, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
-//			this.largeur = largeurF;
-//			this.longueur = longueurF;
+			forward(Math.sqrt((Math.pow(Math.abs(this.longueur-longueurF), 2)) + (Math.pow(Math.abs(this.largeur-largeurF), 2)) ),false);
+			this.largeur = largeurF;
+			this.longueur = longueurF;
 		}else if (longueurF >= this.longueur && largeurF >= this.largeur) {
 			System.out.println("pass 2");
 			rotateEnFonctionBoussole(-90);
@@ -147,22 +145,16 @@ public class WheelMotor extends MovePilot{
 			}else if( largeurF - this.largeur == 0){
 				a = 90;
 			}else {	
-				a = Math.toDegrees(Math.atan((largeurF-this.largeur)/(longueurF-this.longueur)));
+				a = Math.toDegrees(Math.atan((longueurF-this.longueur)/(largeurF-this.largeur)));
 			}
-			System.out.println(a);
-			Delay.msDelay(3000);
 			rotate(a,false);
-			forward(Math.sqrt((Math.pow(this.longueur-longueurF, 2)) + (Math.pow(largeurF-this.largeur, 2)) ),false);
-//			this.largeur = largeurF;
-//			this.longueur = longueurF;
+			forward(Math.sqrt((Math.pow(Math.abs(this.longueur-longueurF), 2)) + (Math.pow(Math.abs(largeurF-this.largeur), 2)) ),false);
+			this.largeur = largeurF;
+			this.longueur = longueurF;
 		}else if (longueurF <= this.longueur && largeurF <= this.largeur) {
 			System.out.println("pass 3");
 			Delay.msDelay(3000);
 			rotateEnFonctionBoussole(90);
-			System.out.println("Largeur " + this.largeur);
-			System.out.println("LargeurF " + largeurF);
-			System.out.println("Longueur " + this.longueur);
-			System.out.println("LonguueurF " + longueurF);
 			Delay.msDelay(8000);
 			double a;
 			if(longueurF - this.longueur == 0) {
@@ -170,17 +162,16 @@ public class WheelMotor extends MovePilot{
 			}else if(this.largeur-largeurF == 0){
 				a = 90;
 			}else {
-				a = Math.toDegrees(Math.atan((this.largeur-largeurF)/(this.longueur-longueurF)));
+				a = Math.toDegrees(Math.atan((this.longueur-longueurF)/(this.largeur-largeurF)));
 			}
 			
 			//System.out.println("Angle " + a);
 			//Delay.msDelay(3000);
 			rotate(a,false);
-			System.out.println("Forward " + Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(this.largeur-largeurF, 2)) ));
 			Delay.msDelay(5000);
-			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(this.largeur-largeurF, 2)) ),false);
-//			this.largeur = largeurF;
-//			this.longueur = longueurF;
+			forward(Math.sqrt((Math.pow(Math.abs(longueurF-this.longueur), 2)) + (Math.pow(Math.abs(this.largeur-largeurF), 2)) ),false);
+			this.largeur = largeurF;
+			this.longueur = longueurF;
 		}else {
 			System.out.println("pass 4");
 			rotateEnFonctionBoussole(180);
@@ -193,10 +184,10 @@ public class WheelMotor extends MovePilot{
 				a = Math.toDegrees(Math.atan((largeurF-this.largeur)/(this.longueur-longueurF)));
 			}			
 			rotate(a,false);
-			System.out.println(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(largeurF-this.largeur, 2))));
-			forward(Math.sqrt((Math.pow(longueurF-this.longueur, 2)) + (Math.pow(largeurF-this.largeur, 2)) ),false);
-//			this.largeur = largeurF;
-//			this.longueur = longueurF;
+			forward(Math.sqrt((Math.pow(Math.abs(longueurF-this.longueur), 2)) + (Math.pow(Math.abs(largeurF-this.largeur), 2)) ),false);
+			this.largeur = largeurF;
+			this.longueur = longueurF;
+			this.setAngularSpeed(240);
 		}
 		
 	}
@@ -363,8 +354,8 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	public void boussole_a_0() {
-		this.rotate(20,false);
-		this.rotate(-40,true);
+		this.rotate(30,false);
+		this.rotate(-60,true);
 		double min = 100;
 		double angle_trouver = 0;
 		while(this.isMoving()) {

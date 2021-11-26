@@ -14,7 +14,7 @@ public class Brain {
 	private static Sensor sensor = new Sensor();
 	private static WheelMotor motor = new WheelMotor(1, sensor);
 	private static Pinces pince = new Pinces();
-	private static final double DIST_MAX = 0.8;
+	private static final double DIST_MAX = 0.65;
 	private static findPalet fp = new findPalet(sensor, motor, pince, DIST_MAX, 0);
 
 
@@ -288,17 +288,65 @@ public class Brain {
 			pince.ouvrir();
 		}
 		*/
-			//pince.fermer();
-
-//		motor.forwardUntil("WHITE");
-//	 	motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
-//    	System.out.println("la premiere dist est "+motor.getMovement().getDistanceTraveled());
-//    	motor.stop();
-//		Delay.msDelay(5000);
-//		motor.goTo(500,300);
-//		Delay.msDelay(5000);
-		fp.mettre_a_jour_largeur();
-		Delay.msDelay(5000);
+		
+		while(Button.ENTER.isDown()==false) {
+			
+		
+		System.out.println("largeur de base : " + motor.getLargeur());
+		System.out.println("longueur de base : " + motor.getLongueur());
+			
+		//partie 1 :
+			System.out.println("Partie 1");
+			double[] d = fp.gotoScanPoint();
+			System.out.println("largeur ou il va" + d[0]);
+			System.out.println("longueur ou il va" + d[1]);
+			//doit afficher 1000 , 2700
+			Delay.msDelay(3000);
+			motor.goTo(d[0], d[1]);
+			System.out.println("largeur ou il est " + motor.getLargeur());
+			System.out.println("longueur ou il est " + motor.getLongueur());
+			//doit afficher 1000 , 2700
+			Delay.msDelay(3000);
+			motor.rotateEnFonctionBoussole(180);
+			fp.marquer_palet(180, 40);
+			Delay.msDelay(2000);
+			//palet trouve donc on doit retourner en 1000 , 2700
+			
+		//partie 2 
+			System.out.println("Partie 2");
+			double[] e = fp.gotoScanPoint();
+			System.out.println("largeur" + e[0]);
+			System.out.println("longueur" + e[1]);
+			//doit afficher 1000, 2700
+			Delay.msDelay(2000);
+			motor.goTo(e[0], e[1]);
+			System.out.println(motor.getLargeur());
+			System.out.println(motor.getLongueur());
+			//doit afficher 1000, 2700
+			Delay.msDelay(2000);
+			motor.rotateEnFonctionBoussole(180);
+			fp.marquer_palet(180, 40);
+			Delay.msDelay(2000);
+			//pas de palet donc on va au deuxieme point de scan 
+			
+		//partie 3	
+			System.out.println("Partie 3");
+			double[] t = fp.gotoScanPoint();
+			System.out.println("largeur" + t[0]);
+			System.out.println("longueur" + t[1]);
+			//doit afficher 1000, 2100
+			Delay.msDelay(2000);
+			motor.goTo(t[0], t[1]);
+			System.out.println(motor.getLargeur());
+			System.out.println(motor.getLongueur());
+			////doit afficher 1000, 2100
+			Delay.msDelay(2000);
+			motor.rotateEnFonctionBoussole(180);
+			fp.marquer_palet(180, 40);
+			Delay.msDelay(2000);
+			//palet trouve
+		
+		}
 		// IMPORTANT
 
 //			System.out.println(fp.marquer_palet(180,40));
