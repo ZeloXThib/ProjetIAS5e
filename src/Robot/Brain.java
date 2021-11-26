@@ -285,70 +285,98 @@ public class Brain {
 			pince.ouvrir();
 		}
 		*/
+		System.out.print("Pince: Ouvrire(G),RienFaire(C),Fermer(D)");
+		double val_def = motor.getAngularSpeed();
+		while(g==0){
+			Delay.msDelay(10);
+			if(Button.LEFT.isDown()) {
+				g = 1;
+
+				motor.setAngularSpeed(200);
+				pince.ouvrir();
+				motor.setAngularSpeed(val_def);
+			}
+			if(Button.ENTER.isDown()) {
+				g = 2;
+			}
+			if(Button.RIGHT.isDown()) {
+				g = 3;
+				motor.setAngularSpeed(200);
+				pince.fermer();
+				motor.setAngularSpeed(val_def);
+
+			}
+		}	
 		
-		while(Button.ENTER.isDown()==false) {
-			
 		
-		System.out.println("largeur de base : " + motor.getLargeur());
-		System.out.println("longueur de base : " + motor.getLongueur());
-			
-		//partie 1 :
-			System.out.println("Partie 1");
-			double[] d = fp.gotoScanPoint();
-			System.out.println("largeur ou il va" + d[0]);
-			System.out.println("longueur ou il va" + d[1]);
-			//doit afficher 1000 , 2700
-			Delay.msDelay(3000);
-			motor.goTo(d[0], d[1]);
-			System.out.println("largeur ou il est " + motor.getLargeur());
-			System.out.println("longueur ou il est " + motor.getLongueur());
-			//doit afficher 1000 , 2700
-			Delay.msDelay(3000);
-			motor.rotateEnFonctionBoussole(180);
-			fp.marquer_palet(180, 40);
-			Delay.msDelay(2000);
-			//palet trouve donc on doit retourner en 1000 , 2700
-			
-		//partie 2 
-			System.out.println("Partie 2");
-			double[] e = fp.gotoScanPoint();
-			System.out.println("largeur" + e[0]);
-			System.out.println("longueur" + e[1]);
-			//doit afficher 1000, 2700
-			Delay.msDelay(2000);
-			motor.goTo(e[0], e[1]);
-			System.out.println(motor.getLargeur());
-			System.out.println(motor.getLongueur());
-			//doit afficher 1000, 2700
-			Delay.msDelay(2000);
-			motor.rotateEnFonctionBoussole(180);
-			fp.marquer_palet(180, 40);
-			Delay.msDelay(2000);
-			//pas de palet donc on va au deuxieme point de scan 
-			
-		//partie 3	
-			System.out.println("Partie 3");
-			double[] t = fp.gotoScanPoint();
-			System.out.println("largeur" + t[0]);
-			System.out.println("longueur" + t[1]);
-			//doit afficher 1000, 2100
-			Delay.msDelay(2000);
-			motor.goTo(t[0], t[1]);
-			System.out.println(motor.getLargeur());
-			System.out.println(motor.getLongueur());
-			////doit afficher 1000, 2100
-			Delay.msDelay(2000);
-			motor.rotateEnFonctionBoussole(180);
-			fp.marquer_palet(180, 40);
-			Delay.msDelay(2000);
-			//palet trouve
 		
+
+		while(fp.marquer_palet(180, 40) == true) {
+		}
+		
+//		System.out.println("largeur de base : " + motor.getLargeur());
+//		System.out.println("longueur de base : " + motor.getLongueur());
+//			
+//		//partie 1 :
+//			System.out.println("Partie 1");
+//			double[] d = fp.gotoScanPoint();
+//			System.out.println("largeur ou il va" + d[0]);
+//			System.out.println("longueur ou il va" + d[1]);
+//			//doit afficher 1000 , 2700
+//			Delay.msDelay(3000);
+//			motor.goTo(d[0], d[1]);
+//			System.out.println("largeur ou il est " + motor.getLargeur());
+//			System.out.println("longueur ou il est " + motor.getLongueur());
+//			//doit afficher 1000 , 2700
+//			Delay.msDelay(3000);
+//			motor.rotateEnFonctionBoussole(180);
+//			fp.marquer_palet(180, 40);
+//			Delay.msDelay(2000);
+//			//palet trouve donc on doit retourner en 1000 , 2700
+//			
+//		//partie 2 
+//			System.out.println("Partie 2");
+//			double[] e = fp.gotoScanPoint();
+//			System.out.println("largeur" + e[0]);
+//			System.out.println("longueur" + e[1]);
+//			//doit afficher 1000, 2700
+//			Delay.msDelay(2000);
+//			motor.goTo(e[0], e[1]);
+//			System.out.println(motor.getLargeur());
+//			System.out.println(motor.getLongueur());
+//			//doit afficher 1000, 2700
+//			Delay.msDelay(2000);
+//			motor.rotateEnFonctionBoussole(180);
+//			fp.marquer_palet(180, 40);
+//			Delay.msDelay(2000);
+//			//pas de palet donc on va au deuxieme point de scan 
+//			
+//		//partie 3	
+//			System.out.println("Partie 3");
+//			double[] t = fp.gotoScanPoint();
+//			System.out.println("largeur" + t[0]);
+//			System.out.println("longueur" + t[1]);
+//			//doit afficher 1000, 2100
+//			Delay.msDelay(2000);
+//			motor.goTo(t[0], t[1]);
+//			System.out.println(motor.getLargeur());
+//			System.out.println(motor.getLongueur());
+//			////doit afficher 1000, 2100
+//			Delay.msDelay(2000);
+//			motor.rotateEnFonctionBoussole(180);
+//			fp.marquer_palet(180, 40);
+//			Delay.msDelay(2000);
+//			//palet trouve
+//		
+			
+			
+			
 		}
 		// IMPORTANT
 
 //			System.out.println(fp.marquer_palet(180,40));
 //			Delay.msDelay(2000);
-		}
+		
 
 		//Delay.msDelay(3000);
 

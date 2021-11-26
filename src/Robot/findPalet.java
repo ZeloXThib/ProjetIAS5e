@@ -85,6 +85,7 @@ public class findPalet {
 	}
 
 	public boolean marquer_palet(int angle_scan, int angle_verif) {
+		motor.rotateEnFonctionBoussole(180);
 		double a = scan(angle_scan);
 		if (a >= dist_max){
 			scanDone();
@@ -93,11 +94,11 @@ public class findPalet {
 		}else if (sensor.getDistance() > a){
 			a = scan(angle_verif);
 		}
-		motor.forward();
 		pince.ouvrir();
-		int i=0;
+		motor.forward();
 		while(Sensor.havePalet() == 0) {	
-
+			System.out.println(sensor.getDistance());
+			//
 			if( motor.getMovement().getDistanceTraveled() < ((a+this.dist_max)/2)+100 ) {
 				motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 				motor.stop();
@@ -107,13 +108,15 @@ public class findPalet {
 				motor.rotateEnFonctionBoussole(180);
 				return false;
 			}
-			if(sensor.getDistance()<0.2) {
+			if(sensor.getDistance()<0.2|| sensor.getDistance() > 2) {
+				System.out.println("MAINTENANT");
 				motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
-				motor.stop();
 				double distance_parcourue = motor.getMovement().getDistanceTraveled();
+				motor.stop();	
 				motor.backward(distance_parcourue);
 				pince.fermer();
 				scanDone();
+				Delay.msDelay(3000);
 				System.out.println("boucle 2");
 				motor.rotateEnFonctionBoussole(180);
 				return false;
