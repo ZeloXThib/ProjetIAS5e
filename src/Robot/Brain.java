@@ -324,10 +324,15 @@ public class Brain {
 				motor.setAngularSpeed(val_def);
 
 			}
-		}	
-		
-		
-		
+		}
+		motor.setLargeur(1000);
+		motor.setLongueur(2700);
+		fp.marquer_palet(180, 40);
+		fp.marquer_palet(180, 40);
+		fp.marquer_palet(180, 40);
+		fp.marquer_palet(180, 40);
+		}
+		/*
 
 		while(fp.marquer_palet(180, 40) == true) {
 		}
@@ -386,10 +391,10 @@ public class Brain {
 			Delay.msDelay(2000);
 			//palet trouve
 		
+			*/
 			
 			
-			
-		}
+		
 		// IMPORTANT
 
 //			System.out.println(fp.marquer_palet(180,40));
@@ -459,6 +464,7 @@ public class Brain {
 		//motor.forward(1868, false);
 		//fp.paletTrouve(motor);
 		*/
+	
 
 
 
@@ -480,21 +486,73 @@ public class Brain {
 		if(numStrat==1) {//Tous les palets sont présents sur la table
 			if(placement == 1) {//Strat 1 et placement a gauche
 				Delay.msDelay(100);
-				strategie1(45,-45,1,-155);//Direction gauche
+				strategie1(45,-45,1,-158);//Direction gauche
+				new Thread(new Runnable() {
+					public void run() {
+						if(Button.UP.isDown()) {
+							motor.stop();
+							System.exit(0);
+							return;
+						}
+					}
+				}).start();
+				while(true) {
+					motor.goTo(fp.gotoScanPoint()[0], fp.gotoScanPoint()[1]);
+					fp.marquer_palet(180, 40);
+				}
 			}
 			else if (placement == 2) {//Strat 1 et placement au millieu
 				if(direction == 1) {
 					Delay.msDelay(100);
-					strategie1(45,-45,2,-155);//Direction gauche
+					strategie1(45,-45,2,-158);//Direction gauche
+					new Thread(new Runnable() {
+						public void run() {
+							if(Button.UP.isDown()) {
+								motor.stop();
+								System.exit(0);
+								return;
+							}
+						}
+					}).start();
+					while(true) {
+						motor.goTo(fp.gotoScanPoint()[0], fp.gotoScanPoint()[1]);
+						fp.marquer_palet(180, 40);
+					}
 				}
 				else if(direction == 2) {//Strat 1 et placement au millieu
 					Delay.msDelay(100);
-					strategie1(-45,45,2,25);//Direction droite
+					strategie1(-45,45,2,158);//Direction droite
+					new Thread(new Runnable() {
+						public void run() {
+							if(Button.UP.isDown()) {
+								motor.stop();
+								System.exit(0);
+								return;
+							}
+						}
+					}).start();
+					while(true) {
+						motor.goTo(fp.gotoScanPoint()[0], fp.gotoScanPoint()[1]);
+						fp.marquer_palet(180, 40);
+					}
 				}
 			}
 			else {//Strat 1 et placement a droite
 				Delay.msDelay(100);
-				strategie1(-45,45,3,25);//Direction droite
+				strategie1(-45,45,3,158);//Direction droite
+				new Thread(new Runnable() {
+					public void run() {
+						if(Button.UP.isDown()) {
+							motor.stop();
+							System.exit(0);
+							return;
+						}
+					}
+				}).start();
+				while(true) {
+					motor.goTo(fp.gotoScanPoint()[0], fp.gotoScanPoint()[1]);
+					fp.marquer_palet(180, 40);
+				}
 			}
 
 		}else if(numStrat==2) {

@@ -76,15 +76,12 @@ public class findPalet {
 			Delay.msDelay(10);
 			count_test++;
 		}
-
-
 		motor.rotate(angle_scan+indice_angle, false);
 		return valeur_plus_petite;
-
-
 	}
 
 	public boolean marquer_palet(int angle_scan, int angle_verif) {
+		double dist = 0;
 		motor.rotateEnFonctionBoussole(180);
 		double a = scan(angle_scan);
 		if (a >= dist_max){
@@ -97,15 +94,17 @@ public class findPalet {
 		pince.ouvrir(false);
 		motor.forward();
 		while(Sensor.havePalet() == 0) {	
-			
-			//
-			if( motor.getMovement().getDistanceTraveled() > ((a+this.dist_max)/2)+100 ) {
-				motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+			if( motor.getMovement().getDistanceTraveled() > ((a*1000)+100) ) 
+				dist = motor.getMovement().getDistanceTraveled();
 				motor.stop();
+				motor.mettre_a_jour_longueur_largeur(dist);
 				pince.fermer(false);
-				scanDone();
+				motor.rotateEnFonctionBoussole(0);
+				motor.forwardUntil("WHITE");
+				dist = motor.getMovement().getDistanceTraveled();
+				motor.stop();
+				motor.mettre_a_jour_longueur_largeur(dist);
 				System.out.println("boucle 1");
-				motor.rotateEnFonctionBoussole(180);
 				return false;
 			}
 			if(sensor.getDistance()<0.2) {
@@ -121,44 +120,57 @@ public class findPalet {
 				motor.rotateEnFonctionBoussole(180);
 				return false;
 			}
-		}
+		
 		System.out.println("boucle 3");
-		motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+		dist = motor.getMovement().getDistanceTraveled();
 		motor.stop();
+		motor.mettre_a_jour_longueur_largeur(dist);
+		System.out.println("largeur  " + motor.getLargeur());
+		System.out.println("longueur  " + motor.getLongueur());
+		System.out.println("boussole  " + motor.getBoussole());
+		Delay.msDelay(5000);
 		pince.fermer(false);
 		motor.rotateEnFonctionBoussole(0);
 		motor.forwardUntil("WHITE");
-		motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+		dist = motor.getMovement().getDistanceTraveled();
 		motor.stop();
-		motor.setLongueur(2700-35);
+		motor.mettre_a_jour_longueur_largeur(dist);
 		pince.ouvrir(false);
-		motor.boussole_a_0();
 		pince.fermer(false);
+		motor.boussole_a_0();
+		motor.setLongueur(2700-35);
+		mettre_a_jour_largeur();
+		System.out.println("largeur  " + motor.getLargeur());
+		System.out.println("longueur  " + motor.getLongueur());
+		System.out.println("boussole  " + motor.getBoussole());
+		Delay.msDelay(5000);
 		return true;
-	}
 
+	}
+	
+	//140 est la distance entre le capteur et le milieu des roues 
 	public void mettre_a_jour_largeur() {
 		if(motor.getLargeur()<750) {
 			motor.rotateEnFonctionBoussole(90);
 			double distance_percu = this.scan(40);
-			if(Math.abs((distance_percu*1000)-motor.getLargeur())<400) {
-				motor.setLargeur(distance_percu*1000);	
-			}
-			else {
-				return;
-			}
+		//	if(Math.abs((distance_percu*1000)-motor.getLargeur())<400) {
+				motor.setLargeur(distance_percu*1000+140);	
+			//}
+			//else {
+			//	return;
+			//}
 		}
 		else if(motor.getLargeur()>1250) {
 			motor.rotateEnFonctionBoussole(-90);
 			double distance_percu = this.scan(40);
-			if(Math.abs((distance_percu*1000)-motor.getLargeur())<400) {
-				motor.setLargeur(2000-(distance_percu*1000));
+			//if(Math.abs((distance_percu*1000)-motor.getLargeur())<400) {
+				motor.setLargeur(2000-(distance_percu*1000+140));
 				
-			}
-			else {
+			//}
+			//else {
 				
 				return;
-			}
+			//}
 		}
 		else {
 			
