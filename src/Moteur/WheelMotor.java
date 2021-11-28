@@ -252,9 +252,6 @@ public class WheelMotor extends MovePilot{
 	
 	public void rotateEnFonctionBoussole(double angleArrivee) { 
 		rotate(angleArrivee-this.boussole,false);
-		
-		
-		
 	}
 	
 
@@ -277,9 +274,9 @@ public class WheelMotor extends MovePilot{
 			if(i > 0) {
 				//System.out.println("maj 3");
 				this.boussole +=i;
-			}else if(i < 0 && this.boussole - i <= -180) {
+			}else if(i < 0 && this.boussole - i >= -180) {
 				//System.out.println("maj 4");
-				double a = 180 - -1*this.boussole;
+				double a = 180 +this.boussole;
 				double b = i - a;
 				this.boussole = 180 - b;
 			}else {
