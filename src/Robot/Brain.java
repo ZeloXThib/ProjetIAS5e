@@ -279,17 +279,10 @@ public class Brain {
 		Delay.msDelay(100);
 
 	}else {
-		pince.fermer();
-		while(Button.ENTER.isDown()==false) {
-			if(Button.DOWN.isDown()==true) {
-				motor.boussole_a_0();
-			}
-		}
+		System.out.println("bienvenue");
+		//pince.fermer(false);
+	
 
-			
-		/*
-
-		*/
 		System.out.print("Pince: Ouvrire(G),RienFaire(C),Fermer(D)");
 		double val_def = motor.getAngularSpeed();
 		while(g==0){
@@ -312,12 +305,13 @@ public class Brain {
 
 			}
 		}
+		System.out.println("on est la");
 		motor.setLargeur(1000);
 		motor.setLongueur(2700);
 		fp.marquer_palet(180, 40);
-		fp.marquer_palet(180, 40);
-		fp.marquer_palet(180, 40);
-		fp.marquer_palet(180, 40);
+		//fp.marquer_palet(180, 40);
+		//fp.marquer_palet(180, 40);
+		//fp.marquer_palet(180, 40);
 		}
 		/*
 
@@ -397,34 +391,34 @@ public class Brain {
 
 		//Code dev
 		
-		motor.forward();
-		new Thread(new Runnable() {
-			public void run() {
-				while(Button.ENTER.isDown() ==false) {
-					Color rgb = sensor.getColorOnGround();
-					System.out.println(sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()));
-					Delay.msDelay(20);
-				}
-			}
-		}).start();
-
-		new Thread(new Runnable() {
-			public void run() {
-				if(Button.ENTER.isDown()) {
-					motor.stop();
-					System.exit(0);
-					return;
-				}
-			}
-		}).start();
-
-
-		motor.setLongueur(300);
-		motor.setLargeur(1500);
-		motor.goTo(1000, 2100);
+//		motor.forward();
+//		new Thread(new Runnable() {
+//			public void run() {
+//				while(Button.ENTER.isDown() ==false) {
+//					Color rgb = sensor.getColorOnGround();
+//					System.out.println(sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()));
+//					Delay.msDelay(20);
+//				}
+//			}
+//		}).start();
+//
+//		new Thread(new Runnable() {
+//			public void run() {
+//				if(Button.ENTER.isDown()) {
+//					motor.stop();
+//					System.exit(0);
+//					return;
+//				}
+//			}
+//		}).start();
+//
+//
+//		motor.setLongueur(300);
+//		motor.setLargeur(1500);
+//		motor.goTo(1000, 2100);
 		//motor.forward(1868, false);
 		//fp.paletTrouve(motor);
-		*/
+		
 	
 
 

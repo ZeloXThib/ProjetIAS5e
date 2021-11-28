@@ -93,11 +93,15 @@ public class findPalet {
 		}
 		pince.ouvrir(false);
 		motor.forward();
-		while(Sensor.havePalet() == 0) {	
-			if( motor.getMovement().getDistanceTraveled() > ((a*1000)+100) ) 
-				dist = motor.getMovement().getDistanceTraveled();
+		
+		while(Sensor.havePalet() == 0) {
+			double distanceee = motor.getMovement().getDistanceTraveled();
+			if(motor.getMovement().getDistanceTraveled() > ((a*10000)+100) ) {
+				motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
 				motor.stop();
-				motor.mettre_a_jour_longueur_largeur(dist);
+				System.out.println("A= " + (a*1000)+100);
+				System.out.println("GetM= "+distanceee);
+				Delay.msDelay(5000);
 				pince.fermer(false);
 				motor.rotateEnFonctionBoussole(0);
 				motor.forwardUntil("WHITE");
@@ -120,7 +124,7 @@ public class findPalet {
 				motor.rotateEnFonctionBoussole(180);
 				return false;
 			}
-		
+		}
 		System.out.println("boucle 3");
 		dist = motor.getMovement().getDistanceTraveled();
 		motor.stop();
