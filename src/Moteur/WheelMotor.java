@@ -89,11 +89,11 @@ public class WheelMotor extends MovePilot{
 			largeur += distance;
 			longueur += 0;
 		}else if (boussole > -180 && boussole < -90) {
-			double angle = 180+boussole;
+			double angle = -boussole-90; //code d'avant c'était 180-boussole, c'est faux
 			largeur += Math.cos(angle)*distance;
 			longueur -= Math.sin(angle)*distance;
 		}else if (boussole > 90 && boussole < 180) {
-			double angle = 180-boussole;
+			double angle = boussole-90;
 			largeur -= Math.cos(angle)*distance;
 			longueur -= Math.sin(angle)*distance;
 		}else if (boussole == 180 || boussole == -180) {
