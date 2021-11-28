@@ -89,11 +89,11 @@ public class WheelMotor extends MovePilot{
 			largeur += distance;
 			longueur += 0;
 		}else if (boussole > -180 && boussole < -90) {
-			double angle = 180+boussole;
+			double angle = -boussole-90; //code d'avant c'était 180-boussole, c'est faux
 			largeur += Math.cos(angle)*distance;
 			longueur -= Math.sin(angle)*distance;
 		}else if (boussole > 90 && boussole < 180) {
-			double angle = 180-boussole;
+			double angle = boussole-90;
 			largeur -= Math.cos(angle)*distance;
 			longueur -= Math.sin(angle)*distance;
 		}else if (boussole == 180 || boussole == -180) {
@@ -321,6 +321,7 @@ public class WheelMotor extends MovePilot{
 	}
 	
 	public void rotateEnFonctionBoussole(double angleArrivee) { 
+
 		double boussoleB;
 		double angleB;
 		if(angleArrivee == this.boussole) {
@@ -357,6 +358,7 @@ public class WheelMotor extends MovePilot{
 		
 		
 		
+
 	}
 	
 
@@ -382,7 +384,7 @@ public class WheelMotor extends MovePilot{
 				this.boussole +=i;
 			}else if(i < 0 && this.boussole - i >= -180) {
 				//System.out.println("maj 4");
-				double a = 180 - -1*this.boussole;
+				double a = 180 +this.boussole;
 				double b = i - a;
 				this.boussole = 180 - b;
 			}else {
