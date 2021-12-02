@@ -59,7 +59,6 @@ public class findPalet {
 	public double scan(int angle_scan) {
 		motor.setAngularSpeed(40);
 		double valeur_plus_petite = 100;
-		int count_test = 0;
 		double indice_angle = 0;
 		double distanceMax = 0.8;
 		motor.rotate(angle_scan/2,false);
@@ -73,8 +72,7 @@ public class findPalet {
 				indice_angle = motor.getMovement().getAngleTurned();
 			}
 			//System.out.print(valeur_plus_petite);
-			Delay.msDelay(10);
-			count_test++;
+			Delay.msDelay(5);
 		}
 		motor.rotate(angle_scan+indice_angle, false);
 		return valeur_plus_petite;
@@ -91,23 +89,33 @@ public class findPalet {
 		}else if (sensor.getDistance() > a){
 			a = scan(angle_verif);
 		}
+		if(a>this.dist_max) {
+			scanDone();
+			return false;
+		}
 		pince.ouvrir(false);
 		motor.forward();
 		
-		while(Sensor.havePalet() == 0) {
-			double distanceee = motor.getMovement().getDistanceTraveled();
-			if(motor.getMovement().getDistanceTraveled() > ((a*10000)+100) ) {
-				motor.mettre_a_jour_longueur_largeur(motor.getMovement().getDistanceTraveled());
+		while(Sensor.havePalet() == 0) {			
+			if(motor.getMovement().getDistanceTraveled() > ((a*1000)+100) ) {
+				dist = motor.getMovement().getDistanceTraveled();
 				motor.stop();
-				System.out.println("A= " + (a*1000)+100);
-				System.out.println("GetM= "+distanceee);
-				Delay.msDelay(5000);
+				motor.mettre_a_jour_longueur_largeur(dist);
 				pince.fermer(false);
 				motor.rotateEnFonctionBoussole(0);
 				motor.forwardUntil("WHITE");
 				dist = motor.getMovement().getDistanceTraveled();
 				motor.stop();
 				motor.mettre_a_jour_longueur_largeur(dist);
+				pince.ouvrir(false);
+				pince.fermer(false);
+				motor.boussole_a_0();
+				System.out.println("largeur  " + motor.getLargeur());
+				System.out.println("longueur  " + motor.getLongueur());
+				System.out.println("boussole  " + motor.getBoussole());
+				//Delay.msDelay(2000);
+				motor.setLongueur(2700-35);
+				mettre_a_jour_largeur();
 				System.out.println("boucle 1");
 				return false;
 			}
@@ -119,7 +127,7 @@ public class findPalet {
 				motor.backward(distance_parcourue);
 				pince.fermer(false);
 				scanDone();
-				Delay.msDelay(3000);
+				//Delay.msDelay(3000);
 				System.out.println("boucle 2");
 				motor.rotateEnFonctionBoussole(180);
 				return false;
@@ -129,11 +137,9 @@ public class findPalet {
 		dist = motor.getMovement().getDistanceTraveled();
 		motor.stop();
 		motor.mettre_a_jour_longueur_largeur(dist);
-		System.out.println("largeur  " + motor.getLargeur());
-		System.out.println("longueur  " + motor.getLongueur());
+		pince.fermer(true);
+		//Delay.msDelay(5000);
 		System.out.println("boussole  " + motor.getBoussole());
-		Delay.msDelay(5000);
-		pince.fermer(false);
 		motor.rotateEnFonctionBoussole(0);
 		motor.forwardUntil("WHITE");
 		dist = motor.getMovement().getDistanceTraveled();
@@ -142,12 +148,14 @@ public class findPalet {
 		pince.ouvrir(false);
 		pince.fermer(false);
 		motor.boussole_a_0();
-		motor.setLongueur(2700-35);
-		mettre_a_jour_largeur();
 		System.out.println("largeur  " + motor.getLargeur());
 		System.out.println("longueur  " + motor.getLongueur());
 		System.out.println("boussole  " + motor.getBoussole());
-		Delay.msDelay(5000);
+		//Delay.msDelay(2000);
+		motor.setLongueur(2700-35);
+		mettre_a_jour_largeur();
+		
+		
 		return true;
 
 	}
