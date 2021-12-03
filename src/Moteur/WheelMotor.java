@@ -18,15 +18,25 @@ import lejos.robotics.navigation.MovePilot.*;
 
 
 public class WheelMotor extends MovePilot{
+	/**
+	 * class permettant de gerer tout ce qui tourne autour des moteurs des roues
+	 * @attribut boussole: boussole du robot (vers ou est oriente le robot)
+	 * @attribut longueur: coordonnee longueur du robot
+	 * @attribut largeur: coordoneee largeur du robot
+	 * @attribut sensor: capteurs du robot
+	 */
 	
 	private double boussole;
-//	private double distance;
 	private double longueur;
 	private double largeur;
 	private Sensor sensor;
 	
 	
-	
+	/**
+	 * constructeur de WheelMotor
+	 * @param i : permet de definir position de départ du robot 
+	 * @param sensor : permet d acceder aux capteurs du robot
+	 */
 	public WheelMotor(int i, Sensor sensor) {	
 		super(56,135,new EV3LargeRegulatedMotor(MotorPort.B),new EV3LargeRegulatedMotor(MotorPort.C));
 		this.sensor = sensor;
@@ -40,38 +50,11 @@ public class WheelMotor extends MovePilot{
 			this.largeur = 1500;
 		}
 	}
-//	public void mettre_a_jour_longueur_largeur_backward(double distance) {
-//		//System.out.println("la distance est "+distance);
-//		if(boussole > 0 && boussole < 90) {
-//			double angle = 180+boussole;
-//			largeur += Math.cos(angle)*distance;
-//			longueur -= Math.sin(angle)*distance;
-//		}else if (boussole < 0 && boussole > -90) { 
-//			double angle = 180-boussole;
-//			largeur -= Math.cos(angle)*distance;
-//			longueur -= Math.sin(angle)*distance;
-//		}else if (boussole == 0) {
-//			largeur += 0;
-//			longueur -= distance; 
-//		}else if (boussole == 90) {
-//			largeur += distance;
-//			longueur += 0; 
-//		}else if (boussole == -90) {
-//			largeur -= distance;
-//			longueur += 0;
-//		}else if (boussole < -180 && boussole > -90) {	
-//			largeur += Math.sin(boussole)*distance;
-//			longueur += Math.cos(boussole)*distance;
-//		}else if (boussole > 90 && boussole < 180) {
-//			largeur -= Math.sin(Math.abs(boussole))*distance;
-//			longueur += Math.cos(Math.abs(boussole))*distance;
-//		}else if (boussole == 180 || boussole == -180) {
-//			largeur += 0;
-//			longueur += distance; 
-//		}
-//		
-//	}
-	
+
+	/**
+	 * methode qui permet de mettre a jour les attibuts longueur et largeur du robot grace a la distance  
+	 * @param distance  : distance parcourue par le robot
+	 */
 	public void mettre_a_jour_longueur_largeur(double distance) {
 		System.out.println("Distance="+(int)distance);
 		System.out.println("Boussole="+this.boussole);
@@ -108,19 +91,21 @@ public class WheelMotor extends MovePilot{
 
 	
 	
-	//oui
+
 	/**
 	 * 
-	 * methode permettant d'avancer
-	 * 
-	 * @param i temps durant lequel le robot va avancer
-	 * System.out.println("largeur de base : " + motor.getLargeur());
-	 */	
-	
+	 * @return : getter de la boussole du robot
+	 */
 	public double getBoussole() {
 		return boussole;
 	}
 	
+	
+	/**
+	 * methode permettant d'aller à un endroit dans l'arène
+	 * @param largeurF : largeur vers laquelle le robot doit aller
+	 * @param longueurF : longueur vers laquelle le robot doit aller
+	 */
 	public void goTo(double largeurF, double longueurF) {
 		if(largeurF==this.largeur && longueurF==this.longueur) {
 			System.out.println("J'y suis deja");
@@ -169,9 +154,6 @@ public class WheelMotor extends MovePilot{
 			}else {
 				a = Math.toDegrees(Math.atan((this.longueur-longueurF)/(this.largeur-largeurF)));
 			}
-			
-			//System.out.println("Angle " + a);
-			//Delay.msDelay(3000);
 			rotate(a,false);
 			forward(Math.sqrt((Math.pow(Math.abs(longueurF-this.longueur), 2)) + (Math.pow(Math.abs(this.largeur-largeurF), 2)) ),false);
 			this.largeur = largeurF;
@@ -196,16 +178,23 @@ public class WheelMotor extends MovePilot{
 		
 	}
 	
+	/**
+	 * methode qui permet d avancer jusqu'a une couleur 
+	 * @param couleur : couleur choisie 
+	 */
 	public void forwardUntil(String couleur) {
 		super.forward();  
 	    Color rgb = Sensor.getColorOnGround();
 	    while(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) != couleur) {
 	    	rgb = Sensor.getColorOnGround();
-	   // 	System.out.println(this.boussole);
 	    }
 
 	}
 	
+	/**
+	 * methode qui permet de reculer jusqu'a une couleur
+	 * @param couleur : couleur choisie 
+	 */
 	public void backwardUntil(String couleur) {
 		super.backward();  
 	    Color rgb = Sensor.getColorOnGround();
@@ -215,37 +204,45 @@ public class WheelMotor extends MovePilot{
 	    
 	}
 	
-	
+	/**
+	 * methode qui permet d'arreter un mouvement 
+	 */
 	public void stop() {
 		super.stop();
-//		double distance = this.getMovement().getDistanceTraveled();
-//		System.out.println(distance);
 	}
 	
+	/**
+	 * methode qui permet d'avancer (il avancera tant qu'il n'aura pas l'information d'arreter dans le code)
+	 */
 	public void forward() {
 		super.forward();
-		//System.out.println(this.getMovement().getDistanceTraveled());
-		//Delay.msDelay(3000);
 		
 	}
 	
+	/**
+	 * methode qui permet d'avancer sur une distance donnee et qui rend la main ou non tout en avançant 
+	 * @param distance : distance parcourue par le robot
+	 * @param immediateReturn : boolean permettant de savoir si on rend la main ou non tout en avançant
+	 */
 	public void forward(double distance,boolean immediateReturn) {
 		super.travel(distance,immediateReturn);
 		
 	}
 	
 	/**
-	 * methode permettant de reculer
+	 * methode qui permet de reculer sur une distance donnee
+	 * @param distance : distance à reculer
 	 */
 	public void backward(double distance) {
 		super.travel(-distance);
-	//	mettre_a_jour_longueur_largeur_backward(distance);
 	}
 	
-	
-
+	/**
+	 * methode qui permet de tourner d'un certain angle en degré et qui rend la main ou non tout en tournant
+	 * @param angle : angle de rotation (positif pour aller à gauche, negatif sinon)
+	 * @param immediateReturn : boolean qui permet de rendre la main ou non en tournant 
+	 */
 	public void rotate(double angle,boolean immediateReturn) {
-		//C.rotate((int) angle);
 		this.setAngularSpeed(80);
 		super.rotate(angle*0.908,immediateReturn);
 		if(angle==0)
@@ -286,31 +283,20 @@ public class WheelMotor extends MovePilot{
 			this.boussole = angle;
 			return;
 		}		
-			
-			
-			
-			
-//			
-//			if(angleB - boussoleB > 180) { 
-//				this.boussole = (360-angleB)+boussoleB;
-//			}else { //angleB - boussoleB <= 180
-//				this.boussole = (angleB-boussoleB);
-//			}	
-//		}else {
-//			if(boussoleB - angleB < 180) {
-//				this.boussole = (angleB - boussoleB);//
-//			}else { //boussoleB - angleB >= 180		
-//				this.boussole = ((360-boussoleB)+angleB);
-//			}
-//		}
-		
-		//this.afficheBoussole();
 	}
 	
+	/**
+	 * methode qui permet de tourner sans rendre la main tant que l'angle n a pas ete fait 
+	 * @param angle : angle de rotation
+	 */
 	public void rotate(double angle) {
 		this.rotate(angle, false);
 	}
 	
+	/**
+	 * methode qui permet de s'orienter vers un angle en fonction de l'orientation de base du robot (boussole)
+	 * @param angleArrivee : angle vers lequel on  veut s'orienter
+	 */
 	public void rotateEnFonctionBoussole(double angleArrivee) { 
 
 		double boussoleB;
@@ -353,7 +339,10 @@ public class WheelMotor extends MovePilot{
 	}
 	
 
-	
+	/**
+	 * methode qui permet de mettre a jour la boussole suite à des rotations
+	 * @param i : angle realise
+	 */
 	public void mettreAJourBoussole(double i) {
 		
 		
@@ -383,11 +372,12 @@ public class WheelMotor extends MovePilot{
 			}
 		}
 		
-//		if(this.boussole < -180 || this.boussole > 180) {
-//			this.boussole = -this.boussole % 180;
-//		}
+
 	}
 	
+	/**
+	 * methode permettant de recalibrer la boussole a 0 suite à des erreurs possibles du robot sur des rotations
+	 */
 	public void boussole_a_0() {
 		this.rotate(30,false);
 		this.rotate(-60,true);
@@ -403,66 +393,73 @@ public class WheelMotor extends MovePilot{
 			Delay.msDelay(3);
 			cmp++;
 		}
-		//motor.rotate(indice_angle);
-		//System.out.print("Voila l'angle : " + angle_trouver);
-
-
 
 		this.rotate(60+angle_trouver, false);
 		this.setBoussole(0);
 	}
 	
 	
-	
+	/**
+	 * methode qui permet d'afficher la boussole dans la console
+	 */
 	public void afficheBoussole() {
 		System.out.println(this.boussole);
 	
 	}
 	
+	/**
+	 * methode qui permet d'afficher la longueur dans la console
+	 */
 	public void afficheLongueur() {
 		System.out.println("blablabla" + this.longueur);
 	}
 	
+	
+	/**
+	 * methode qui permet d'afficher la largeur dans la console
+	 */
 	public void afficheLargeur() {
 		System.out.println("blibliblbi "+ this.largeur);
 	}
 	
+	/**
+	 * setter de la longueur
+	 */
 	public void setLongueur(double d) {
 		this.longueur = d;
 	}
 	
+	/**
+	 * setter de la largeur
+	 */
 	public void setLargeur(double d) {
 		this.largeur = d;
 	}
-
+	
+	/**
+	 * setter de la boussole
+	 */
 	public void setBoussole(double boussole) {
 		this.boussole = boussole;
 	}
 	
+	/**
+	 * getter de la longueur
+	 */
 	public double getLongueur() {
 		return longueur;
 	}
 	
+	/**
+	 * getter de la largeur
+	 */
 	public double getLargeur() {
 		return largeur;
 	}
 	
-	/**
-	 * methode permettant de realiser un arc de cercle
-	 */
 	
-	/**
-	public void arcDeCercle(double longueur,boolean droite) {
-		if(droite == true) {
-			this.rotate(-45);
-			this.forward(longueur);
-			this.rotate(45);
-		}else {
-			this.rotate(45);
-			this.forward(longueur);
-			this.rotate(-45);
-		}
-		*/
+	
+	
 	}
 	
 

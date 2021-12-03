@@ -18,10 +18,7 @@ import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 import perception.Sensor;
 
-/**
-import lejos.robotics.navigation.MovePilot;
-import lejos.robotics.navigation.MovePilot.*;
-*/
+
 public class TestWheelMotor {
 	
 	public static void deleteFile(File file, boolean printing) {
@@ -57,7 +54,7 @@ public class TestWheelMotor {
 			{  
 				resultat +=((char)r);      //prints the content of the file  
 			}  
-			//System.out.println("/n"+resultat);
+		
 			
 			fis.close();
 		}  
@@ -154,95 +151,7 @@ public class TestWheelMotor {
 	public static void main(String[] args) {
 		
 		
-		//WheelMotor m = new WheelMotor(1);
-
-
-		//m.rotate(338);
-		//m.setLargeur(1000);
-		//m.setLongueur(300);
 		
-	//	m.goTo(500,2700);
-	//	Delay.msDelay(5000);
-		//Pinces p = new Pinces();
-		//p.fermer();
-		
-		
-		/**
-		m.afficheLargeur();
-		m.afficheLongueur();
-		m.afficheBoussole();
-		Delay.msDelay(3000);
-		m.rotate(45);
-		m.forward(500);
-		m.afficheLargeur();
-		m.afficheLongueur();
-		m.afficheBoussole();
-		Delay.msDelay(10000);
-		*/
-		
-		
-		
-		/*
-		File file = new File("test.txt");
-		deleteFile(file, true);
-		
-		createAndWriteFile(file, "123456", true);
-		
-		String res = chargeFile(file);
-		System.out.println("\nRes: "+res);
-		
-		replaceContent(file, "3456");
-		res = chargeFile(file);
-		System.out.println("\nRes after change:"+res);
-		int check=0;
-		while(check==0){
-			Delay.msDelay(10);
-			if(Button.LEFT.isDown()) {
-				check=1;
-				Delay.msDelay(10);
-			}
-		}
-		Delay.msDelay(1000);
-		*/
-		
-		/*
-		playTone(100, 100, 100);
-		Delay.msDelay(100);
-		playTone(2000, 100, 100);
-		Delay.msDelay(100);
-		playTone(10000, 100, 100);
-		Delay.msDelay(100);
-		*/
-		/*
-		for(int i=100;i<1500;i=i+100) {
-			playTone(i, 10, 100);
-			Delay.msDelay(10);
-		}
-		
-		for(int i=1500;i>0;i=i-100) {
-			playTone(i, 10, 100);
-			Delay.msDelay(10);
-		}
-		
-		for(int i=100;i<2000;i=i+100) {
-			playTone(i, 10, 100);
-			Delay.msDelay(10);
-		}
-		*/
-		
-		
-		playTone(800, 20, 100);
-		Delay.msDelay(100);
-		playTone(1200, 10, 100);
-		Delay.msDelay(100);
-		playTone(800, 20, 100);
-		Delay.msDelay(100);
-		playTone(800, 20, 100);
-		Delay.msDelay(100);
-		playTone(800, 20, 100);
-		Delay.msDelay(100);
-		playTone(5200, 10, 100);
-		Delay.msDelay(100);
 		
 		
 		

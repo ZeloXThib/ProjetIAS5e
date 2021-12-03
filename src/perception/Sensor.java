@@ -17,19 +17,24 @@ import lejos.utility.Delay;
 
 
 public class Sensor {
+	/**
+	 * class qui gere les capteurs du robot
+	 */
 	
 	private Port port_Ultrasound;
 	private Port port_Pression;
 	private Port port_S_Color;
-	private static SensorModes sensor_Ultrasound = null;
-	private static SensorModes sensor_Pression = null;
-	private static SensorModes sensor_S_Color = null;
-	static GraphicsLCD g = null;
-	private ArrayList<Integer> yellow = new ArrayList<Integer>();
-	private ArrayList<Integer> red = new ArrayList<Integer>();
-	
+	private static SensorModes sensor_Ultrasound ;
+	private static SensorModes sensor_Pression ;
+	private static SensorModes sensor_S_Color ;
+
+	/**
+	 * constructeur de sensor qui initialise les attributs
+	 * @param port_Ultrasound_s 
+	 * @param port_Pression_s 
+	 * @param port_Color_s
+	 */
 	public Sensor(String port_Ultrasound_s, String port_Pression_s, String port_Color_s) {
-		// get a port instance
 		port_Ultrasound = LocalEV3.get().getPort(port_Ultrasound_s);
 		sensor_Ultrasound = new EV3UltrasonicSensor(port_Ultrasound);
 		
@@ -40,18 +45,18 @@ public class Sensor {
 		sensor_S_Color = new EV3ColorSensor(port_S_Color);
 	}
 	
-	
+	/**
+	 * constructeur par default
+	 */
 	public Sensor() {
 		this("S1","S3","S4");//Par default S1
 	}
 	
-
 	
-	static public void affiche(String text) {
-		System.out.println(text);
-	}
-	
-	
+	/**
+	 * 
+	 * @return la distance captee par le capteur distance (en metres)
+	 */
 	public static float getDistance() {	
 
 		// get an instance of this sensor in measurement mode
@@ -66,9 +71,12 @@ public class Sensor {
 		
 	}
 	
-	//Tourner sur lui meme lire les valeurs du capteur ultrasonic
 	
 	
+	/**
+	 * 
+	 * @return une valeur differente de 0 si le robot a un palet, 0 sinon
+	 */
 	public static float havePalet() {
 		
 		// get an instance of this sensor in measurement mode
@@ -86,6 +94,10 @@ public class Sensor {
 		
 	}
 	
+	/**
+	 * 
+	 * @return la couleur captee par le robot en type RGB (ex : 1,1,1)
+	 */
 	public static Color getColorOnGround() {
 		
 		
@@ -104,6 +116,13 @@ public class Sensor {
 		
 	}
 	
+	/**
+	 * 
+	 * @param r
+	 * @param g
+	 * @param b
+	 * @return la couleur RGB en string
+	 */
 	public static String Color_to_String(int r, int g, int b) {
 		if((r<6 && g<6 && b<6)) {
 			return "BLACK";
@@ -123,74 +142,14 @@ public class Sensor {
 			return "NONE";
 		}
 		
-		//JAUNE
-		//37 26 8
-		// 35 25 8
 		
-		//NOIR
-		//2 3 3
-		// 3 4 4
-		
-		//GRIS
-		//12 12 1
-		//13 12 1
-		///////10 10 1
-		
-		//BLUE
-		//2 5 11
-		//2 4 11
 	}
 	
-	public static boolean colorIsWisWHITE() {
-		Color rgb = Sensor.getColorOnGround();
-		return Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) == "WHITE";
-	}
 	
-	public boolean yellow() {
-		Color rgb = Sensor.getColorOnGround();
-		if(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) == "YELLOW") {
-			yellow.add(1);
-			if(is_yellow())
-				return true;
-			return false;
-		}
-		else {
-			yellow.clear();
-			return false;
-		}
-	}
 	
-	public boolean red() {
-		Color rgb = Sensor.getColorOnGround();
-		if(Sensor.Color_to_String(rgb.getRed(), rgb.getGreen(), rgb.getBlue()) == "RED") {
-			red.add(1);
-			if(is_red()) {
-				return true;
-			}
-			return false;
-		}
-		else {
-			red.clear();
-			return false;
-		}
 	
-	}
-	
-	public boolean is_yellow() {
-		if(yellow.size()>=5)
-			return true;
-		return false;
-	}
-	
-	public boolean is_red() {
-		if(red.size()>=5)
-			return true;
-		return false;
-	}
 
-	/*public static String WichButtonPressed() {
-		Buttons.GetClicks ()
-	}*/
+	
 	
 	
 		
